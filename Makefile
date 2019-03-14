@@ -52,6 +52,7 @@ $(NAME): $(OBJS)
 	$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIBFT) $(LIBMLX) $(FRAME) $(FLAGS) $(INC)
 
 %.o: %.c $(HEADER) $(LIBFT)
+	echo zzzzzzzzzzzzzzzz
 	$(GCC) $(FLAGS) -o $@ -c $< $(INC)
 
 $(LIBFT): FORCE
