@@ -15,7 +15,7 @@ NAME			= wolf3d
 
 BASE_SRC		= main.c										\
 
-INIT_SRC		= init.c										\
+INIT_SRC		= init.c map.c									\
 
 BASE_PATH		= ./src/
 
@@ -26,9 +26,7 @@ OBJ_PATH		= ./OBJ
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRC))			\
 					$(addprefix $(INIT_PATH), $(INIT_SRC))			\
 
-INC				= -I ./includes
-
-LIB				= -L ./libft/
+INC				=  -I ./libft -I ./includes -I ./libui/SDL2/
 
 GCC				= gcc
 
@@ -38,31 +36,38 @@ OBJS			= $(addprefix $(OBJ), $(SRCS:.c=.o))
 
 MAKELIB			= make re -C libft/
 
-LIBFT			= -Llibft/ -lft
+LIBFT			= libft/libft.a
 
 LIBMLX			= -L ./libui -lSDL2 -lSDL2_image
 
 FRAME			= -framework OpenGL -framework AppKit
 
+HEADER			= wolf3d.h
+
 RANDOM			= $$
-
-%.o: %.c ./includes/wolf3d.h
-	@$(GCC) $(INC) -o $@ -c $< $(FLAGS)
-
-$(NAME): $(OBJS)
-	@$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIB) $(LIBFT) $(LIBMLX) $(FRAME) $(FLAGS)
 
 all : $(NAME)
 
-clean :
-	@rm -rf $(OBJS) ; echo "Obj Cleaned"
+$(NAME): $(OBJS)
+	$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIBFT) $(LIBMLX) $(FRAME) $(FLAGS) $(INC)
 
-fclean : clean
-	@rm -rf $(NAME) ; echo "Exec Cleaned"
+%.o: %.c $(HEADER) $(LIBFT)
+	$(GCC) $(FLAGS) -o $@ -c $< $(INC)
 
-re : fclean all
+$(LIBFT): FORCE
+	make -C ./libft
 
-relibft :
+FORCE:
+
+clean:
+	rm -rf $(OBJS)
+
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all
+
+relibft:
 	$(MAKELIB)
 
-.PHONY : all clean fclean re
+.PHONY: all clean fclean re
