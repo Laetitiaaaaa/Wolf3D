@@ -10,22 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "wolf3d.h"
 
-int main(int argc, char const **argv)
+void	quit(char *info, t_context *ct)
+{
+	ft_putendl(info);
+	(void)ct;
+	// do free here
+	exit(0);
+}
+
+int 	main(int argc, char const **argv)
 {
 	t_context	ct;
 
 	if (argc != 2)
-	{
-		ft_putendl("Usage : ./wolf3d <map file name>");
-		return (0);
-	}
+		quit("Usage : ./wolf3d <map file name>", &ct);
 	if (init(&ct, argv[1]) != 0)
-	{
-		//a function to quit and print error info
-		return (0);
-	};
-	return 0;
+		quit("initialtion failed", &ct);
+	return (0);
 }
+
+

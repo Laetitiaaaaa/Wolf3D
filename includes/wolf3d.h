@@ -25,11 +25,10 @@ typedef struct		s_map_params
 {
 	int				x;
 	int				y;
-	int				ret;
-	float			d;
+//	float			d;
 	int				**map;
-	int				z_max;
-	int				z_min;
+//	int				z_max;
+//	int				z_min;
 }					t_map_params;
 
 typedef struct 		s_pixel
@@ -40,7 +39,7 @@ typedef struct 		s_pixel
 
 typedef struct		s_context
 {
-	t_map_params	mpp;
+	t_map_params	*mpp;
 	SDL_Event		ev;
 	SDL_Window		*window;
 	SDL_Renderer	*rend;

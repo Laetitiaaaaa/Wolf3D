@@ -29,28 +29,28 @@ int					check_map_line(char *line)
 	return (0);
 }
 
-int					check_map(const char *argv, t_map_params *mpp)
+int					check_map(const char *argv, t_context *ct)
 {
 	int		fd;
 	char	*line;
+	int		ret;
 
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		return (-1);
-	mpp->y = 0;
+		quit("open fd failed");
+	ct->mpp->y = 0;
 	while (1)
 	{
-		mpp->ret = get_next_line(fd, &line);
-		if (mpp->ret == -1)
-			return (-1);
-		if ((mpp->y == 0) && (mpp->ret == 0))
-			return (-2);
-		if (mpp->ret == 0)
+		ret = get_next_line(fd, &line);
+		(ret == -1) ? quit("get_next_line failed") : 0;
+		if ((ct->mpp->y == 0) && (ret == 0))
+			quit("map file should not be empty");
+		if (ret == 0)
 			break ;
-		mpp->ret = check_map_line(line);
-		if (mpp->ret == -1)
-			return (-3);
-		mpp->y++;
+		ret = check_map_line(line);
+		if (ret == -1)
+			quit("content of map file is not right");
+		ct->mpp->y++;
 		free(line);
 		line = 0;
 	}
@@ -90,22 +90,20 @@ t_map_params		stock_map(int fd, t_map_params mpp)
 {
 	char			*line;
 	int				temp;
+	int				ret;
 
 	temp = 0;
 	while (1)
 	{
-		mpp.ret = get_next_line(fd, &line);
-		if (mpp.ret == -1)
-			return (mpp);
-		if (mpp.ret == 0)
-			break ;
+		ret = get_next_line(fd, &line);
+		(ret == -1) ? quit("get_next_line failed") : 0;
+		(ret == 0) ? break : 0;
 		mpp.map[mpp.y] = aatoii(ft_strsplit(line, ' '), &mpp.x);
 		if (mpp.y == 0)
 			temp = mpp.x;
 		else if (mpp.x != temp)
 		{
-			mpp.ret = -4;
-			return (mpp);
+			quit("error:the length of each line should be the same");
 		}
 		mpp.y++;
 		free(line);
