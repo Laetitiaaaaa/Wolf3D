@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lomasse <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: llejeune <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/11/06 19:24:01 by lomasse           #+#    #+#              #
-#    Updated: 2019/03/13 16:29:46 by jleblond         ###   ########.fr        #
+#    Created: 2019/03/15 16:31:36 by llejeune          #+#    #+#              #
+#    Updated: 2019/03/15 16:33:19 by llejeune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,6 @@ LIBSDL			= -L ./libui -lSDL2 -lSDL2_image
 FRAME			= -framework OpenGL -framework AppKit
 
 LIBFTA			= libft/libft.a
-
-RANDOM			= $$
 
 all : $(NAME)
 
