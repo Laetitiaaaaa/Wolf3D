@@ -50,6 +50,7 @@ typedef struct		s_context
 	t_map_params	mpp;
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
+	SDL_Event		*ev;
 }					t_context;
 
 int					load_map(t_context *ct, const char *argv);

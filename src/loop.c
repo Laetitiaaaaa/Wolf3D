@@ -14,10 +14,19 @@
 
 void		loop(t_context *ct)
 {
+	Uint8		*state;
+
 	while (TRUE)
 	{
+		SDL_PollEvent(ct->ev);
+		state = (Uint8*)SDL_GetKeyboardState(NULL);
+		state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
+
+
 		SDL_SetRenderDrawColor(ct->rend, 124, 130, 140, SDL_ALPHA_OPAQUE);
 		SDL_RenderDrawLine(ct->rend, 100, 100, 500, 100);
 		SDL_RenderPresent(ct->rend);
+
+
 	}
 }
