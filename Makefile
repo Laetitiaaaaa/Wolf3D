@@ -48,7 +48,7 @@ RANDOM			= $$
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIB) $(LIBFTA) $(LIBSDL) $(FRAME) $(FLAGS)
+	$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIBFTA) $(LIBSDL) $(FRAME) $(FLAGS)
 
 %.o: %.c $(HEADER) $(LIBFTA)
 	$(GCC) $(INC) -o $@ -c $< $(FLAGS)
