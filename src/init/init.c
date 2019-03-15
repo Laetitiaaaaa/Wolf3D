@@ -12,6 +12,7 @@
 
 #include "wolf3d.h"
 
+
 // error information for maps
 void	error_info(int x)
 {
@@ -33,20 +34,21 @@ void	init_sdl(t_context *ct)
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
-	SDL_Delay(10000);
 
 }
+
 
 int		init(t_context *ct, const char *argv)
 {
 	int		ret;
 
 	ret = load_map(ct, argv);
-	if (ret == -1 || ret == -2 || ret == -3 || ret == -4)
+	if (ret == -1)
 	{
-		error_info(ret);
+		quit("error", ct);
 		return (0);
 	}
+
 /// ---------unleve les commentaires pour affichier le map
 
 	// int	i = 0;
@@ -64,18 +66,6 @@ int		init(t_context *ct, const char *argv)
 	// }
 // ---------------------------------
 	init_sdl(ct);
-
-
-
-
-
-
-
-
-
-
-
-
 
 	return (0);
 }

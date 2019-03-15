@@ -12,7 +12,7 @@
 
 NAME			= wolf3d
 
-BASE_SRC		= main.c									\
+BASE_SRC		= main.c loop.c									\
 
 INIT_SRC		= init.c map.c									\
 
