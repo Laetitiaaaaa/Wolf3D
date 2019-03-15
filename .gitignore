@@ -18,17 +18,18 @@
 
 # Libraries
 *.lib
-*.a
 *.la
 *.lo
+libft.a
 
 # Shared objects (inc. Windows DLLs)
 *.dll
 *.so
 *.so.*
-*.dylib
+
 
 # Executables
+wolf3d
 *.exe
 *.out
 *.app
