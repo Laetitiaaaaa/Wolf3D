@@ -3,63 +3,66 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llejeune <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: jleblond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/03/14 18:59:27 by llejeune          #+#    #+#              #
-#    Updated: 2019/03/14 19:57:13 by llejeune         ###   ########.fr        #
+#    Created: 2019/03/14 08:56:17 by jleblond          #+#    #+#              #
+#    Updated: 2019/03/14 08:56:22 by jleblond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = wolf3d
 
-SRC = main.c 
+NAME			= wolf3d
 
-INIT_SRC = init.c 
+BASE_SRC		= main.c										\
 
-OBJ = $(SRC:.c=.o) \
-	$(INIT_SRC:.c=.o)
+INIT_SRC		= init.c										\
 
-SRC_PATH = ./src/
+BASE_PATH		= ./src/
 
-INIT_PATH = ./src/init/
+INIT_PATH		= ./src/init/
 
-OBJ_PATH = ./objs/
+OBJ_PATH		= ./OBJ
 
-SOURCES = $(addprefix $(SRC_PATH), $(SRC)) \
-		  $(addprefix $(INIT_PATH), $(INIT_SRC))
+SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRC))			\
+					$(addprefix $(INIT_PATH), $(INIT_SRC))			\
 
-OBJETS = $(addprefix $(OBJ_PATH), $(OBJ))
+INC				= -I ./includes
 
-FLAGS = -Wall -Wextra -Werror
+LIB				= -L ./libft/
 
-INC = -I ./includes
+GCC				= gcc
 
-LIBFT = ./libft/libft.a
+FLAGS			= -Wall -Wextra -Werror
 
-LIBRARIES = -L ./libui -lSDL2 -lSDL2_image -framework OpenGL -framework AppKit \
-            -L ./libft -lft 
+OBJS			= $(addprefix $(OBJ), $(SRCS:.c=.o))
 
-all: $(NAME)
+MAKELIB			= make re -C libft/
 
-$(NAME): $(OBJETS)
-	gcc $(FLAGS) $(INC) $(OBJETS) $(LIBRARIES) -o $(NAME)                                 #`sdl2-config --cflags --libs`
+LIBFT			= -Llibft/ -lft
 
-$(OBJ_PATH)%.o: $(SOURCES)%.c $(LIBFT) ./includes/wolf3d.h
-	mkdir $(OBJ_PATH) 2> /dev/null || true
-	gcc $(FLAGS) $(INC) -o $@ -c $< 
+LIBMLX			= -L ./libui -lSDL2 -lSDL2_image
 
-$(LIBFT): FORCE
-	make -C ./libft
+FRAME			= -framework OpenGL -framework AppKit
 
-FORCE:
+RANDOM			= $$
 
-clean:
-	make fclean -C ./libft
-	rm -rf $(OBJ_PATH) ; echo "Obj Cleaned"
+%.o: %.c ./includes/wolf3d.h
+	@$(GCC) $(INC) -o $@ -c $< $(FLAGS)
+
+$(NAME): $(OBJS)
+	@$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIB) $(LIBFT) $(LIBMLX) $(FRAME) $(FLAGS)
+
+all : $(NAME)
+
+clean :
+	@rm -rf $(OBJS) ; echo "Obj Cleaned"
 
 fclean : clean
-	rm -rf $(NAME) ; echo "Exec Cleaned"
+	@rm -rf $(NAME) ; echo "Exec Cleaned"
 
 re : fclean all
+
+relibft :
+	$(MAKELIB)
 
 .PHONY : all clean fclean re

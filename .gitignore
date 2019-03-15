@@ -29,6 +29,7 @@ libft.a
 
 
 # Executables
+wolf3d
 *.exe
 *.out
 *.app
