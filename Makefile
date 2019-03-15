@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jleblond <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: lomasse <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/03/14 08:56:17 by jleblond          #+#    #+#              #
-#    Updated: 2019/03/14 08:56:22 by jleblond         ###   ########.fr        #
+#    Created: 2018/11/06 19:24:01 by lomasse           #+#    #+#              #
+#    Updated: 2019/03/13 16:29:46 by jleblond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME			= wolf3d
 
-BASE_SRC		= main.c										\
+BASE_SRC		= main.c									\
 
 INIT_SRC		= init.c map.c									\
 
@@ -21,12 +20,14 @@ BASE_PATH		= ./src/
 
 INIT_PATH		= ./src/init/
 
+HEADER			= ./includes/wolf3d.h
+
 OBJ_PATH		= ./OBJ
 
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRC))			\
 					$(addprefix $(INIT_PATH), $(INIT_SRC))			\
 
-INC				=  -I ./libft -I ./includes -I ./libui/SDL2/
+INC				= -I ./includes -I ./libft -I ./libui/SDL2/
 
 GCC				= gcc
 
@@ -36,25 +37,23 @@ OBJS			= $(addprefix $(OBJ), $(SRCS:.c=.o))
 
 MAKELIB			= make re -C libft/
 
-LIBFT			= libft/libft.a
-
-LIBMLX			= -L ./libui -lSDL2 -lSDL2_image
+LIBSDL			= -L ./libui -lSDL2 -lSDL2_image
 
 FRAME			= -framework OpenGL -framework AppKit
 
-HEADER			= wolf3d.h
+LIBFTA			= libft/libft.a
 
 RANDOM			= $$
 
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIBFT) $(LIBMLX) $(FRAME) $(FLAGS) $(INC)
+	$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIB) $(LIBFTA) $(LIBSDL) $(FRAME) $(FLAGS)
 
-%.o: %.c $(HEADER) $(LIBFT)
-	$(GCC) $(FLAGS) -o $@ -c $< $(INC)
+%.o: %.c $(HEADER) $(LIBFTA)
+	$(GCC) $(INC) -o $@ -c $< $(FLAGS)
 
-$(LIBFT): FORCE
+$(LIBFTA): FORCE
 	make -C ./libft
 
 FORCE:
