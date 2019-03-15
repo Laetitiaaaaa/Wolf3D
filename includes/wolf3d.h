@@ -39,12 +39,6 @@ typedef struct		s_map_params
 //	int				z_min;
 }					t_map_params;
 
-typedef struct 		s_pixel
-{
-	int				x;
-	int				y;
-}					t_pixel;
-
 typedef struct		s_context
 {
 	t_map_params	mpp;
@@ -57,6 +51,6 @@ int					load_map(t_context *ct, const char *argv);
 int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
-
+void				draw_background(t_context *ct);
 
 #endif
