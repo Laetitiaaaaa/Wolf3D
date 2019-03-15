@@ -64,18 +64,5 @@ int		init(t_context *ct, const char *argv)
 	// }
 // ---------------------------------
 	init_sdl(ct);
-
-
-
-
-
-
-
-
-
-
-
-
-
 	return (0);
 }
