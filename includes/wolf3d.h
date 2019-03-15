@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 09:06:38 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/14 09:08:52 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:48:40 by llejeune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,15 @@ typedef struct		s_map_params
 //	int				z_min;
 }					t_map_params;
 
-typedef struct 		s_pixel
-{
-	int				x;
-	int				y;
-}					t_pixel;
-
 typedef struct		s_context
 {
 	t_map_params	mpp;
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	SDL_Event		*ev;
+	SDL_Surface		*surface;
+	SDL_Texture		*texture;
+	SDL_Texture		*tmp;
 }					t_context;
 
 int					load_map(t_context *ct, const char *argv);

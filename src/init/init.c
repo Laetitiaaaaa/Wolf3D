@@ -1,4 +1,5 @@
 /* ************************************************************************** */
+
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
@@ -33,7 +34,7 @@ void	init_sdl(t_context *ct)
 	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, XWIN, YWIN, SDL_WINDOW_SHOWN);
 	if (ct->window == NULL)
 		quit("window create failed", ct);
-	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
+	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_PRESENTVSYNC);
 
 }
 
