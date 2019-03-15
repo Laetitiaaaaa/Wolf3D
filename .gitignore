@@ -20,6 +20,7 @@
 *.lib
 *.la
 *.lo
+libft.a
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -28,6 +29,7 @@
 
 
 # Executables
+wolf3d
 *.exe
 *.out
 *.app
