@@ -33,7 +33,7 @@ void	init_sdl(t_context *ct)
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
-	SDL_Delay(5000);
+	SDL_Delay(10000);
 
 }
 
