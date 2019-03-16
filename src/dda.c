@@ -21,7 +21,7 @@ void		dda(t_context *ct)
 
 	distance_ver_wall = NO_WALL;
 	distance_hor_wall = NO_WALL;
-	ct->cam.angle = 30;
+	ct->cam.angle = 60;
 	ct->cam.cam_position.x = 2.5;
 	ct->cam.cam_position.y = 4.5;
 	ver_wall_p = vertial_wall_position_calcu(ct);
