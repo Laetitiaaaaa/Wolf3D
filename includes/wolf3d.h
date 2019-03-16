@@ -22,7 +22,7 @@
 # define XWIN 900
 # define YWIN 600
 # define CUBESIZE 1.0
-# define NO_WALL -1
+# define NO_WALL -1.0
 
 typedef enum 		e_bool
 {
@@ -82,8 +82,9 @@ double				convert_degree_to_radian(double angle);
 float				tan_angle_abs(float angle);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct);
 t_floatpoint		vertical_first_delta_calcu(t_context *ct);
-void				horizontal_wall_position_calcu(t_context *ct);
-t_floatpoint			vertial_wall_position_calcu(t_context *ct);
+t_floatpoint		vertial_wall_position_calcu(t_context *ct);
+t_floatpoint		horizontal_wall_position_calcu(t_context *ct);
+
 
 
 
