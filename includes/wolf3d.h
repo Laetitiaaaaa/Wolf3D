@@ -22,12 +22,20 @@
 # define XWIN 900
 # define YWIN 600
 # define CUBESIZE 1.0
+# define NO_WALL -1
 
 typedef enum 		e_bool
 {
 	FALSE = 0,
 	TRUE = 1,
 }					t_bool;
+
+typedef enum 		e_neg_or_posi
+{
+	NEGATIVE = -1,
+	POSITIVE = 1,
+	ZERO = 0,
+}					t_neg_or_posi;
 
 typedef struct		s_map_params
 {
@@ -49,7 +57,7 @@ typedef struct 		s_floatpoint
 typedef struct  	s_camera
 {
 	t_floatpoint	cam_position;
-	float			angle; // in radian form
+	float			angle; // angle is between 0 and 360
 
 
 }					t_camera;
@@ -70,4 +78,14 @@ void				loop(t_context *ct);
 void				draw_background(t_context *ct);
 SDL_Point			convert_plan_to_pixel(t_floatpoint n, t_context *ct);
 void				dda(t_context *ct);
+double				convert_degree_to_radian(double angle);
+float				tan_angle_abs(float angle);
+t_floatpoint		horizontal_first_delta_calcu(t_context *ct);
+t_floatpoint		vertical_first_delta_calcu(t_context *ct);
+void				horizontal_wall_position_calcu(t_context *ct);
+t_floatpoint			vertial_wall_position_calcu(t_context *ct);
+
+
+
+
 #endif
