@@ -48,22 +48,20 @@ int		init(t_context *ct, const char *argv)
 		quit("error", ct);
 		return (0);
 	}
-
 /// ---------unleve les commentaires pour affichier le map
-
-	// int	i = 0;
-	// int	j = 0;
-	// while (j < ct->mpp.y)
-	// {
-	// 	while (i < ct->mpp.x)
-	// 	{
-	// 		printf("%d", ct->mpp.map[j][i]);
-	// 		i++;
-	// 	}
-	// 	printf("\n");
-	// 	i = 0;
-	// 	j++;
-	// }
+	int	i = 0;
+	int	j = 0;
+	while (j < ct->mpp.y)
+	{
+		while (i < ct->mpp.x)
+		{
+			printf("%d", ct->mpp.map[j][i]);
+			i++;
+		}
+		printf("\n");
+		i = 0;
+		j++;
+	}
 // ---------------------------------
 	init_sdl(ct);
 

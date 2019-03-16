@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   convert.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/15 14:27:53 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/15 16:30:47 by llejeune         ###   ########.fr       */
+/*   Created: 2019/03/16 10:41:09 by jleblond          #+#    #+#             */
+/*   Updated: 2019/03/16 10:41:11 by jleblond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void		loop(t_context *ct)
+
+//je vais normaliser les points sur plan entre 0 et 1
+SDL_Point	convert_plan_to_pixel(t_floatpoint n, t_context *ct)
 {
-	Uint8		*state;
+	SDL_Point	pixel;
 
-	while (TRUE)
-	{
-		SDL_PollEvent(ct->ev);
-		state = (Uint8*)SDL_GetKeyboardState(NULL);
-		state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
-
-//----------------jie
-
-		//draw_background(ct);
-
-		//jie-------
-//----------------laeti
-
-		//----------------laeti-------
-		SDL_RenderPresent(ct->rend);
-	}
+	pixel.x = XWIN * n.x / ((ct->mpp.x - 1) * CUBESIZE);
+	pixel.y = YWIN * n.y / ((ct->mpp.y - 1) * CUBESIZE);
+	return (pixel);
 }
 

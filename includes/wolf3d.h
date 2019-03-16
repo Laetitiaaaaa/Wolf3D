@@ -21,6 +21,7 @@
 
 # define XWIN 900
 # define YWIN 600
+# define CUBESIZE 1.0
 
 typedef enum 		e_bool
 {
@@ -34,10 +35,24 @@ typedef struct		s_map_params
 	int				y;
 	int				ret;
 	float			d;
-	int		**map;
+	int				**map;
 //	int				z_max;
 //	int				z_min;
 }					t_map_params;
+
+typedef struct 		s_floatpoint
+{
+	float			x;
+	float			y;
+}					t_floatpoint;
+
+typedef struct  	s_camera
+{
+	t_floatpoint	cam_position;
+	float			angle; // in radian form
+
+
+}					t_camera;
 
 typedef struct		s_context
 {
@@ -45,6 +60,7 @@ typedef struct		s_context
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	SDL_Event		*ev;
+	t_camera		cam;
 }					t_context;
 
 int					load_map(t_context *ct, const char *argv);
@@ -52,5 +68,6 @@ int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
-
+SDL_Point			convert_plan_to_pixel(t_floatpoint n, t_context *ct);
+void				dda(t_context *ct);
 #endif
