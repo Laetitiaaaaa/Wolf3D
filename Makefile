@@ -12,7 +12,7 @@
 
 NAME			= wolf3d
 
-BASE_SRC		= main.c loop.c convert.c dda.c	draw_background.c						\
+BASE_SRC		= main.c loop.c convert.c dda.c	draw_background.c draw_2d.c \
 
 INIT_SRC		= init.c map.c									\
 
