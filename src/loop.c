@@ -43,6 +43,7 @@ void		draw_2d(t_context *ct)
 void	draw_cubes(t_context *ct)
 {
 	SDL_Rect		*rects;
+	SDL_Rect		rec;
 	int				count;
 	SDL_Point		pixel;
 	t_floatpoint	n;
@@ -59,6 +60,15 @@ void	draw_cubes(t_context *ct)
 			n.x = (float)i;
 			n.y = (float)j;
 			pixel = convert_plan_to_pixel(n, ct);
+			if (ct->mpp.map[j][i] == 1)
+			{
+				rec.x = pixel.x;
+				rec.y = pixel.y;
+				rec.w = XWIN / ct->mpp.x;
+				rec.h = YWIN / ct->mpp.y;
+				SDL_SetRenderDrawColor(ct->rend, 31, 47, 73, SDL_ALPHA_OPAQUE);
+				SDL_RenderFillRect(ct->rend, &rec);
+			}
 			rects[j * (ct->mpp.x) + i].x = pixel.x;
 			rects[j * (ct->mpp.x) + i].y = pixel.y;
 			rects[j * (ct->mpp.x) + i].w = XWIN / ct->mpp.x;
@@ -69,17 +79,6 @@ void	draw_cubes(t_context *ct)
 		i = 0;
 		j++;
 	}
-
-	// while ( < count)
-	// {
-	// 	rects[i].x = pixel.x;
-	// 	rects[i].y = pixel.y;
-	// 	rects[i].w = XWIN / ct->mpp.x;
-	// 	rects[i].h = YWIN / ct->mpp.y;
-	// }
-
-
-
 	SDL_SetRenderDrawColor(ct->rend, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawRects(ct->rend, rects, count);
 //	SDL_RenderDrawLines(ct->rend, points, count);
