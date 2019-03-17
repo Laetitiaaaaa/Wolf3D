@@ -34,11 +34,27 @@ void		loop(t_context *ct)
 	}
 }
 
+
+
 void		draw_2d(t_context *ct)
 {
 	draw_cubes(ct);
+	draw_camera(ct);
 
 }
+
+void	draw_camera(t_context *ct)
+{
+	SDL_Point    	pixel;
+	t_floatpoint	n;
+
+	n.x = ct->cam.cam_position.x;
+	n.y = ct->cam.cam_position.y;
+	pixel = convert_plan_to_pixel(n, ct);
+	SDL_SetRenderDrawColor(ct->rend, 89, 224, 192, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
+}
+
 
 void	draw_cubes(t_context *ct)
 {
@@ -75,11 +91,9 @@ void	draw_cubes(t_context *ct)
 			rects[j * (ct->mpp.x) + i].h = YWIN / ct->mpp.y;
 			i++;
 		}
-		printf("\n");
 		i = 0;
 		j++;
 	}
 	SDL_SetRenderDrawColor(ct->rend, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawRects(ct->rend, rects, count);
-//	SDL_RenderDrawLines(ct->rend, points, count);
 }
