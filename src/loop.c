@@ -46,26 +46,22 @@ void		draw_2d(t_context *ct)
 
 }
 
-// void	draw_ray(t_context *ct)
-// {
-// 	SDL_Point    	pixel;
-// 	SDL_Point    	pixel2;
-// 	t_floatpoint	n;
-// 	t_floatpoint	wall_position;
+void	draw_ray(t_context *ct)
+{
+	SDL_Point    	pix_cam;
+	SDL_Point    	pix_wall;
+	t_floatpoint	wall_position;
 
-// 	n.x = ct->cam.cam_position.x;
-// 	n.y = ct->cam.cam_position.y;
-// 	pixel = convert_plan_to_pixel(n, ct);
+	pix_cam = convert_plan_to_pixel(ct->cam.cam_position.x, ct->cam.cam_position.y, ct);
+	wall_position = dda(ct);
+	if (wall_position.x != NO_WALL)
+	{
+		pix_wall = convert_plan_to_pixel(wall_position.x, wall_position.y, ct);
+		SDL_SetRenderDrawColor(ct->rend, 226, 83, 83, SDL_ALPHA_OPAQUE);
+		SDL_RenderDrawLine(ct->rend, pix_cam.x, pix_cam.y, pix_wall.x, pix_wall.y);
+	}
 
-// 	wall_position = dda(ct);
-// 	if (wall_position.x != NO_WALL)
-// 	{
-// 		pixel2 = convert_plan_to_pixel(wall_position, ct);
-// 		SDL_SetRenderDrawColor(ct->rend, 226, 83, 83, SDL_ALPHA_OPAQUE);
-// 		SDL_RenderDrawLine(ct->rend, pixel.x, pixel.y, pixel2.x, pixel2.y);
-// 	}
-
-// }
+}
 
 void	draw_camera(t_context *ct)
 {
