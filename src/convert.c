@@ -14,12 +14,12 @@
 
 
 //je vais normaliser les points sur plan entre 0 et 1
-SDL_Point	convert_plan_to_pixel(t_floatpoint n, t_context *ct)
+SDL_Point	convert_plan_to_pixel(float x, float y, t_context *ct)
 {
 	SDL_Point	pixel;
 
-	pixel.x = XWIN * n.x / ((ct->mpp.x) * CUBESIZE);
-	pixel.y = YWIN * n.y / ((ct->mpp.y) * CUBESIZE);
+	pixel.x = XWIN * x / ((ct->mpp.x) * CUBESIZE);
+	pixel.y = YWIN * y / ((ct->mpp.y) * CUBESIZE);
 	return (pixel);
 }
 

@@ -46,35 +46,32 @@ void		draw_2d(t_context *ct)
 
 }
 
-void	draw_ray(t_context *ct)
-{
-	SDL_Point    	pixel;
-	SDL_Point    	pixel2;
-	t_floatpoint	n;
-	t_floatpoint	wall_position;
+// void	draw_ray(t_context *ct)
+// {
+// 	SDL_Point    	pixel;
+// 	SDL_Point    	pixel2;
+// 	t_floatpoint	n;
+// 	t_floatpoint	wall_position;
 
-	n.x = ct->cam.cam_position.x;
-	n.y = ct->cam.cam_position.y;
-	pixel = convert_plan_to_pixel(n, ct);
+// 	n.x = ct->cam.cam_position.x;
+// 	n.y = ct->cam.cam_position.y;
+// 	pixel = convert_plan_to_pixel(n, ct);
 
-	wall_position = dda(ct);
-	if (wall_position.x != NO_WALL)
-	{
-		pixel2 = convert_plan_to_pixel(wall_position, ct);
-		SDL_SetRenderDrawColor(ct->rend, 226, 83, 83, SDL_ALPHA_OPAQUE);
-		SDL_RenderDrawLine(ct->rend, pixel.x, pixel.y, pixel2.x, pixel2.y);
-	}
+// 	wall_position = dda(ct);
+// 	if (wall_position.x != NO_WALL)
+// 	{
+// 		pixel2 = convert_plan_to_pixel(wall_position, ct);
+// 		SDL_SetRenderDrawColor(ct->rend, 226, 83, 83, SDL_ALPHA_OPAQUE);
+// 		SDL_RenderDrawLine(ct->rend, pixel.x, pixel.y, pixel2.x, pixel2.y);
+// 	}
 
-}
+// }
 
 void	draw_camera(t_context *ct)
 {
 	SDL_Point    	pixel;
-	t_floatpoint	n;
 
-	n.x = ct->cam.cam_position.x;
-	n.y = ct->cam.cam_position.y;
-	pixel = convert_plan_to_pixel(n, ct);
+	pixel = convert_plan_to_pixel(ct->cam.cam_position.x, ct->cam.cam_position.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 89, 224, 192, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
 }
@@ -86,7 +83,6 @@ void	draw_cubes(t_context *ct)
 	SDL_Rect		rec;
 	int				count;
 	SDL_Point		pixel;
-	t_floatpoint	n;
 
 	count = ct->mpp.x * ct->mpp.y;
 	rects= (SDL_Rect*)malloc(sizeof(SDL_Rect) * count);  //remember to free later
@@ -97,9 +93,7 @@ void	draw_cubes(t_context *ct)
 	{
 		while (i < ct->mpp.x)
 		{
-			n.x = (float)i;
-			n.y = (float)j;
-			pixel = convert_plan_to_pixel(n, ct);
+			pixel = convert_plan_to_pixel((float)i, (float)j, ct);
 			if (ct->mpp.map[j][i] == 1)
 			{
 				rec.x = pixel.x;
