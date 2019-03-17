@@ -38,8 +38,32 @@ void		loop(t_context *ct)
 
 void		draw_2d(t_context *ct)
 {
+	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(ct->rend);
 	draw_cubes(ct);
 	draw_camera(ct);
+//	draw_ray(ct);
+
+}
+
+void	draw_ray(t_context *ct)
+{
+	SDL_Point    	pixel;
+	SDL_Point    	pixel2;
+	t_floatpoint	n;
+	t_floatpoint	wall_position;
+
+	n.x = ct->cam.cam_position.x;
+	n.y = ct->cam.cam_position.y;
+	pixel = convert_plan_to_pixel(n, ct);
+
+	wall_position = dda(ct);
+	if (wall_position.x != NO_WALL)
+	{
+		pixel2 = convert_plan_to_pixel(wall_position, ct);
+		SDL_SetRenderDrawColor(ct->rend, 226, 83, 83, SDL_ALPHA_OPAQUE);
+		SDL_RenderDrawLine(ct->rend, pixel.x, pixel.y, pixel2.x, pixel2.y);
+	}
 
 }
 
