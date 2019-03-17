@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-void		dda(t_context *ct)
+float		dda(t_context *ct)
 {
 	t_floatpoint 	ver_wall_p;
 	float			distance_ver_wall;
@@ -32,6 +32,7 @@ void		dda(t_context *ct)
 	if (hor_wall_p.x != NO_WALL)
 		distance_hor_wall = (ct->cam.cam_position.y - (float)hor_wall_p.y) / sin(convert_degree_to_radian(ct->cam.angle));
 	printf("distance_hor_wall:%f distance_ver_wall:%f\n", distance_hor_wall, distance_ver_wall);
+	return (distance_ver_wall < distance_hor_wall ? distance_ver_wall : distance_hor_wall);
 
 }
 

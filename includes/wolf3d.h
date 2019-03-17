@@ -21,7 +21,7 @@
 
 # define XWIN 900
 # define YWIN 600
-# define CUBESIZE 1.0
+# define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 
 typedef enum 		e_bool
@@ -77,13 +77,15 @@ void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
 SDL_Point			convert_plan_to_pixel(t_floatpoint n, t_context *ct);
-void				dda(t_context *ct);
+float				dda(t_context *ct);
 double				convert_degree_to_radian(double angle);
 float				tan_angle_abs(float angle);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct);
 t_floatpoint		vertical_first_delta_calcu(t_context *ct);
 t_floatpoint		vertial_wall_position_calcu(t_context *ct);
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct);
+void				draw_2d(t_context *ct);
+void				draw_cubes(t_context *ct);
 
 
 

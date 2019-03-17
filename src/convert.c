@@ -18,8 +18,8 @@ SDL_Point	convert_plan_to_pixel(t_floatpoint n, t_context *ct)
 {
 	SDL_Point	pixel;
 
-	pixel.x = XWIN * n.x / ((ct->mpp.x - 1) * CUBESIZE);
-	pixel.y = YWIN * n.y / ((ct->mpp.y - 1) * CUBESIZE);
+	pixel.x = XWIN * n.x / ((ct->mpp.x) * CUBESIZE);
+	pixel.y = YWIN * n.y / ((ct->mpp.y) * CUBESIZE);
 	return (pixel);
 }
 

@@ -23,7 +23,7 @@ void		loop(t_context *ct)
 		state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
 
 //----------------jie
-
+		draw_2d(ct);
 		//draw_background(ct);
 
 		//jie-------
@@ -34,3 +34,53 @@ void		loop(t_context *ct)
 	}
 }
 
+void		draw_2d(t_context *ct)
+{
+	draw_cubes(ct);
+
+}
+
+void	draw_cubes(t_context *ct)
+{
+	SDL_Rect		*rects;
+	int				count;
+	SDL_Point		pixel;
+	t_floatpoint	n;
+
+	count = ct->mpp.x * ct->mpp.y;
+	rects= (SDL_Rect*)malloc(sizeof(SDL_Rect) * count);  //remember to free later
+
+	int	i = 0;
+	int	j = 0;
+	while (j < ct->mpp.y)
+	{
+		while (i < ct->mpp.x)
+		{
+			n.x = (float)i;
+			n.y = (float)j;
+			pixel = convert_plan_to_pixel(n, ct);
+			rects[j * (ct->mpp.x) + i].x = pixel.x;
+			rects[j * (ct->mpp.x) + i].y = pixel.y;
+			rects[j * (ct->mpp.x) + i].w = XWIN / ct->mpp.x;
+			rects[j * (ct->mpp.x) + i].h = YWIN / ct->mpp.y;
+			i++;
+		}
+		printf("\n");
+		i = 0;
+		j++;
+	}
+
+	// while ( < count)
+	// {
+	// 	rects[i].x = pixel.x;
+	// 	rects[i].y = pixel.y;
+	// 	rects[i].w = XWIN / ct->mpp.x;
+	// 	rects[i].h = YWIN / ct->mpp.y;
+	// }
+
+
+
+	SDL_SetRenderDrawColor(ct->rend, 255, 255, 255, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawRects(ct->rend, rects, count);
+//	SDL_RenderDrawLines(ct->rend, points, count);
+}
