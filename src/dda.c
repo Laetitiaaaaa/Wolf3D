@@ -48,16 +48,16 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct)
 		d.x = ft_float_abs(ct->cam.cam_position.x - (float)(int)(ct->cam.cam_position.x));
 		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(ct->cam.angle)));
 	}
-	else if (ct->cam.angle == 90)
-	{
-		d.x = 0;
-		d.y = ct->cam.cam_position.y - (float)(int)(ct->cam.cam_position.y);
-	}
-	else if (ct->cam.angle == 270)
-	{
-		d.x = 0;
-		d.y = ((float)(int)(ct->cam.cam_position.y + 1)) - ct->cam.cam_position.y;
-	}
+	// else if (ct->cam.angle == 90)
+	// {
+	// 	d.x = 0;
+	// 	d.y = ct->cam.cam_position.y - (float)(int)(ct->cam.cam_position.y);
+	// }
+	// else if (ct->cam.angle == 270)
+	// {
+	// 	d.x = 0;
+	// 	d.y = ((float)(int)(ct->cam.cam_position.y + 1)) - ct->cam.cam_position.y;
+	// }
 	else
 	{
 		d.x = ft_float_abs(((float)(int)(ct->cam.cam_position.x + 1)) - ct->cam.cam_position.x);
@@ -115,6 +115,12 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 	to_int.y = (int)detect.y;
 
 	set_neg_posi(ct);
+	if ((ct->cam.angle == 90) || (ct->cam.angle == 270))
+	{
+		detect.x = NO_WALL;
+		detect.y = NO_WALL;
+		return(detect);
+	}
 	while (ct->mpp.map[to_int.y][to_int.x] == 0)
 	{
 		if (count == 0)
@@ -159,52 +165,4 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 
 
 
-t_floatpoint		horizontal_first_delta_calcu(t_context *ct)
-{
-	t_floatpoint	d2;
-	d2.y =  ct->cam.cam_position.y - (float)((int)(ct->cam.cam_position.y));
-	d2.x = d2.y / tan(convert_degree_to_radian(ct->cam.angle));
-	return (d2);
-}
 
-t_floatpoint		horizontal_wall_position_calcu(t_context *ct)
-{
-	t_floatpoint	ret;
-	t_floatpoint	d = horizontal_first_delta_calcu(ct);
-
-	ret.x = ct->cam.cam_position.x;
-	ret.y = ct->cam.cam_position.y;
-	int				count = 0;
-
-	int		int_x = (int)ret.x;
-	int		int_y = (int)ret.y;
-
-	while (ct->mpp.map[int_y - 1][int_x] == 0)  //attention for -1 here
-	{
-		if (count == 0)
-		{
-			ret.x = ret.x + d.x;
-			ret.y = ret.y - d.y;
-		//	printf("horizontal first round ret.x ret.y(%f, %f)\n", ret.x, ret.y);
-			count++;
-		}
-		else
-		{
-			ret.y = ret.y - CUBESIZE;
-			ret.x = ret.x + CUBESIZE / tan(convert_degree_to_radian(ct->cam.angle));
-		//	printf("horizontal second and later round ret.x ret.y(%f, %f)\n", ret.x, ret.y);
-		}
-		int_x = (int)ret.x;
-		int_y = (int)ret.y;
-		//printf("wall valeur:%d\n", ct->mpp.map[int_y][int_ret.x]);
-		if (ret.x > ct->mpp.x || ret.x < 0 || ret.y < 1 || ret.y > ct->mpp.y)
-		{
-			ret.x = NO_WALL;
-			ret.y = NO_WALL;
-			printf("horizontal There is no wall in this direction\n");
-			return(ret) ;
-		}
-	}
-	return (ret);
-	printf("horizontal wall found, wall position is (%f, %f)\n", ret.x, ret.y);
-}
