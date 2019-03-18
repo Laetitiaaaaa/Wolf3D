@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 09:06:38 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/15 18:48:40 by llejeune         ###   ########.fr       */
+/*   Updated: 2019/03/16 10:28:13 by llejeune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int					load_map(t_context *ct, const char *argv);
 int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
-
+void				ft_print_menu(t_context *ct);
 
 #endif
