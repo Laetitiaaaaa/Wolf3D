@@ -30,12 +30,12 @@ typedef enum 		e_bool
 	TRUE = 1,
 }					t_bool;
 
-// typedef enum 		e_neg_or_posi
-// {
-// 	NEGATIVE = -1,
-// 	POSITIVE = 1,
-// 	ZERO = 0,
-// }					t_neg_or_posi;
+typedef enum 		e_neg_or_posi
+{
+	NEGATIVE = -1,
+	POSITIVE = 1,
+	ZERO = 0,
+}					t_neg_or_posi;
 
 typedef struct		s_map_params
 {
@@ -44,6 +44,8 @@ typedef struct		s_map_params
 	int				ret;
 	float			d;
 	int				**map;
+//	int				z_max;
+//	int				z_min;
 }					t_map_params;
 
 typedef struct 		s_floatpoint
@@ -85,8 +87,7 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct);
 void				draw_2d(t_context *ct);
 void				draw_cubes(t_context *ct);
 void				draw_camera(t_context *ct);
-void				draw_ray(t_context *ct);
-void				draw_fill_cubes(t_context *ct, SDL_Point pixel);
+void	draw_ray(t_context *ct);
 
 
 
