@@ -45,22 +45,12 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct)
 
 	if (ct->cam.angle > 90 && ct->cam.angle < 270)
 	{
-		d.x = ft_float_abs(ct->cam.cam_position.x - (float)(int)(ct->cam.cam_position.x));
+		d.x = ct->cam.cam_position.x - (float)(int)(ct->cam.cam_position.x);
 		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(ct->cam.angle)));
 	}
-	// else if (ct->cam.angle == 90)
-	// {
-	// 	d.x = 0;
-	// 	d.y = ct->cam.cam_position.y - (float)(int)(ct->cam.cam_position.y);
-	// }
-	// else if (ct->cam.angle == 270)
-	// {
-	// 	d.x = 0;
-	// 	d.y = ((float)(int)(ct->cam.cam_position.y + 1)) - ct->cam.cam_position.y;
-	// }
 	else
 	{
-		d.x = ft_float_abs(((float)(int)(ct->cam.cam_position.x + 1)) - ct->cam.cam_position.x);
+		d.x = ((float)(int)(ct->cam.cam_position.x + 1)) - ct->cam.cam_position.x;
 		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(ct->cam.angle)));
 	}
 	return (d);
@@ -70,6 +60,8 @@ void		set_neg_posi(t_context *ct)
 {
 	while (ct->cam.angle >= 360)
 		ct->cam.angle = ct->cam.angle - 360;
+	while (ct->cam.angle < 0)
+		ct->cam.angle = ct->cam.angle + 360;
 	if ((ct->cam.angle > 0) && (ct->cam.angle < 90))
 	{
 		ct->cam.neg_posi.x = POSITIVE;
@@ -128,15 +120,11 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 			detect.x = detect.x + d.x * ct->cam.neg_posi.x;
 			detect.y = detect.y + d.y * ct->cam.neg_posi.y;
 			count++;
-			printf(" first round to_int x and y(%d, %d)   map[][] :%d\n", to_int.x, to_int.y, ct->mpp.map[to_int.y][to_int.x]);
-			printf(" first round detect x and y(%f, %f)\n",detect.x, detect.y);
-
 		}
 		else
 		{
 			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE;
 			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE * ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
-			printf(" other round to_int x and y(%d, %d)   map[][] :%d\n", to_int.x, to_int.y, ct->mpp.map[to_int.y][to_int.x]);
 
 		}
 		to_int.x = (int)detect.x;
@@ -145,10 +133,9 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 		{
 			to_int.x--;
 		}
-		if (detect.x > ct->mpp.x || detect.x < 0 || detect.y < 0 || detect.y > ct->mpp.y)
+		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y < 0 || detect.y > ct->mpp.y)
 		{
 			printf("detectx and detect y(%f, %f)\n", detect.x, detect.y);
-
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
 			printf("verrr There is no wall in this direction\n");
@@ -159,7 +146,6 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 	printf("angle:%f\n", ct->cam.angle );
 	printf("verrrr wall found, wall position is (%f, %f)\n", detect.x, detect.y);
 	printf("to_int x and y(%d, %d)   map[][] :%d\n", to_int.x, to_int.y, ct->mpp.map[to_int.y][to_int.x]);
-
 	return(detect);
 }
 
