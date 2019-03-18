@@ -22,7 +22,7 @@ INIT_PATH		= ./src/init/
 
 HEADER			= ./includes/wolf3d.h
 
-OBJ_PATH		= ./OBJ
+
 
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRC))			\
 					$(addprefix $(INIT_PATH), $(INIT_SRC))			\

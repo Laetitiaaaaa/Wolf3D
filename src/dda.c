@@ -86,43 +86,50 @@ void		set_neg_posi(t_context *ct)
 
 t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 {
-	t_floatpoint	ret;
-	ret.x = ct->cam.cam_position.x;
-	ret.y = ct->cam.cam_position.y;
+	t_floatpoint	detect;
+	detect.x = ct->cam.cam_position.x;
+	detect.y = ct->cam.cam_position.y;
 	t_floatpoint	d = vertical_first_delta_calcu(ct);
 	int				count = 0;
+	SDL_Point		to_int;
 
-	int		int_x = (int)ret.x;
-	int		int_y = (int)ret.y;
+	to_int.x = (int)detect.x;
+	to_int.y = (int)detect.y;
 
 	set_neg_posi(ct);
-	while (ct->mpp.map[int_y][int_x] == 0)
+	while (ct->mpp.map[to_int.y][to_int.x] == 0)
 	{
 		if (count == 0)
 		{
-			ret.x = ret.x + d.x * ct->cam.neg_posi.x;
-			ret.y = ret.y + d.y * ct->cam.neg_posi.y;
+			detect.x = detect.x + d.x * ct->cam.neg_posi.x;
+			detect.y = detect.y + d.y * ct->cam.neg_posi.y;
 			count++;
 		}
 		else
 		{
 			printf("neg_posi(%d %d)\n", ct->cam.neg_posi.x, ct->cam.neg_posi.y );
 			printf("angle:%f\n", ct->cam.angle );
-			ret.x = ret.x +  ct->cam.neg_posi.x * CUBESIZE;
-			ret.y = ret.y +  ct->cam.neg_posi.y * CUBESIZE * ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
+			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE;
+			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE * ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
 		}
-		int_x = (int)ret.x;
-		int_y = (int)ret.y;
-		if (ret.x > (ct->mpp.x) || ret.x < 0 || ret.y < 0 || ret.y > ct->mpp.y)
+		to_int.x = (int)detect.x;
+		to_int.y = (int)detect.y;
+		if ((ct->cam.angle > 90) && ((ct->cam.angle < 270)))
 		{
-			ret.x = NO_WALL;
-			ret.y = NO_WALL;
+			to_int.x--;
+		}
+		if (detect.x > ct->mpp.x || detect.x < 0 || detect.y < 0 || detect.y > ct->mpp.y)
+		{
+			printf("detectx and detect y(%f, %f)\n", detect.x, detect.y);
+
+			detect.x = NO_WALL;
+			detect.y = NO_WALL;
 			printf("verrr There is no wall in this direction\n");
-			return (ret);
+			return (detect);
 		}
 	}
-	printf("verrrr wall found, wall position is (%f, %f)\n", ret.x, ret.y);
-	return(ret);
+	printf("verrrr wall found, wall position is (%f, %f)\n", detect.x, detect.y);
+	return(detect);
 }
 
 
