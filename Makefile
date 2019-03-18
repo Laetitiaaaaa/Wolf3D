@@ -5,66 +5,73 @@
 #                                                     +:+ +:+         +:+      #
 #    By: llejeune <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/03/15 16:31:36 by llejeune          #+#    #+#              #
-#    Updated: 2019/03/15 16:33:19 by llejeune         ###   ########.fr        #
+#    Created: 2019/03/18 19:20:02 by llejeune          #+#    #+#              #
+#    Updated: 2019/03/18 20:05:23 by llejeune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= wolf3d
+NAME = wolf3d
 
-BASE_SRC		= main.c loop.c									\
+INC_DIR = $(shell find includes -type d) $(shell find libft -type d)
 
-INIT_SRC		= init.c map.c									\
+SRC_DIR = $(shell find srcs -type d)
 
-BASE_PATH		= ./src/
+OBJ_DIR = obj
 
-INIT_PATH		= ./src/init/
+SRC = loop.c \
+	  main.c \
+	  menu.c \
+	  init.c \
+	  map.c \
 
-HEADER			= ./includes/wolf3d.h
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
-OBJ_PATH		= ./OBJ
+LIBS = SDL2 SDL2_image ft
 
-SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRC))			\
-					$(addprefix $(INIT_PATH), $(INIT_SRC))			\
+LIB_DIR = ./libft \
+		  ./libraries/SDL2 \
+		  ./libraries/SDL2_image \
 
-INC				= -I ./includes -I ./libft -I ./libui/SDL2/
+FRAMEWORK = OpenGL AppKit
 
-GCC				= gcc
+CC = gcc
 
-FLAGS			= -Wall -Wextra -Werror
+vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
-OBJS			= $(addprefix $(OBJ), $(SRCS:.c=.o))
+IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
 
-MAKELIB			= make re -C libft/
+CFLAG = -Wall -Wextra -Werror
 
-LIBSDL			= -L ./libui -lSDL2 -lSDL2_image
+LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) )
 
-FRAME			= -framework OpenGL -framework AppKit
+all: $(NAME)
 
-LIBFTA			= libft/libft.a
+relib:
+	@make re -C libft
 
-all : $(NAME)
+$(NAME): $(OBJ)
+	@make -C libft
+	@echo "Compiling $(NAME) !"
+	@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(IFLAG) $(LFLAG)
 
-$(NAME): $(OBJS)
-	$(GCC) -o $@ `sdl2-config --cflags --libs` $(OBJS) $(LIBFTA) $(LIBSDL) $(FRAME) $(FLAGS)
-
-%.o: %.c $(HEADER) $(LIBFTA)
-	$(GCC) $(INC) -o $@ -c $< $(FLAGS)
-
-$(LIBFTA): FORCE
-	make -C ./libft
-
-FORCE:
+$(OBJ_DIR)/%.o: %.c
+	@mkdir $(OBJ_DIR) 2> /dev/null || true
+	@echo "Compiling $< ... \c"
+	@$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
+	@echo "DONE"
 
 clean:
-	rm -rf $(OBJS)
+	@make clean -C libft
+	@echo "Cleaning the project"
+	@rm -f $(OBJ)
 
-fclean: clean
-	rm -rf $(NAME)
+fclean:
+	@make clean
+	@echo "Fcleaning the project"
+	@rm $(NAME)
 
-re: fclean all
+re:
+	@make fclean
+	@echo "Restarting the compilation"
+	@make $(NAME)
 
-relibft:
-	$(MAKELIB)
-
-.PHONY: all clean fclean re
