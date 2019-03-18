@@ -58,7 +58,7 @@ typedef struct  	s_camera
 {
 	t_floatpoint	cam_position;
 	float			angle; // angle is between 0 and 360
-
+	SDL_Point		neg_posi;
 
 }					t_camera;
 
@@ -79,7 +79,6 @@ void				draw_background(t_context *ct);
 t_floatpoint		dda(t_context *ct);
 double				convert_degree_to_radian(double angle);
 SDL_Point			convert_plan_to_pixel(float x, float y, t_context *ct);
-float				tan_angle_abs(float angle);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct);
 t_floatpoint		vertical_first_delta_calcu(t_context *ct);
 t_floatpoint		vertial_wall_position_calcu(t_context *ct);
@@ -88,7 +87,7 @@ void				draw_2d(t_context *ct);
 void				draw_cubes(t_context *ct);
 void				draw_camera(t_context *ct);
 void	draw_ray(t_context *ct);
-
+void		set_neg_posi(t_context *ct);
 
 
 

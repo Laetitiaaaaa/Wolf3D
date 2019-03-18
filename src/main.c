@@ -31,7 +31,6 @@ int main(int argc, char const **argv)
 	}
 
 	init(&ct, argv[1]);
-	dda(&ct);
 
 
 	loop(&ct);

@@ -42,12 +42,47 @@ t_floatpoint		dda(t_context *ct)
 t_floatpoint		vertical_first_delta_calcu(t_context *ct)
 {
 	t_floatpoint	d;
-	d.x = ((float)(int)(ct->cam.cam_position.x + 1)) - ct->cam.cam_position.x;
-	d.y = d.x * tan(convert_degree_to_radian(ct->cam.angle));
 
+	d.x = ft_float_abs(((float)(int)(ct->cam.cam_position.x + 1)) - ct->cam.cam_position.x);
+	d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(ct->cam.angle)));
 	return (d);
 }
 
+void		set_neg_posi(t_context *ct)
+{
+	while (ct->cam.angle >= 360)
+		ct->cam.angle = ct->cam.angle - 360;
+	if ((ct->cam.angle > 0) && (ct->cam.angle < 90))
+	{
+		ct->cam.neg_posi.x = POSITIVE;
+		ct->cam.neg_posi.y = NEGATIVE;
+	}
+	if (ct->cam.angle == 90)
+	{
+		ct->cam.neg_posi.x = ZERO;
+		ct->cam.neg_posi.y = NEGATIVE;
+	}
+	if ((ct->cam.angle > 90) && (ct->cam.angle <= 180))
+	{
+		ct->cam.neg_posi.x = NEGATIVE;
+		ct->cam.neg_posi.y = NEGATIVE;
+	}
+	if ((ct->cam.angle > 180) && (ct->cam.angle < 270))
+	{
+		ct->cam.neg_posi.x = NEGATIVE;
+		ct->cam.neg_posi.y = POSITIVE;
+	}
+	if (ct->cam.angle == 270)
+	{
+		ct->cam.neg_posi.x = ZERO;
+		ct->cam.neg_posi.y = POSITIVE;
+	}
+	if ((ct->cam.angle > 270) && (ct->cam.angle < 360))
+	{
+		ct->cam.neg_posi.x = POSITIVE;
+		ct->cam.neg_posi.y = POSITIVE;
+	}
+}
 
 t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 {
@@ -60,18 +95,21 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 	int		int_x = (int)ret.x;
 	int		int_y = (int)ret.y;
 
+	set_neg_posi(ct);
 	while (ct->mpp.map[int_y][int_x] == 0)
 	{
 		if (count == 0)
 		{
-			ret.x = ret.x + d.x;
-			ret.y = ret.y - d.y;
+			ret.x = ret.x + d.x * ct->cam.neg_posi.x;
+			ret.y = ret.y + d.y * ct->cam.neg_posi.y;
 			count++;
 		}
 		else
 		{
-			ret.x = ret.x + CUBESIZE;
-			ret.y = ret.y - CUBESIZE * tan(convert_degree_to_radian(ct->cam.angle));
+			printf("neg_posi(%d %d)\n", ct->cam.neg_posi.x, ct->cam.neg_posi.y );
+			printf("angle:%f\n", ct->cam.angle );
+			ret.x = ret.x +  ct->cam.neg_posi.x * CUBESIZE;
+			ret.y = ret.y +  ct->cam.neg_posi.y * CUBESIZE * ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
 		}
 		int_x = (int)ret.x;
 		int_y = (int)ret.y;
