@@ -6,7 +6,7 @@
 #    By: llejeune <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/18 19:20:02 by llejeune          #+#    #+#              #
-#    Updated: 2019/03/19 12:20:59 by llejeune         ###   ########.fr        #
+#    Updated: 2019/03/19 16:10:55 by llejeune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,13 +59,15 @@ $(OBJ_DIR)/%.o: %.c
 
 clean:
 	@make clean -C libft
-	@echo "Cleaning the project"
-	@rm -f $(OBJ)
+	@echo "Cleaning the project ... \c"
+	@rm -rf $(OBJ_DIR)
+	@echo "DONE"
 
 fclean:
 	@make clean
-	@echo "Fcleaning the project"
+	@echo "Fcleaning the project ... \c"
 	@rm $(NAME)
+	@echo "DONE"
 
 re:
 	@make fclean
@@ -75,7 +77,8 @@ re:
 relib:
 	@make re -C libft
 
-image:
+image: ttf
+	@mkdir libraries 2> /dev/null || true
 	tar -xzf filetar/SDL2_image-2.0.4.tar.gz -C libraries
 	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/SDL2_image-2.0.4
 	make -C ./libraries/SDL2_image-2.0.4
@@ -84,4 +87,20 @@ image:
 	mv ./libraries/SDL2_image-2.0.4/lib/ ./libraries/SDL2_image
 	rm -rf ./libraries/SDL2_image-2.0.4
 
-ttf:
+ftype:
+	@mkdir libraries 2> /dev/null ||true
+	tar -xzf ./filetar/freetype-2.4.11.tar.gz -C libraries
+	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries/freetype-2.4.11
+	make -C ./libraries/freetype-2.4.11
+	make -C ./libraries/freetype-2.4.11 install
+	mv ./libraries/freetype-2.4.11 ./libraries/freetype
+
+ttf: ftype
+	@mkdir libraries 2> /dev/null ||true
+	tar -xzf ./filetar/SDL2_ttf-2.0.15.tar.gz -C libraries
+	cd libraries/SDL2_ttf-2.0.15 ; ./configure --prefix=$(shell pwd)/libraries/SDL2_ttf-2.0.15
+	make -C ./libraries/SDL2_ttf-2.0.15
+	make -C ./libraries/SDL2_ttf-2.0.15 install
+	mv ./libraries/SDL2_ttf-2.0.15/include/SDL2/SDL_ttf.h ./includes/
+	mv ./libraries/SDL2_ttf-2.0.15/lib ./libraries/SDL2_ttf
+	rm -rf ./libraries/SDL2_ttf-2.0.15

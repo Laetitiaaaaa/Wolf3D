@@ -20,7 +20,9 @@
 *.lib
 *.la
 *.lo
-libft.a
+*.a
+*.dylib
+
 
 # Shared objects (inc. Windows DLLs)
 *.dll
