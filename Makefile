@@ -23,6 +23,13 @@ SRC = loop.c \
 	  menu.c \
 	  init.c \
 	  map.c \
+	  convert.c \
+	  dda.c \
+	  dda_horizontalwall.c \
+	  init_event.c \
+	  draw_2d.c \
+	  draw_background.c \
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 

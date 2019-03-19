@@ -30,7 +30,7 @@ ft_itoa.c ft_putchar.c ft_putstr.c ft_putendl.c ft_putnbr.c ft_putchar_fd.c \
 ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_lstdelone.c \
 ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_lstcpy.c \
 ft_word_nbr_counter.c ft_lstlen.c ft_islower.c ft_isupper.c \
-get_next_line.c ft_aatoii.c ft_color_val_calculate.c \
+get_next_line.c ft_aatoii.c ft_color_val_calculate.c ft_float_abs.c  \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
@@ -65,7 +65,7 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "DONE"
 
-re: 
+re:
 	@make fclean
 	@echo "Restarting the compilation !"
 	@make all

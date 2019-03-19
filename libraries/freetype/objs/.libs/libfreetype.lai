@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/Users/llejeune/Desktop/wolf3D/libraries/freetype-2.4.11/lib'
+libdir='/Users/jleblond/wolf3d/libraries/freetype-2.4.11/lib'

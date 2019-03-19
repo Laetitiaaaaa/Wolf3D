@@ -1,4 +1,4 @@
-prefix=/Users/llejeune/Desktop/wolf3D/libraries/SDL2_ttf-2.0.15
+prefix=/Users/jleblond/wolf3d/libraries/SDL2_ttf-2.0.15
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

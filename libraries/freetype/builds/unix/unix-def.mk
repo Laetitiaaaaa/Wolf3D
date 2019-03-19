@@ -47,7 +47,7 @@ DISTCLEAN += $(OBJ_BUILD)/config.cache    \
 
 # Standard installation variables.
 #
-prefix       := /Users/llejeune/Desktop/wolf3D/libraries/freetype-2.4.11
+prefix       := /Users/jleblond/wolf3d/libraries/freetype-2.4.11
 exec_prefix  := ${prefix}
 libdir       := ${exec_prefix}/lib
 bindir       := ${exec_prefix}/bin
