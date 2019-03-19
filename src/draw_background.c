@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   draw_background.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/14 09:22:27 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/15 16:22:05 by llejeune         ###   ########.fr       */
+/*   Created: 2019/03/16 13:54:26 by jleblond          #+#    #+#             */
+/*   Updated: 2019/03/16 13:54:27 by jleblond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	quit(char *msg, t_context *ct)
+void		draw_background(t_context *ct)
 {
-	ft_putendl(msg);
-	(void)ct;
-	//codes to add :free the structure and all its contents here
-	exit(0);
-}
+	int		x;
+	int		y;
 
-int main(int argc, char const **argv)
-{
-	t_context	ct;
-
-	if (argc != 2)
+	x = 0;
+	y = 0;
+	SDL_SetRenderDrawColor(ct->rend, 21, 24, 30, 255);
+	while (y < YWIN / 2)
 	{
-		ft_putendl("Usage : ./wolf3d <map file name>");
-		return (0);
+		while (x < XWIN)
+		{
+			SDL_RenderDrawPoint(ct->rend, x, y);
+			x++;
+		}
+		x = 0;
+		y++;
 	}
-
-	init(&ct, argv[1]);
-
-
-	loop(&ct);
-
-	SDL_DestroyRenderer(ct.rend);
-	SDL_DestroyWindow(ct.window);
-	SDL_Quit();
-	return 0;
+	SDL_SetRenderDrawColor(ct->rend, 95, 99, 107, 255);
+	while (y >= YWIN / 2 && y < YWIN)
+	{
+		while (x < XWIN)
+		{
+			SDL_RenderDrawPoint(ct->rend, x, y);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
 }

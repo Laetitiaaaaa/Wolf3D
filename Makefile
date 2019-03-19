@@ -12,9 +12,9 @@
 
 NAME			= wolf3d
 
-BASE_SRC		= main.c loop.c									\
+BASE_SRC		= main.c loop.c convert.c dda.c	draw_background.c draw_2d.c dda_horizontalwall.c  \
 
-INIT_SRC		= init.c map.c									\
+INIT_SRC		= init.c map.c	init_event.c								\
 
 BASE_PATH		= ./src/
 
@@ -22,7 +22,7 @@ INIT_PATH		= ./src/init/
 
 HEADER			= ./includes/wolf3d.h
 
-OBJ_PATH		= ./OBJ
+
 
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRC))			\
 					$(addprefix $(INIT_PATH), $(INIT_SRC))			\
