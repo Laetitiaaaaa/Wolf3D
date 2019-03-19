@@ -6,7 +6,7 @@
 #    By: llejeune <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/18 19:20:02 by llejeune          #+#    #+#              #
-#    Updated: 2019/03/19 10:45:39 by llejeune         ###   ########.fr        #
+#    Updated: 2019/03/19 12:20:59 by llejeune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,6 @@ LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) 
 
 all: $(NAME)
 
-relib:
-	@make re -C libft
-
 $(NAME): $(OBJ)
 	@make -C libft
 	@echo "Compiling $(NAME) !"
@@ -75,3 +72,16 @@ re:
 	@echo "Restarting the compilation"
 	@make $(NAME)
 
+relib:
+	@make re -C libft
+
+image:
+	tar -xzf filetar/SDL2_image-2.0.4.tar.gz -C libraries
+	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/SDL2_image-2.0.4
+	make -C ./libraries/SDL2_image-2.0.4
+	make -C ./libraries/SDL2_image-2.0.4 install
+	mv ./libraries/SDL2_image-2.0.4/include/SDL2/SDL_image.h ./includes
+	mv ./libraries/SDL2_image-2.0.4/lib/ ./libraries/SDL2_image
+	rm -rf ./libraries/SDL2_image-2.0.4
+
+ttf:
