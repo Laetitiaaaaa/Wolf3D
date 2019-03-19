@@ -14,17 +14,12 @@
 
 void		loop(t_context *ct)
 {
-	Uint8		*state;
 
 	while (TRUE)
 	{
 		SDL_PollEvent(ct->ev);
-		state = (Uint8*)SDL_GetKeyboardState(NULL);
-		state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
-		state[SDL_SCANCODE_A] ? ct->cam.angle += 0.05 : 0;
-		state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.05 : 0;
-		state[SDL_SCANCODE_UP] ? ct->cam.cam_position.y += 0.1 : 0;
-		state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.05 : 0;
+
+		key_events(ct);
 
 //----------------jie
 		draw_2d(ct);
@@ -40,3 +35,16 @@ void		loop(t_context *ct)
 
 
 
+void	key_events(t_context *ct)
+{
+	Uint8	*state;
+
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
+	state[SDL_SCANCODE_A] ? ct->cam.angle += 0.05 : 0;
+	state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.05 : 0;
+	state[SDL_SCANCODE_UP] ? ct->cam.cam_position.y -= 0.005 : 0;
+	state[SDL_SCANCODE_DOWN] ? ct->cam.cam_position.y += 0.005 : 0;
+	state[SDL_SCANCODE_LEFT] ? ct->cam.cam_position.x -= 0.005 : 0;
+	state[SDL_SCANCODE_RIGHT] ? ct->cam.cam_position.x += 0.005 : 0;
+}

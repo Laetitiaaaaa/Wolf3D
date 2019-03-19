@@ -89,7 +89,7 @@ void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct);
 void				set_neg_posi(t_context *ct);
 void				init_set_initial_params(t_context *ct);
-
+void				key_events(t_context *ct);
 
 
 
