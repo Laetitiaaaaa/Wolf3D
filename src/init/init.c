@@ -64,7 +64,7 @@ int		init(t_context *ct, const char *argv)
 	// 	j++;
 	// }
 // ---------------------------------
-	init_set_initial_params(ct);
+	init_event(ct);
 	init_sdl(ct);
 
 	return (0);

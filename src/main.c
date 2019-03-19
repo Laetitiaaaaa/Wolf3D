@@ -35,7 +35,6 @@ int main(int argc, char const **argv)
 
 	loop(&ct);
 
-	SDL_Delay(10000);
 	SDL_DestroyRenderer(ct.rend);
 	SDL_DestroyWindow(ct.window);
 	SDL_Quit();

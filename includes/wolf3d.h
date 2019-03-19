@@ -44,8 +44,6 @@ typedef struct		s_map_params
 	int				ret;
 	float			d;
 	int				**map;
-//	int				z_max;
-//	int				z_min;
 }					t_map_params;
 
 typedef struct 		s_floatpoint
@@ -88,7 +86,7 @@ void				draw_cubes(t_context *ct);
 void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct);
 void				set_neg_posi(t_context *ct);
-void				init_set_initial_params(t_context *ct);
+void				init_event(t_context *ct);
 void				key_events(t_context *ct);
 
 

@@ -14,7 +14,7 @@ NAME			= wolf3d
 
 BASE_SRC		= main.c loop.c convert.c dda.c	draw_background.c draw_2d.c dda_horizontalwall.c  \
 
-INIT_SRC		= init.c map.c	init_set_initial_params.c								\
+INIT_SRC		= init.c map.c	init_event.c								\
 
 BASE_PATH		= ./src/
 
