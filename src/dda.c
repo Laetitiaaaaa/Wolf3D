@@ -19,10 +19,6 @@ t_floatpoint		dda(t_context *ct)
 	float			distance_ver;
 	float			distance_hor;
 
-
-
-
-
 	posi_ver = vertial_wall_position_calcu(ct);
 	posi_hor = horizontal_wall_position_calcu(ct);
 	distance_ver = ft_float_abs((((float)posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(ct->cam.angle)));
@@ -141,7 +137,4 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 	}
 	return(detect);
 }
-
-
-
 

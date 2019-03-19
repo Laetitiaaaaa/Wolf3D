@@ -23,6 +23,8 @@ void		loop(t_context *ct)
 		state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
 		state[SDL_SCANCODE_A] ? ct->cam.angle += 0.05 : 0;
 		state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.05 : 0;
+		state[SDL_SCANCODE_UP] ? ct->cam.cam_position.y += 0.1 : 0;
+		state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.05 : 0;
 
 //----------------jie
 		draw_2d(ct);
