@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 09:06:38 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/19 16:26:26 by llejeune         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:46:32 by llejeune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define WOLF3D_H
 
 # include <stdlib.h>
-# include <math.h>
 # include "libft.h"
-# include "SDL.h"
+# include <math.h>
+# include <SDL.h>
 # include <stdio.h>
 
 # define XWIN 500
@@ -76,7 +76,6 @@ int					load_map(t_context *ct, const char *argv);
 int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
-void				ft_print_menu(t_context *ct);
 void				draw_background(t_context *ct);
 t_floatpoint		dda(t_context *ct);
 double				convert_degree_to_radian(double angle);
@@ -92,5 +91,6 @@ void				draw_ray(t_context *ct);
 void				set_neg_posi(t_context *ct);
 void				init_event(t_context *ct);
 void				key_events(t_context *ct);
+void				print_menu(t_context *ct);
 
 #endif
