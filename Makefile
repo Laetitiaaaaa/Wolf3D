@@ -6,13 +6,13 @@
 #    By: llejeune <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/18 19:20:02 by llejeune          #+#    #+#              #
-#    Updated: 2019/03/18 20:05:23 by llejeune         ###   ########.fr        #
+#    Updated: 2019/03/19 10:45:39 by llejeune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = wolf3d
 
-INC_DIR = $(shell find includes -type d) $(shell find libft -type d)
+INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d)
 
 SRC_DIR = $(shell find srcs -type d)
 
@@ -29,7 +29,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 LIBS = SDL2 SDL2_image ft
 
 LIB_DIR = ./libft \
-		  ./libraries/SDL2 \
+		  ~/.brew/lib \
 		  ./libraries/SDL2_image \
 
 FRAMEWORK = OpenGL AppKit
