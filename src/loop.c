@@ -16,7 +16,6 @@ void		loop(t_context *ct)
 {
 	Uint8		*state;
 
-	ct->cam.angle = 10;
 	while (TRUE)
 	{
 		SDL_PollEvent(ct->ev);

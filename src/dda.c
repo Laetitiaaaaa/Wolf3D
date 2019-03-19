@@ -20,8 +20,7 @@ t_floatpoint		dda(t_context *ct)
 	float			distance_hor;
 
 
-	ct->cam.cam_position.x = 2.2;
-	ct->cam.cam_position.y = 2.2;
+
 
 
 	posi_ver = vertial_wall_position_calcu(ct);
@@ -135,17 +134,11 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 		}
 		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y < 0 || detect.y > ct->mpp.y)
 		{
-			printf("detectx and detect y(%f, %f)\n", detect.x, detect.y);
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
-			printf("verrr There is no wall in this direction\n");
 			return (detect);
 		}
 	}
-	printf("neg_posi(%d %d)\n", ct->cam.neg_posi.x, ct->cam.neg_posi.y );
-	printf("angle:%f\n", ct->cam.angle );
-	printf("verrrr wall found, wall position is (%f, %f)\n", detect.x, detect.y);
-	printf("to_int x and y(%d, %d)   map[][] :%d\n", to_int.x, to_int.y, ct->mpp.map[to_int.y][to_int.x]);
 	return(detect);
 }
 

@@ -86,8 +86,10 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct);
 void				draw_2d(t_context *ct);
 void				draw_cubes(t_context *ct);
 void				draw_camera(t_context *ct);
-void	draw_ray(t_context *ct);
-void		set_neg_posi(t_context *ct);
+void				draw_ray(t_context *ct);
+void				set_neg_posi(t_context *ct);
+void				init_set_initial_params(t_context *ct);
+
 
 
 

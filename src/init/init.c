@@ -49,21 +49,22 @@ int		init(t_context *ct, const char *argv)
 		return (0);
 	}
 /// ---------unleve les commentaires pour affichier le map
-	printf("mppx et mppy(%d, %d)\n", ct->mpp.x, ct->mpp.y);
-	int	i = 0;
-	int	j = 0;
-	while (j < ct->mpp.y)
-	{
-		while (i < ct->mpp.x)
-		{
-			printf("%d", ct->mpp.map[j][i]);
-			i++;
-		}
-		printf("\n");
-		i = 0;
-		j++;
-	}
+	// printf("mppx et mppy(%d, %d)\n", ct->mpp.x, ct->mpp.y);
+	// int	i = 0;
+	// int	j = 0;
+	// while (j < ct->mpp.y)
+	// {
+	// 	while (i < ct->mpp.x)
+	// 	{
+	// 		printf("%d", ct->mpp.map[j][i]);
+	// 		i++;
+	// 	}
+	// 	printf("\n");
+	// 	i = 0;
+	// 	j++;
+	// }
 // ---------------------------------
+	init_set_initial_params(ct);
 	init_sdl(ct);
 
 	return (0);

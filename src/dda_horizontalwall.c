@@ -55,14 +55,12 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct)
 		{
 			detect.x = detect.x + d.x * ct->cam.neg_posi.x;
 			detect.y = detect.y + d.y * ct->cam.neg_posi.y;
-	//		printf("horizontal first round detect.x detect.y(%f, %f)\n", detect.x, detect.y);
 			count++;
 		}
 		else
 		{
 			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE;
 			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE / ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
-//			printf(" horizontal other round to_int x and y(%d, %d)   map[][] :%d\n", to_int.x, to_int.y, ct->mpp.map[to_int.y][to_int.x]);
 		}
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
@@ -74,14 +72,8 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct)
 		{
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
-//			printf("horizontal There is no wall in this direction\n");
 			return(detect) ;
 		}
 	}
-	// printf("neg_posi(%d %d)\n", ct->cam.neg_posi.x, ct->cam.neg_posi.y );
-	// printf("angle:%f\n", ct->cam.angle );
-	// printf("horrrr wall found, wall position is (%f, %f)\n", detect.x, detect.y);
-	// printf("to_int x and y(%d, %d)   map[][] :%d\n", to_int.x, to_int.y, ct->mpp.map[to_int.y][to_int.x]);
 	return (detect);
-
 }
