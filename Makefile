@@ -6,15 +6,15 @@
 #    By: llejeune <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/15 16:31:36 by llejeune          #+#    #+#              #
-#    Updated: 2019/03/15 16:33:19 by llejeune         ###   ########.fr        #
+#    Updated: 2019/03/19 16:28:40 by llejeune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= wolf3d
 
-BASE_SRC		= main.c loop.c									\
+BASE_SRC		= main.c loop.c convert.c dda.c	draw_background.c draw_2d.c dda_horizontalwall.c  \
 
-INIT_SRC		= init.c map.c									\
+INIT_SRC		= init.c map.c	init_event.c								\
 
 BASE_PATH		= ./src/
 
@@ -22,7 +22,7 @@ INIT_PATH		= ./src/init/
 
 HEADER			= ./includes/wolf3d.h
 
-OBJ_PATH		= ./OBJ
+
 
 SRCS			=	$(addprefix $(BASE_PATH), $(BASE_SRC))			\
 					$(addprefix $(INIT_PATH), $(INIT_SRC))			\
@@ -31,7 +31,7 @@ INC				= -I ./includes -I ./libft -I ./libui/SDL2/
 
 GCC				= gcc
 
-FLAGS			= -Wall -Wextra -Werror
+FLAGS			= -Wall -Wextra -Werror 
 
 OBJS			= $(addprefix $(OBJ), $(SRCS:.c=.o))
 

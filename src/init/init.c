@@ -49,9 +49,8 @@ int		init(t_context *ct, const char *argv)
 		quit("error", ct);
 		return (0);
 	}
-
 /// ---------unleve les commentaires pour affichier le map
-
+	// printf("mppx et mppy(%d, %d)\n", ct->mpp.x, ct->mpp.y);
 	// int	i = 0;
 	// int	j = 0;
 	// while (j < ct->mpp.y)
@@ -66,6 +65,7 @@ int		init(t_context *ct, const char *argv)
 	// 	j++;
 	// }
 // ---------------------------------
+	init_event(ct);
 	init_sdl(ct);
 
 	return (0);

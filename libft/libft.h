@@ -115,5 +115,5 @@ int				ft_isupper(int c);
 ** [0, 10, 5]
 */
 int				*ft_aatoii(char **pptr);
-
+float			ft_float_abs(float x);
 #endif
