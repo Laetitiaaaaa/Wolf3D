@@ -20,7 +20,6 @@ OBJ_DIR = obj
 
 SRC = loop.c \
 	  main.c \
-	  menu.c \
 	  init.c \
 	  map.c \
 	  convert.c \
