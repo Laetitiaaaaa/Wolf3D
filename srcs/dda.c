@@ -120,7 +120,8 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 		else
 		{
 			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE;
-			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE * ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
+			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE
+			* ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
 
 		}
 		to_int.x = (int)detect.x;
