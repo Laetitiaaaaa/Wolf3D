@@ -12,17 +12,17 @@
 
 #include "wolf3d.h"
 
-t_floatpoint		dda(t_context *ct)
+t_floatpoint		dda(t_context *ct, float angle)
 {
 	t_floatpoint 	posi_ver;
 	t_floatpoint 	posi_hor;
 	float			distance_ver;
 	float			distance_hor;
 
-	posi_ver = vertial_wall_position_calcu(ct);
-	posi_hor = horizontal_wall_position_calcu(ct);
-	distance_ver = ft_float_abs((((float)posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(ct->cam.angle)));
-	distance_hor = ft_float_abs((ct->cam.cam_position.y - (float)posi_hor.y) / sin(convert_degree_to_radian(ct->cam.angle)));
+	posi_ver = vertial_wall_position_calcu(ct, angle);
+	posi_hor = horizontal_wall_position_calcu(ct, angle);
+	distance_ver = ft_float_abs((((float)posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
+	distance_hor = ft_float_abs((ct->cam.cam_position.y - (float)posi_hor.y) / sin(convert_degree_to_radian(angle)));
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (posi_ver);
 	else if (posi_ver.x == NO_WALL)
@@ -34,66 +34,66 @@ t_floatpoint		dda(t_context *ct)
 }
 
 
-t_floatpoint		vertical_first_delta_calcu(t_context *ct)
+t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	d;
 
-	if (ct->cam.angle > 90 && ct->cam.angle < 270)
+	if (angle > 90 && angle < 270)
 	{
 		d.x = ct->cam.cam_position.x - (float)(int)(ct->cam.cam_position.x);
-		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(ct->cam.angle)));
+		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(angle)));
 	}
 	else
 	{
 		d.x = ((float)(int)(ct->cam.cam_position.x + 1)) - ct->cam.cam_position.x;
-		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(ct->cam.angle)));
+		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(angle)));
 	}
 	return (d);
 }
 
-void		set_neg_posi(t_context *ct)
+void		set_neg_posi(t_context *ct, float angle)
 {
-	while (ct->cam.angle >= 360)
-		ct->cam.angle = ct->cam.angle - 360;
-	while (ct->cam.angle < 0)
-		ct->cam.angle = ct->cam.angle + 360;
-	if ((ct->cam.angle > 0) && (ct->cam.angle < 90))
+	while (angle >= 360)
+		angle = angle - 360;
+	while (angle < 0)
+		angle = angle + 360;
+	if ((angle > 0) && (angle < 90))
 	{
 		ct->cam.neg_posi.x = POSITIVE;
 		ct->cam.neg_posi.y = NEGATIVE;
 	}
-	if (ct->cam.angle == 90)
+	if (angle == 90)
 	{
 		ct->cam.neg_posi.x = ZERO;
 		ct->cam.neg_posi.y = NEGATIVE;
 	}
-	if ((ct->cam.angle > 90) && (ct->cam.angle <= 180))
+	if ((angle > 90) && (angle <= 180))
 	{
 		ct->cam.neg_posi.x = NEGATIVE;
 		ct->cam.neg_posi.y = NEGATIVE;
 	}
-	if ((ct->cam.angle > 180) && (ct->cam.angle < 270))
+	if ((angle > 180) && (angle < 270))
 	{
 		ct->cam.neg_posi.x = NEGATIVE;
 		ct->cam.neg_posi.y = POSITIVE;
 	}
-	if (ct->cam.angle == 270)
+	if (angle == 270)
 	{
 		ct->cam.neg_posi.x = ZERO;
 		ct->cam.neg_posi.y = POSITIVE;
 	}
-	if ((ct->cam.angle > 270) && (ct->cam.angle < 360))
+	if ((angle > 270) && (angle < 360))
 	{
 		ct->cam.neg_posi.x = POSITIVE;
 		ct->cam.neg_posi.y = POSITIVE;
 	}
 }
 
-t_floatpoint			vertial_wall_position_calcu(t_context *ct)
+t_floatpoint			vertial_wall_position_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	detect;
 
-	t_floatpoint	d = vertical_first_delta_calcu(ct);
+	t_floatpoint	d = vertical_first_delta_calcu(ct, angle);
 	int				count = 0;
 	SDL_Point		to_int;
 
@@ -102,8 +102,8 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 	to_int.x = (int)detect.x;
 	to_int.y = (int)detect.y;
 
-	set_neg_posi(ct);
-	if ((ct->cam.angle == 90) || (ct->cam.angle == 270))
+	set_neg_posi(ct, angle);
+	if ((angle == 90) || (angle == 270))
 	{
 		detect.x = NO_WALL;
 		detect.y = NO_WALL;
@@ -121,12 +121,12 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 		{
 			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE;
 			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE
-			* ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
+			* ft_float_abs(tan(convert_degree_to_radian(angle)));
 
 		}
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
-		if (ct->cam.angle > 90 && ct->cam.angle < 270)
+		if (angle > 90 && angle < 270)
 			to_int.x--;
 		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y < 0 || detect.y > ct->mpp.y)
 		{

@@ -12,27 +12,27 @@
 
 #include "wolf3d.h"
 
-t_floatpoint		horizontal_first_delta_calcu(t_context *ct)
+t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	d;
 
-	if (ct->cam.angle > 0 && ct->cam.angle < 180)
+	if (angle > 0 && angle < 180)
 	{
 		d.y = ct->cam.cam_position.y -(float)(int)(ct->cam.cam_position.y);
-		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(ct->cam.angle)));
+		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(angle)));
 	}
 	else
 	{
 		d.y = (float)(int)(ct->cam.cam_position.y) + 1 - ct->cam.cam_position.y;
-		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(ct->cam.angle)));
+		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(angle)));
 	}
 	return (d);
 }
 
-t_floatpoint		horizontal_wall_position_calcu(t_context *ct)
+t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	detect;
-	t_floatpoint	d = horizontal_first_delta_calcu(ct);
+	t_floatpoint	d = horizontal_first_delta_calcu(ct, angle);
 
 	detect.x = ct->cam.cam_position.x;
 	detect.y = ct->cam.cam_position.y;
@@ -42,8 +42,8 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct)
 	to_int.x = (int)detect.x;
 	to_int.y = (int)detect.y;
 
-	set_neg_posi(ct);
-	if ((ct->cam.angle == 0) || (ct->cam.angle == 180))
+	set_neg_posi(ct, angle);
+	if ((angle == 0) || (angle == 180))
 	{
 		detect.x = NO_WALL;
 		detect.y = NO_WALL;
@@ -60,11 +60,11 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct)
 		else
 		{
 			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE;
-			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE / ft_float_abs(tan(convert_degree_to_radian(ct->cam.angle)));
+			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE / ft_float_abs(tan(convert_degree_to_radian(angle)));
 		}
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
-		if (ct->cam.angle > 0 && ct->cam.angle < 180)
+		if (angle > 0 && angle < 180)
 		{
 			to_int.y--;
 		}

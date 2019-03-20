@@ -14,21 +14,29 @@
 
 void		draw_2d(t_context *ct)
 {
+	float angle;
+
 	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(ct->rend);
 	draw_cubes(ct);
 	draw_camera(ct);
-	draw_ray(ct);
-
+	draw_ray(ct, ct->cam.angle);
+	angle = ct->cam.angle;
+	draw_ray(ct, angle);
+	while (angle <= (ct->cam.angle + 30))
+	{
+		angle += 30 / 30;
+		draw_ray(ct, angle);
+	}
 }
 
-void	draw_ray(t_context *ct)
+void	draw_ray(t_context *ct, float angle)
 {
 	SDL_Point    	pix_cam;
 	SDL_Point    	pix_wall;
 	t_floatpoint	wall_p;
 
-	wall_p = dda(ct);
+	wall_p = dda(ct, angle);
 	if (wall_p.x == NO_WALL)
 		return ;
 	pix_cam = convert_plan_to_pixel(ct->cam.cam_position.x, ct->cam.cam_position.y, ct);
