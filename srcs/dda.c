@@ -92,12 +92,13 @@ void		set_neg_posi(t_context *ct)
 t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 {
 	t_floatpoint	detect;
-	detect.x = ct->cam.cam_position.x;
-	detect.y = ct->cam.cam_position.y;
+
 	t_floatpoint	d = vertical_first_delta_calcu(ct);
 	int				count = 0;
 	SDL_Point		to_int;
 
+	detect.x = ct->cam.cam_position.x;
+	detect.y = ct->cam.cam_position.y;
 	to_int.x = (int)detect.x;
 	to_int.y = (int)detect.y;
 
@@ -125,9 +126,7 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct)
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
 		if (ct->cam.angle > 90 && ct->cam.angle < 270)
-		{
 			to_int.x--;
-		}
 		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y < 0 || detect.y > ct->mpp.y)
 		{
 			detect.x = NO_WALL;
