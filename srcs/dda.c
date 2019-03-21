@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 13:11:24 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/16 13:11:26 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/03/21 19:27:18 by llejeune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ t_floatpoint		dda(t_context *ct, float angle)
 {
 	t_floatpoint 	posi_ver;
 	t_floatpoint 	posi_hor;
-	float			distance_ver;
-	float			distance_hor;
 
 	posi_ver = vertial_wall_position_calcu(ct, angle);
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
-	distance_ver = ft_float_abs((((float)posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
-	distance_hor = ft_float_abs((ct->cam.cam_position.y - (float)posi_hor.y) / sin(convert_degree_to_radian(angle)));
+	ct->distance_ver = ft_float_abs((((float)posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
+	ct->distance_hor = ft_float_abs((ct->cam.cam_position.y - (float)posi_hor.y) / sin(convert_degree_to_radian(angle)));
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (posi_ver);
 	else if (posi_ver.x == NO_WALL)
@@ -30,7 +28,7 @@ t_floatpoint		dda(t_context *ct, float angle)
 	else if (posi_hor.x == NO_WALL)
 		return (posi_ver);
 	else
-		return(distance_ver < distance_hor ? posi_ver : posi_hor);
+		return(ct->distance_ver < ct->distance_hor ? posi_ver : posi_hor);
 }
 
 

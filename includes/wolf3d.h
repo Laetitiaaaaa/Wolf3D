@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 09:06:38 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/14 09:08:52 by jleblond         ###   ########.fr       */
+/*   Updated: 2019/03/21 19:28:08 by llejeune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ typedef struct		s_context
 	SDL_Renderer	*rend;
 	SDL_Event		*ev;
 	t_camera		cam;
+	float			distance_ver;
+	float			distance_hor;
+	float			distance;
+	SDL_Point		pixel;
 }					t_context;
 
 int					load_map(t_context *ct, const char *argv);
@@ -88,8 +92,8 @@ void				draw_ray(t_context *ct, float angle);
 void				set_neg_posi(t_context *ct, float angle);
 void				init_event(t_context *ct);
 void				key_events(t_context *ct);
-
-
+void				draw_line_wall(t_context *ct, float angle);
+void				draw_wall(t_context *ct);
 
 
 
