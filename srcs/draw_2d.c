@@ -24,14 +24,13 @@ void		draw_2d(t_context *ct)
 	angle = ct->cam.angle;
 	while (angle <= (ct->cam.angle + 30.0))
 	{
-		angle += 30.0 / 100.0;
+		angle += 30.0 / 500.0;
 		draw_ray(ct, angle);
 	}
 	angle = ct->cam.angle;
 	while (angle >= ct->cam.angle - 30.0)
 	{
-		angle -= 30.0 / 100.0;
-
+		angle -= 30.0 / 500.0;
 		draw_ray(ct, angle);
 	}
 
@@ -40,12 +39,10 @@ void		draw_2d(t_context *ct)
 void	draw_wall(t_context *ct)
 {
 	float	angle;
-	float	angle2;
 
 	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(ct->rend);
 	angle = ct->cam.angle;
-	angle2 = ct->cam.angle;
 	ct->pixel.x = XWIN / 2;
 	draw_line_wall(ct, angle);
 	while (angle <= (ct->cam.angle + 30))
@@ -55,12 +52,13 @@ void	draw_wall(t_context *ct)
 		draw_line_wall(ct, angle);
 
 	}
+	angle = ct->cam.angle;
 	ct->pixel.x = XWIN / 2;
-	while (angle2 >= (ct->cam.angle - 30))
+	while (angle >= (ct->cam.angle - 30))
 	{
 		ct->pixel.x--;
-		angle2 -= 30.0 / 500.0;
-		draw_line_wall(ct, angle2);
+		angle -= 30.0 / 500.0;
+		draw_line_wall(ct, angle);
 	}
 }
 
@@ -70,11 +68,14 @@ void	draw_line_wall(t_context *ct, float angle)
 	int		h;
 	int		H;
 	int		i;
+	t_floatpoint 	val;
 
 	i = 0;
 	D = 200;
-	h = 4;
-	dda(ct, angle);
+	h = 2;
+	val = dda(ct, angle);
+	if (val.x == NO_WALL)
+		return ;
 	ct->distance_ver < ct->distance_hor ? (ct->distance = ct->distance_ver) : (ct->distance = ct->distance_hor);
 	H = (D * h) / ct->distance;
 	ct->pixel.y = YWIN / 2;
@@ -141,6 +142,10 @@ void	draw_cubes(t_context *ct)
 	i = 0;
 	j = 0;
 	rects= (SDL_Rect*)malloc(sizeof(SDL_Rect) * ct->mpp.x * ct->mpp.y);  //free malloc code not written yet
+	if (rects == NULL)
+	{
+		quit("malloc in function drawcubes failed", ct);
+	}
 	while (j < ct->mpp.y)
 	{
 		while (i < ct->mpp.x)

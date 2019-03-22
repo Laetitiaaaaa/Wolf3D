@@ -21,15 +21,10 @@ void		loop(t_context *ct)
 
 		key_events(ct);
 
-//----------------jie
-		draw_2d(ct);
 		//draw_background(ct);
-//		draw_wall(ct);
+//			draw_2d(ct);
+			draw_wall(ct);
 
-		//jie-------
-//----------------laeti
-
-		//----------------laeti-------
 		SDL_RenderPresent(ct->rend);
 	}
 }
