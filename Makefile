@@ -46,7 +46,7 @@ vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
 IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
 
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -Wall -Wextra -Werror -g -fsanitize=address
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) )
 
