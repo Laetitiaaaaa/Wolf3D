@@ -90,14 +90,15 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertial_wall_position_calcu(t_context *ct, float angle);
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle);
 void				draw_2d(t_context *ct);
-void	key_events(t_context *ct, Uint8 *state);
-
+void				key_events(t_context *ct, Uint8 *state);
 void				draw_cubes(t_context *ct);
 void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_event(t_context *ct);
-void	choose_interface(t_context *ct);
+void				choose_interface(t_context *ct);
+void	draw_wall(t_context *ct);
+void	draw_line_wall(t_context *ct, float angle);
 
 
 
