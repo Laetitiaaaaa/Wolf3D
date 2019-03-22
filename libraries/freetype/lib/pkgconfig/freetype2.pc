@@ -1,4 +1,4 @@
-prefix=/Users/jleblond/wolf3d/libraries/freetype-2.4.11
+prefix=/Users/air/projets/wolf3d/libraries/freetype
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
