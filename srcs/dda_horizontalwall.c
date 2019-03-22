@@ -16,6 +16,7 @@ t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	d;
 
+	angle = set_neg_posi(ct, angle);
 	if (angle > 0 && angle < 180)
 	{
 		d.y = ct->cam.cam_position.y -(float)(int)(ct->cam.cam_position.y);
@@ -42,7 +43,7 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle)
 	to_int.x = (int)detect.x;
 	to_int.y = (int)detect.y;
 
-	set_neg_posi(ct, angle);
+	angle = set_neg_posi(ct, angle);
 	if ((angle == 0) || (angle == 180))
 	{
 		detect.x = NO_WALL;
@@ -53,14 +54,14 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle)
 	{
 		if (count == 0)
 		{
-			detect.x = detect.x + d.x * ct->cam.neg_posi.x;
-			detect.y = detect.y + d.y * ct->cam.neg_posi.y;
+			detect.x += d.x * ct->cam.neg_posi.x;
+			detect.y += d.y * ct->cam.neg_posi.y;
 			count++;
 		}
 		else
 		{
-			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE;
-			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE / ft_float_abs(tan(convert_degree_to_radian(angle)));
+			detect.y += ct->cam.neg_posi.y * CUBESIZE;
+			detect.x += ct->cam.neg_posi.x * CUBESIZE / ft_float_abs(tan(convert_degree_to_radian(angle)));
 		}
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;

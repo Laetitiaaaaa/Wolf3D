@@ -22,10 +22,9 @@ void		draw_2d(t_context *ct)
 	draw_camera(ct);
 	draw_ray(ct, ct->cam.angle);
 	angle = ct->cam.angle;
-	draw_ray(ct, angle);
 	while (angle <= (ct->cam.angle + 30))
 	{
-		angle += 30 / 30;
+		angle += 30 / 10;
 		draw_ray(ct, angle);
 	}
 }

@@ -38,6 +38,7 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	d;
 
+	angle = set_neg_posi(ct, angle);
 	if (angle > 90 && angle < 270)
 	{
 		d.x = ct->cam.cam_position.x - (float)(int)(ct->cam.cam_position.x);
@@ -51,7 +52,7 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle)
 	return (d);
 }
 
-void		set_neg_posi(t_context *ct, float angle)
+float 	set_neg_posi(t_context *ct, float angle)
 {
 	while (angle >= 360)
 		angle = angle - 360;
@@ -87,6 +88,7 @@ void		set_neg_posi(t_context *ct, float angle)
 		ct->cam.neg_posi.x = POSITIVE;
 		ct->cam.neg_posi.y = POSITIVE;
 	}
+	return (angle);
 }
 
 t_floatpoint			vertial_wall_position_calcu(t_context *ct, float angle)
@@ -102,7 +104,7 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct, float angle)
 	to_int.x = (int)detect.x;
 	to_int.y = (int)detect.y;
 
-	set_neg_posi(ct, angle);
+	angle = set_neg_posi(ct, angle);
 	if ((angle == 90) || (angle == 270))
 	{
 		detect.x = NO_WALL;
@@ -113,16 +115,15 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct, float angle)
 	{
 		if (count == 0)
 		{
-			detect.x = detect.x + d.x * ct->cam.neg_posi.x;
-			detect.y = detect.y + d.y * ct->cam.neg_posi.y;
+			detect.x += d.x * ct->cam.neg_posi.x;
+			detect.y += d.y * ct->cam.neg_posi.y;
 			count++;
+
 		}
 		else
 		{
-			detect.x = detect.x +  ct->cam.neg_posi.x * CUBESIZE;
-			detect.y = detect.y +  ct->cam.neg_posi.y * CUBESIZE
-			* ft_float_abs(tan(convert_degree_to_radian(angle)));
-
+			detect.x += ct->cam.neg_posi.x * CUBESIZE;
+			detect.y += ct->cam.neg_posi.y * CUBESIZE * ft_float_abs(tan(convert_degree_to_radian(angle)));
 		}
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
