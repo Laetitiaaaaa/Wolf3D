@@ -141,6 +141,10 @@ void	draw_cubes(t_context *ct)
 	i = 0;
 	j = 0;
 	rects= (SDL_Rect*)malloc(sizeof(SDL_Rect) * ct->mpp.x * ct->mpp.y);  //free malloc code not written yet
+	if (rects == NULL)
+	{
+		quit("malloc in function drawcubes failed", ct);
+	}
 	while (j < ct->mpp.y)
 	{
 		while (i < ct->mpp.x)

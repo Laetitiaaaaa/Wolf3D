@@ -127,7 +127,7 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct, float angle)
 		to_int.y = (int)detect.y;
 		if (angle > 90 && angle < 270)
 			to_int.x--;
-		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y < 0 || detect.y > ct->mpp.y)
+		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y <= 0 || detect.y >= ct->mpp.y)
 		{
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
