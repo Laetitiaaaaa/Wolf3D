@@ -69,7 +69,7 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle)
 		{
 			to_int.y--;
 		}
-		if (detect.x > ct->mpp.x || detect.x < 0 || detect.y < 1 || detect.y > ct->mpp.y - 1)
+		if (detect.x >= ct->mpp.x || detect.x <= 0 || detect.y < 1 || detect.y > ct->mpp.y - 1)
 		{
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
