@@ -52,12 +52,10 @@ void	choose_interface(t_context *ct)
 
 	if (ct->choose_inter == MAP)
 	{
-		printf("MAP%d\n", MAP);
 		draw_2d(ct);
 	}
 	if (ct->choose_inter == GAME)
 	{
-		printf("GAME%d\n", GAME);
 		draw_background(ct);
 	}
 
