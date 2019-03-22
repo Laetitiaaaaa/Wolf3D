@@ -21,8 +21,21 @@ void		loop(t_context *ct)
 		SDL_PollEvent(ct->ev);
 		state = (Uint8*)SDL_GetKeyboardState(NULL);
 		key_events(ct, state);
+		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
+		SDL_RenderClear(ct->rend);
+		choose_interface(ct);
+
 		if (state[SDL_SCANCODE_C])
-			choose_interface(ct);
+		{
+			//ct->choose_inter += 1;
+			ct->choose_inter = MAP;
+		}
+		if (state[SDL_SCANCODE_V])
+		{
+			// ct->choose_inter -= 1;
+			ct->choose_inter = GAME;
+		}
+
 //----------------jie
 		//draw_background(ct);
 
@@ -36,10 +49,15 @@ void		loop(t_context *ct)
 
 void	choose_interface(t_context *ct)
 {
+
 	if (ct->choose_inter == MAP)
+	{
+		printf("MAP%d\n", MAP);
 		draw_2d(ct);
+	}
 	if (ct->choose_inter == GAME)
 	{
+		printf("GAME%d\n", GAME);
 		draw_background(ct);
 	}
 
