@@ -6,7 +6,7 @@
 /*   By: jleblond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:27:53 by jleblond          #+#    #+#             */
-/*   Updated: 2019/03/15 16:30:47 by llejeune         ###   ########.fr       */
+/*   Updated: 2019/03/21 19:32:32 by llejeune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void		loop(t_context *ct)
 		key_events(ct);
 
 //----------------jie
-		draw_2d(ct);
+//		draw_2d(ct);
 		//draw_background(ct);
+		draw_wall(ct);
 
 		//jie-------
 //----------------laeti
