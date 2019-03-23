@@ -12,7 +12,6 @@
 
 NAME = wolf3d
 
-
 INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d)
 
 SRC_DIR = $(shell find srcs -type d)
