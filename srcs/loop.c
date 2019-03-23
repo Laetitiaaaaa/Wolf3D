@@ -14,15 +14,33 @@
 
 void		loop(t_context *ct)
 {
+	Uint8	*state;
 
 	while (TRUE)
 	{
 		SDL_PollEvent(ct->ev);
+		state = (Uint8*)SDL_GetKeyboardState(NULL);
+		key_events(ct, state);
+		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
+		SDL_RenderClear(ct->rend);
+		choose_interface(ct);
 
-		key_events(ct);
+		if (state[SDL_SCANCODE_C])
+		{
+			//ct->choose_inter += 1;
+			ct->choose_inter = MAP;
+		}
+		if (state[SDL_SCANCODE_V])
+		{
+			// ct->choose_inter -= 1;
+			ct->choose_inter = GAME;
+		}
 
 //----------------jie
+<<<<<<< HEAD
 //		draw_2d(ct);
+=======
+>>>>>>> jie
 		//draw_background(ct);
 		draw_wall(ct);
 
@@ -34,13 +52,26 @@ void		loop(t_context *ct)
 	}
 }
 
-
-
-void	key_events(t_context *ct)
+void	choose_interface(t_context *ct)
 {
-	Uint8	*state;
 
-	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	if (ct->choose_inter == MAP)
+	{
+		draw_2d(ct);
+	}
+	if (ct->choose_inter == GAME)
+	{
+		draw_background(ct);
+	}
+
+}
+
+
+
+void	key_events(t_context *ct, Uint8 *state)
+{
+
+
 	state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
 	state[SDL_SCANCODE_A] ? ct->cam.angle += 0.1 : 0;
 	state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.1 : 0;
