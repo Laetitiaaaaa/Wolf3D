@@ -35,7 +35,6 @@ void		loop(t_context *ct)
 			ct->choose_inter = GAME;
 		}
 
-
 		SDL_RenderPresent(ct->rend);
 	}
 }

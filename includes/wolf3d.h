@@ -100,7 +100,6 @@ void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_event(t_context *ct);
-void				key_events(t_context *ct);
 void				draw_line_wall(t_context *ct, float angle);
 void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
