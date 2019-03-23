@@ -71,7 +71,7 @@ void	draw_line_wall(t_context *ct, float angle)
 	t_floatpoint 	val;
 
 	i = 0;
-	D = 200;
+	D = 100;
 	h = 2;
 	val = dda(ct, angle);
 	if (val.x == NO_WALL)
