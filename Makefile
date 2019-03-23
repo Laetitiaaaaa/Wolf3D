@@ -29,7 +29,7 @@ SRC = loop.c \
 	  draw_2d.c \
 	  draw_3d.c \
 	  draw_background.c \
-
+	  menu.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
