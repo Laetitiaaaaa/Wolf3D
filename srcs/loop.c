@@ -31,15 +31,6 @@ void		loop(t_context *ct)
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(ct->rend);
 		choose_interface(ct);
-		key_events(ct, state);
-		if (state[SDL_SCANCODE_C])
-		{
-			ct->choose_inter = MAP;
-		}
-		if (state[SDL_SCANCODE_V])
-		{
-			ct->choose_inter = GAME;
-		}
 		SDL_RenderPresent(ct->rend);
 	}
 }
