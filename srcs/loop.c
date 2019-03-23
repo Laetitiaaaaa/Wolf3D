@@ -24,18 +24,13 @@ void		loop(t_context *ct)
 		while (SDL_PollEvent(&event))
 		{
 			if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
-			{
 				ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
-			}
 
 		}
-
 		key_events(ct, state);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(ct->rend);
 		choose_interface(ct);
-
-
 		SDL_RenderPresent(ct->rend);
 	}
 }
@@ -51,7 +46,10 @@ void	choose_interface(t_context *ct)
 	{
 		draw_background(ct);
 	}
-
+	// if (ct->choose_inter == MENU)
+	// {
+	// 	print_menu(ct);
+	// }
 }
 
 
