@@ -12,6 +12,7 @@
 
 NAME = wolf3d
 
+
 INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d)
 
 SRC_DIR = $(shell find srcs -type d)
@@ -44,69 +45,71 @@ CC = gcc
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
-IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
+IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) -I libraries/dist/include -I /usr/local/Cellar/sdl2/2.0.9/include/SDL2
 
 CFLAG = -Wall -Wextra -Werror -g -fsanitize=address
 
-LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) )
+LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
+  -L /usr/local/Cellar/sdl2/2.0.9/lib \
+  -L libraries/dist/lib
+
 
 all: $(NAME)
 
+
 $(NAME): $(OBJ)
-	@make -C libft
-	@echo "Compiling $(NAME) !"
-	@$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(IFLAG) $(LFLAG)
+	make -C libft
+	$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG)
 
 $(OBJ_DIR)/%.o: %.c
-	@mkdir $(OBJ_DIR) 2> /dev/null || true
-	@echo "Compiling $< ... \c"
-	@$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
-	@echo "DONE"
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
 
 clean:
-	@make clean -C libft
+	make clean -C libft
 	@echo "Cleaning the project ... \c"
-	@rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR)
 	@echo "DONE"
 
-fclean:
-	@make clean
+fclean: clean
 	@echo "Fcleaning the project ... \c"
-	@rm $(NAME)
+	rm $(NAME)
 	@echo "DONE"
 
-re:
-	@make fclean
+re: fclean
 	@echo "Restarting the compilation"
-	@make $(NAME)
+	make $(NAME)
 
 relib:
-	@make re -C libft
+	make re -C libft
 
-image: ttf
-	@mkdir libraries 2> /dev/null || true
+image: libraries/dist/lib/libSDL2_image.dylib
+
+libraries/dist/lib/libSDL2_image.dylib: libraries/dist/lib/libSDL2_ttf.dylib
+	mkdir -p libraries
 	tar -xzf filetar/SDL2_image-2.0.4.tar.gz -C libraries
-	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/SDL2_image-2.0.4
+	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/dist
 	make -C ./libraries/SDL2_image-2.0.4
 	make -C ./libraries/SDL2_image-2.0.4 install
-	mv ./libraries/SDL2_image-2.0.4/include/SDL2/SDL_image.h ./includes
-	mv ./libraries/SDL2_image-2.0.4/lib/ ./libraries/SDL2_image
-	rm -rf ./libraries/SDL2_image-2.0.4
+# 	mv ./libraries/SDL2_image-2.0.4/include/SDL2/SDL_image.h ./includes
+# 	mv ./libraries/SDL2_image-2.0.4/lib/ ./libraries/SDL2_image
+# 	rm -rf ./libraries/SDL2_image-2.0.4
 
-ftype:
-	@mkdir libraries 2> /dev/null ||true
+
+libraries/dist/lib/libfreetype.dylib:
+	mkdir -p libraries
 	tar -xzf ./filetar/freetype-2.4.11.tar.gz -C libraries
-	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries/freetype-2.4.11
+	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries/dist
 	make -C ./libraries/freetype-2.4.11
 	make -C ./libraries/freetype-2.4.11 install
-	mv ./libraries/freetype-2.4.11 ./libraries/freetype
 
-ttf: ftype
-	@mkdir libraries 2> /dev/null ||true
+
+libraries/dist/lib/libSDL2_ttf.dylib: libraries/dist/lib/libfreetype.dylib
+	mkdir -p libraries
 	tar -xzf ./filetar/SDL2_ttf-2.0.15.tar.gz -C libraries
-	cd libraries/SDL2_ttf-2.0.15 ; ./configure --prefix=$(shell pwd)/libraries/SDL2_ttf-2.0.15
+	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries/dist
 	make -C ./libraries/SDL2_ttf-2.0.15
 	make -C ./libraries/SDL2_ttf-2.0.15 install
-	mv ./libraries/SDL2_ttf-2.0.15/include/SDL2/SDL_ttf.h ./includes/
-	mv ./libraries/SDL2_ttf-2.0.15/lib ./libraries/SDL2_ttf
-	rm -rf ./libraries/SDL2_ttf-2.0.15
+# 	mv ./libraries/SDL2_ttf-2.0.15/include/SDL2/SDL_ttf.h ./includes/
+# 	mv ./libraries/SDL2_ttf-2.0.15/lib ./libraries/SDL2_ttf
+# 	rm -rf ./libraries/SDL2_ttf-2.0.15

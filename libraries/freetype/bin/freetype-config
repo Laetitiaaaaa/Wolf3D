@@ -9,7 +9,7 @@
 # indicate that you have read the license and understand and accept it
 # fully.
 
-prefix=/Users/jleblond/wolf3d/libraries/freetype-2.4.11
+prefix=/Users/air/projets/wolf3d/libraries/freetype
 exec_prefix=${prefix}
 exec_prefix_set=no
 includedir=${prefix}/include

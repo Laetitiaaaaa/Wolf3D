@@ -24,6 +24,13 @@
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 
+typedef enum 		e_interface
+{
+	MAP,
+	GAME,
+	MENU,
+}					t_interface;
+
 typedef enum 		e_bool
 {
 	FALSE = 0,
@@ -71,6 +78,7 @@ typedef struct		s_context
 	float			distance_hor;
 	float			distance;
 	SDL_Point		pixel;
+	int				choose_inter;
 }					t_context;
 
 int					load_map(t_context *ct, const char *argv);
@@ -86,6 +94,7 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertial_wall_position_calcu(t_context *ct, float angle);
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle);
 void				draw_2d(t_context *ct);
+void				key_events(t_context *ct, Uint8 *state);
 void				draw_cubes(t_context *ct);
 void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
@@ -94,6 +103,9 @@ void				init_event(t_context *ct);
 void				key_events(t_context *ct);
 void				draw_line_wall(t_context *ct, float angle);
 void				draw_wall(t_context *ct);
+void				choose_interface(t_context *ct);
+
+
 
 
 
