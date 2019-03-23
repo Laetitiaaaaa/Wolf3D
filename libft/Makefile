@@ -6,7 +6,7 @@
 #    By: jleblond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/21 20:32:08 by jleblond          #+#    #+#              #
-#    Updated: 2019/03/18 19:49:12 by llejeune         ###   ########.fr        #
+#    Updated: 2019/03/23 14:50:50 by llejeune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 	@echo "DONE"
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c ./includes/libft.h
 	@mkdir $(OBJ_DIR) 2> /dev/null || true
 	@echo "Compiling $<... \c"
 	@$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
@@ -57,7 +57,7 @@ $(OBJ_DIR)/%.o: %.c
 
 clean:
 	@echo "Cleaning libft ... \c"
-	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
 	@echo "DONE"
 
 fclean: clean
