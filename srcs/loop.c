@@ -36,18 +36,6 @@ void		loop(t_context *ct)
 			ct->choose_inter = GAME;
 		}
 
-//----------------jie
-<<<<<<< HEAD
-//		draw_2d(ct);
-=======
->>>>>>> jie
-		//draw_background(ct);
-		draw_wall(ct);
-
-		//jie-------
-//----------------laeti
-
-		//----------------laeti-------
 		SDL_RenderPresent(ct->rend);
 	}
 }
