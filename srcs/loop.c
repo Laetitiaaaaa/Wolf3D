@@ -14,35 +14,28 @@
 
 void		loop(t_context *ct)
 {
-	Uint8	*state;
+	Uint8			*state;
+	SDL_Event		event;
+
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
 
 	while (TRUE)
 	{
-		SDL_PollEvent(ct->ev);
-		state = (Uint8*)SDL_GetKeyboardState(NULL);
+		while (SDL_PollEvent(&event))
+		{
+			if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
+			{
+				ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
+			}
+
+		}
+
 		key_events(ct, state);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(ct->rend);
 		choose_interface(ct);
 
-		if (state[SDL_SCANCODE_C])
-		{
-			//ct->choose_inter += 1;
-			ct->choose_inter = MAP;
-		}
-		if (state[SDL_SCANCODE_V])
-		{
-			// ct->choose_inter -= 1;
-			ct->choose_inter = GAME;
-		}
 
-//----------------jie
-		//draw_background(ct);
-
-		//jie-------
-//----------------laeti
-
-		//----------------laeti-------
 		SDL_RenderPresent(ct->rend);
 	}
 }

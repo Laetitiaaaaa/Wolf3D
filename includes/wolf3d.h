@@ -26,9 +26,10 @@
 
 typedef enum 		e_interface
 {
-	MAP,
+	MAP = 0,
 	GAME,
 	MENU,
+	INTERFACE_NB,
 }					t_interface;
 
 typedef enum 		e_bool

@@ -16,8 +16,6 @@ void		draw_2d(t_context *ct)
 {
 	float angle;
 
-	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(ct->rend);
 	draw_cubes(ct);
 	draw_camera(ct);
 	draw_ray(ct, ct->cam.angle);
