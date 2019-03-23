@@ -29,7 +29,7 @@ SRC = loop.c \
 	  init_event.c \
 	  draw_2d.c \
 	  draw_background.c \
-
+	  menu.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
@@ -53,17 +53,24 @@ LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) 
   -L /usr/local/Cellar/sdl2/2.0.9/lib \
   -L libraries/dist/lib
 
+HEADER = includes/wolf3d.h
+
+LIBFTA = ./libft/
 
 all: $(NAME)
 
 
 $(NAME): $(OBJ)
-	make -C libft
 	$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG)
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c $(HEADER) $(LIBFTA)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
+
+$(LIBFTA): FORCE
+	make -C libft
+
+FORCE:
 
 clean:
 	make clean -C libft

@@ -26,9 +26,10 @@
 
 typedef enum 		e_interface
 {
-	MAP,
+	MAP = 0,
 	GAME,
 	MENU,
+	INTERFACE_NB, // always leave it in the end
 }					t_interface;
 
 typedef enum 		e_bool
@@ -72,12 +73,10 @@ typedef struct		s_context
 	t_map_params	mpp;
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
-	SDL_Event		*ev;
 	t_camera		cam;
-	float			distance_ver;
-	float			distance_hor;
-	float			distance;
-	SDL_Point		pixel;
+	SDL_Surface		*surface;
+	SDL_Texture		*tmp;
+	SDL_Texture		*texture;
 	int				choose_inter;
 }					t_context;
 
@@ -103,6 +102,9 @@ void				init_event(t_context *ct);
 void				draw_line_wall(t_context *ct, float angle);
 void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
+void	draw_wall(t_context *ct);
+void		draw_line_wall(t_context *ct, float angle);
+void			print_menu(t_context *ct);
 
 
 
