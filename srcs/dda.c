@@ -12,6 +12,34 @@
 
 #include "wolf3d.h"
 
+float		dda_return_distance(t_context *ct, float angle)
+{
+	t_floatpoint 	posi_ver;
+	t_floatpoint 	posi_hor;
+	float 			distance_ver;
+	float 			distance_hor;
+
+
+	posi_ver = vertial_wall_position_calcu(ct, angle);
+	posi_hor = horizontal_wall_position_calcu(ct, angle);
+	distance_ver = ft_float_abs((posi_ver.x - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
+	distance_hor = ft_float_abs((ct->cam.cam_position.y - posi_hor.y) / sin(convert_degree_to_radian(angle)));
+	// distance_ver = ft_float_abs(posi_ver.x - ct->cam.cam_position.x) * cos(convert_degree_to_radian(ct->cam.angle)) -
+	// (ft_float_abs(posi_ver.y - ct->cam.cam_position.y) * sin(convert_degree_to_radian(ct->cam.angle)));
+	// distance_hor = ft_float_abs(posi_hor.x - ct->cam.cam_position.x) * cos(convert_degree_to_radian(ct->cam.angle)) -
+	// (ft_float_abs(posi_hor.y - ct->cam.cam_position.y) * sin(convert_degree_to_radian(ct->cam.angle)));
+	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
+		return (NO_WALL);
+	else if (posi_ver.x == NO_WALL)
+		return (distance_hor);
+	else if (posi_hor.x == NO_WALL)
+		return(distance_ver);
+	else if (distance_ver < distance_hor)
+		return (distance_ver);
+	else
+		return(distance_hor);
+}
+
 t_wall		dda(t_context *ct, float angle)
 {
 	t_wall			wall;
@@ -37,8 +65,8 @@ t_wall		choose_wall(t_context *ct, float angle, t_floatpoint posi_ver, t_floatpo
 	float 			distance_hor;
 	t_wall			wall;
 
-	distance_ver = ft_float_abs(((posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
-	distance_hor = ft_float_abs((ct->cam.cam_position.y - (float)posi_hor.y) / sin(convert_degree_to_radian(angle)));
+	distance_ver = ft_float_abs((posi_ver.x - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
+	distance_hor = ft_float_abs((ct->cam.cam_position.y - posi_hor.y) / sin(convert_degree_to_radian(angle)));
 	if (posi_ver.x == NO_WALL)
 	{
 		wall.posi = posi_hor;

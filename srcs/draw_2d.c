@@ -22,13 +22,13 @@ void		draw_2d(t_context *ct)
 	angle = ct->cam.angle;
 	while (angle <= (ct->cam.angle + 30.0))
 	{
-		angle += 30.0 / 500.0;
+		angle += 30.0 / (float)XWIN;
 		draw_ray(ct, angle);
 	}
 	angle = ct->cam.angle;
 	while (angle >= ct->cam.angle - 30.0)
 	{
-		angle -= 30.0 / 500.0;
+		angle -= 30.0 / (float)XWIN;
 		draw_ray(ct, angle);
 	}
 
@@ -36,9 +36,9 @@ void		draw_2d(t_context *ct)
 
 void	draw_ray(t_context *ct, float angle)
 {
-	SDL_Point    	pix_cam;
-	SDL_Point    	pix_wall;
-	t_distance		wall_p;
+	SDL_Point		pix_cam;
+	SDL_Point		pix_wall;
+	t_wall			wall_p;
 
 	wall_p = dda(ct, angle);
 	if (wall_p.posi.x == NO_WALL)

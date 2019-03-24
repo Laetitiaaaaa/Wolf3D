@@ -28,7 +28,6 @@ typedef enum 		e_interface
 {
 	MAP = 0,
 	GAME,
-	MENU,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
 
@@ -79,7 +78,7 @@ typedef struct		s_context
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	t_camera		cam;
-	SDL_Point		pixel;
+//	SDL_Point		pixel;
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
 	SDL_Texture		*texture;
@@ -105,13 +104,14 @@ void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_event(t_context *ct);
-void				draw_line_wall(t_context *ct, float angle);
 void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
-void	draw_wall(t_context *ct);
-void		draw_line_wall(t_context *ct, float angle);
-void			print_menu(t_context *ct);
-t_wall		choose_wall(t_context *ct, float angle, t_floatpoint posi_ver, t_floatpoint posi_hor);
+void				draw_wall(t_context *ct);
+void				print_menu(t_context *ct);
+t_wall				choose_wall(t_context *ct, float angle, t_floatpoint posi_ver, t_floatpoint posi_hor);
+float				dda_return_distance(t_context *ct, float angle);
+void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
+int		convert_mapdis_to_screendis(float distance, t_context *ct);
 
 
 

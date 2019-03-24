@@ -44,6 +44,7 @@ void	choose_interface(t_context *ct)
 	}
 	if (ct->choose_inter == GAME)
 	{
+		draw_background(ct);
 		draw_wall(ct);
 	}
 	// if (ct->choose_inter == MENU)
