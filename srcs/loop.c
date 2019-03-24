@@ -85,8 +85,8 @@ void	key_events_movein_3d(t_context *ct, Uint8 *state)
 	d = 0.005;
 	dy = d * sin(convert_degree_to_radian(ct->cam.angle));
 	dx = d * cos(convert_degree_to_radian(ct->cam.angle));
-	if ((ct->cam.posi.y - dy > 0)
-		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)ct->cam.posi.x] != 1)
+	if ((ct->cam.posi.y - dy > 0) && (ct->cam.posi.x + dx < ct->mpp.x)
+		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)] != 1)
 	{
 		if (state[SDL_SCANCODE_UP])
 		{
