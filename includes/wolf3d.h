@@ -50,7 +50,7 @@ typedef struct		s_map_params
 	int				x;  // x and y are the number of points  for map 42, x = 10 y = 11
 	int				y;
 	int				ret;
-	float			d;
+//	float			d;
 	int				**map;
 }					t_map_params;
 
@@ -60,11 +60,11 @@ typedef struct 		s_floatpoint
 	float			y;
 }					t_floatpoint;
 
-typedef struct 		s_distance
+typedef struct 		s_wall
 {
 	float 			distance;
 	t_floatpoint 	posi;
-}					t_distance;
+}					t_wall;
 
 typedef struct  	s_camera
 {
@@ -80,7 +80,7 @@ typedef struct		s_context
 	SDL_Renderer	*rend;
 	t_camera		cam;
 	SDL_Point		pixel;
-SDL_Surface		*surface;
+	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
 	SDL_Texture		*texture;
 	int				choose_inter;
@@ -91,7 +91,7 @@ int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
-t_distance			dda(t_context *ct, float angle);
+t_wall				dda(t_context *ct, float angle);
 double				convert_degree_to_radian(double angle);
 SDL_Point			convert_plan_to_pixel(float x, float y, t_context *ct);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle);
@@ -111,6 +111,7 @@ void				choose_interface(t_context *ct);
 void	draw_wall(t_context *ct);
 void		draw_line_wall(t_context *ct, float angle);
 void			print_menu(t_context *ct);
+t_wall		choose_wall(t_context *ct, float angle, t_floatpoint posi_ver, t_floatpoint posi_hor);
 
 
 
