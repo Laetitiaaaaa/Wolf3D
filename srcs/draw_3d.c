@@ -18,7 +18,7 @@ void	draw_wall(t_context *ct)
 	}
 	angle = ct->cam.angle;
 	x_pixel = XWIN / 2;
-	while (x_pixel <= 499)
+	while (x_pixel <= XWIN)
 	{
 		x_pixel++;
 		angle -= 30.0 / (float)(XWIN / 2);
@@ -49,19 +49,15 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 int		convert_mapdis_to_screendis(float distance, t_context *ct)
 {
 	float	dis_max;
+	float	dis_min;
 	int		wall_height;
 
 	dis_max = sqrt(pow(ct->mpp.x, 2) + pow(ct->mpp.y, 2));
+	dis_min = 0.1;
+	if (distance < dis_min)
+		distance = dis_min;
 
-	//wall takes full screen when distance is 0    50% of screen when distance is 1
-	if ((distance <= 1) && (distance >= 0))
-	{
-		wall_height = YWIN - (int)(distance * (float)YWIN / 2);
-	}
-	// wall take 5% of screen when distance is max
-	if ((distance > 1) && (distance <= dis_max))
-	{
-		wall_height = (int)(250 - (0.45 * (float)YWIN / (dis_max - 1.0)) * (distance - 1.0));
-	}
+
+	wall_height = (dis_max - distance) * 10 / distance;
 	return (wall_height);
 }
