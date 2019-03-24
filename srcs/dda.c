@@ -37,7 +37,7 @@ t_wall		choose_wall(t_context *ct, float angle, t_floatpoint posi_ver, t_floatpo
 	float 			distance_hor;
 	t_wall			wall;
 
-	distance_ver = ft_float_abs((((float)posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
+	distance_ver = ft_float_abs(((posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
 	distance_hor = ft_float_abs((ct->cam.cam_position.y - (float)posi_hor.y) / sin(convert_degree_to_radian(angle)));
 	if (posi_ver.x == NO_WALL)
 	{
