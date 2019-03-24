@@ -62,7 +62,7 @@ typedef struct 		s_floatpoint
 
 typedef struct  	s_camera
 {
-	t_floatpoint	cam_position;
+	t_floatpoint	posi;
 	float			angle; // angle is between 0 and 360
 	SDL_Point		neg_posi;
 }					t_camera;
@@ -105,6 +105,7 @@ void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
 int					convert_mapdis_to_screendis(float distance, t_context *ct);
 t_floatpoint		dda_return_posi(t_context *ct, float angle);
 float				dda_return_distance(t_context *ct, float angle);
+void				key_events_movein_2d(t_context *ct, Uint8 *state);
 
 
 

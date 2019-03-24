@@ -19,12 +19,12 @@ t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle)
 	angle = set_neg_posi(ct, angle);
 	if (angle > 0 && angle < 180)
 	{
-		d.y = ct->cam.cam_position.y -(float)(int)(ct->cam.cam_position.y);
+		d.y = ct->cam.posi.y -(float)(int)(ct->cam.posi.y);
 		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(angle)));
 	}
 	else
 	{
-		d.y = (float)(int)(ct->cam.cam_position.y) + 1 - ct->cam.cam_position.y;
+		d.y = (float)(int)(ct->cam.posi.y) + 1 - ct->cam.posi.y;
 		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(angle)));
 	}
 	return (d);
@@ -35,8 +35,8 @@ t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle)
 	t_floatpoint	detect;
 	t_floatpoint	d = horizontal_first_delta_calcu(ct, angle);
 
-	detect.x = ct->cam.cam_position.x;
-	detect.y = ct->cam.cam_position.y;
+	detect.x = ct->cam.posi.x;
+	detect.y = ct->cam.posi.y;
 	int				count = 0;
 	SDL_Point		to_int;
 

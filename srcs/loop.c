@@ -25,7 +25,6 @@ void		loop(t_context *ct)
 		{
 			if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
 				ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
-
 		}
 		key_events(ct, state);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
@@ -53,26 +52,55 @@ void	choose_interface(t_context *ct)
 	// }
 }
 
-
-
 void	key_events(t_context *ct, Uint8 *state)
 {
-
-
 	state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
-	state[SDL_SCANCODE_A] ? ct->cam.angle += 0.5 : 0;
-	state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.5 : 0;
-	if ((ct->cam.cam_position.y - 0.005 > 0)
-		&& ct->mpp.map[(int)(ct->cam.cam_position.y - 0.005)][(int)ct->cam.cam_position.x] != 1)
-		state[SDL_SCANCODE_UP] ? ct->cam.cam_position.y -= 0.005 : 0;
-	if ((ct->cam.cam_position.y + 0.005 < ct->mpp.y)
-		&& ct->mpp.map[(int)(ct->cam.cam_position.y + 0.005)][(int)ct->cam.cam_position.x] != 1)
-		state[SDL_SCANCODE_DOWN] ? ct->cam.cam_position.y += 0.005 : 0;
-	if ((ct->cam.cam_position.x - 0.005 > 0)
-		&& ct->mpp.map[(int)ct->cam.cam_position.y][(int)(ct->cam.cam_position.x - 0.005)]!= 1)
-		state[SDL_SCANCODE_LEFT] ? ct->cam.cam_position.x -= 0.005 : 0;
-	if ((ct->cam.cam_position.x + 0.005 < ct->mpp.x)
-		&& ct->mpp.map[(int)ct->cam.cam_position.y][(int)(ct->cam.cam_position.x + 0.005)]!= 1)
-		state[SDL_SCANCODE_RIGHT] ? ct->cam.cam_position.x += 0.005 : 0;
+	state[SDL_SCANCODE_A] ? ct->cam.angle += 0.25 : 0;
+	state[SDL_SCANCODE_S] ? ct->cam.angle -= 0.25 : 0;
+	key_events_movein_2d(ct, state);
 }
 
+void	key_events_movein_2d(t_context *ct, Uint8 *state)
+{
+	if ((ct->cam.posi.y - 0.005 > 0)
+		&& ct->mpp.map[(int)(ct->cam.posi.y - 0.005)][(int)ct->cam.posi.x] != 1)
+		state[SDL_SCANCODE_I] ? ct->cam.posi.y -= 0.005 : 0;
+	if ((ct->cam.posi.y + 0.005 < ct->mpp.y)
+		&& ct->mpp.map[(int)(ct->cam.posi.y + 0.005)][(int)ct->cam.posi.x] != 1)
+		state[SDL_SCANCODE_K] ? ct->cam.posi.y += 0.005 : 0;
+	if ((ct->cam.posi.x - 0.005 > 0)
+		&& ct->mpp.map[(int)ct->cam.posi.y][(int)(ct->cam.posi.x - 0.005)]!= 1)
+		state[SDL_SCANCODE_J] ? ct->cam.posi.x -= 0.005 : 0;
+	if ((ct->cam.posi.x + 0.005 < ct->mpp.x)
+		&& ct->mpp.map[(int)ct->cam.posi.y][(int)(ct->cam.posi.x + 0.005)]!= 1)
+		state[SDL_SCANCODE_L] ? ct->cam.posi.x += 0.005 : 0;
+}
+
+void	key_events_movein_3d(t_context *ct, Uint8 *state)
+{
+	float	d;
+	float	dx;
+	float	dy;
+
+	d = 0.005;
+	dy = d * sin(convert_degree_to_radian(ct->cam.angle));
+	dx = d * cos(convert_degree_to_radian(ct->cam.angle));
+	if ((ct->cam.posi.y - dy > 0)
+		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)ct->cam.posi.x] != 1)
+	{
+		if (state[SDL_SCANCODE_UP])
+		{
+			ct->cam.posi.y -= dy ;
+			ct->cam.posi.x += dx ;
+		}
+	}
+	// if ((ct->cam.posi.y + 0.005 < ct->mpp.y)
+	// 	&& ct->mpp.map[(int)(ct->cam.posi.y + 0.005)][(int)ct->cam.posi.x] != 1)
+	// 	state[SDL_SCANCODE_K] ? ct->cam.posi.y += 0.005 : 0;
+	// if ((ct->cam.posi.x - 0.005 > 0)
+	// 	&& ct->mpp.map[(int)ct->cam.posi.y][(int)(ct->cam.posi.x - 0.005)]!= 1)
+	// 	state[SDL_SCANCODE_J] ? ct->cam.posi.x -= 0.005 : 0;
+	// if ((ct->cam.posi.x + 0.005 < ct->mpp.x)
+	// 	&& ct->mpp.map[(int)ct->cam.posi.y][(int)(ct->cam.posi.x + 0.005)]!= 1)
+	// 	state[SDL_SCANCODE_L] ? ct->cam.posi.x += 0.005 : 0;
+}
