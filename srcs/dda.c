@@ -22,12 +22,12 @@ float		dda_return_distance(t_context *ct, float angle)
 
 	posi_ver = vertial_wall_position_calcu(ct, angle);
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
-	distance_ver = ft_float_abs((posi_ver.x - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
-	distance_hor = ft_float_abs((ct->cam.cam_position.y - posi_hor.y) / sin(convert_degree_to_radian(angle)));
-	// distance_ver = ft_float_abs(posi_ver.x - ct->cam.cam_position.x) * cos(convert_degree_to_radian(ct->cam.angle)) -
-	// (ft_float_abs(posi_ver.y - ct->cam.cam_position.y) * sin(convert_degree_to_radian(ct->cam.angle)));
-	// distance_hor = ft_float_abs(posi_hor.x - ct->cam.cam_position.x) * cos(convert_degree_to_radian(ct->cam.angle)) -
-	// (ft_float_abs(posi_hor.y - ct->cam.cam_position.y) * sin(convert_degree_to_radian(ct->cam.angle)));
+//	distance_ver = ft_float_abs((posi_ver.x - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
+//	distance_hor = ft_float_abs((ct->cam.cam_position.y - posi_hor.y) / sin(convert_degree_to_radian(angle)));
+	distance_ver = ft_float_abs((posi_ver.x - ct->cam.cam_position.x) * cos(convert_degree_to_radian(ct->cam.angle))) -
+	ft_float_abs((posi_ver.y - ct->cam.cam_position.y) * sin(convert_degree_to_radian(ct->cam.angle)));
+	distance_hor = ft_float_abs((posi_hor.x - ct->cam.cam_position.x) * cos(convert_degree_to_radian(ct->cam.angle))) -
+	ft_float_abs((posi_hor.y - ct->cam.cam_position.y) * sin(convert_degree_to_radian( ct->cam.angle)));
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (NO_WALL);
 	else if (posi_ver.x == NO_WALL)
