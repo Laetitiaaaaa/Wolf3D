@@ -42,7 +42,7 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	// D = 100;
 	// h = 2;
 	distance = dda_return_distance(ct, angle);
-	if (distance < 0)
+	if (distance < 0) // distance will be negative if no wall
 		return ;
 	wall_height = convert_mapdis_to_screendis(distance, ct);
 	top.x = x_pixel;
@@ -75,7 +75,7 @@ int		convert_mapdis_to_screendis(float distance, t_context *ct)
 	float	dis_max;
 	int		wall_height;
 
-	if (ct->mpp.x > ct->mpp.y )
+	if (ct->mpp.x > ct->mpp.y)
 		dis_max = (float)(ct->mpp.x);
 	else
 		dis_max = (float)(ct->mpp.y);

@@ -23,6 +23,7 @@
 # define YWIN 500
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
+# define INITIAL 0
 
 typedef enum 		e_interface
 {
@@ -59,12 +60,6 @@ typedef struct 		s_floatpoint
 	float			y;
 }					t_floatpoint;
 
-typedef struct 		s_wall
-{
-	float 			distance;
-	t_floatpoint 	posi;
-}					t_wall;
-
 typedef struct  	s_camera
 {
 	t_floatpoint	cam_position;
@@ -90,7 +85,6 @@ int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
-t_wall				dda(t_context *ct, float angle);
 double				convert_degree_to_radian(double angle);
 SDL_Point			convert_plan_to_pixel(float x, float y, t_context *ct);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle);
@@ -108,10 +102,10 @@ void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
 void				draw_wall(t_context *ct);
 void				print_menu(t_context *ct);
-t_wall				choose_wall(t_context *ct, float angle, t_floatpoint posi_ver, t_floatpoint posi_hor);
-float				dda_return_distance(t_context *ct, float angle);
 void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
-int		convert_mapdis_to_screendis(float distance, t_context *ct);
+int					convert_mapdis_to_screendis(float distance, t_context *ct);
+t_floatpoint		dda_return_posi(t_context *ct, float angle);
+float				dda_return_distance(t_context *ct, float angle);
 
 
 
