@@ -19,8 +19,8 @@
 # include "SDL.h"
 # include <stdio.h>
 
-# define XWIN 1000
-# define YWIN 800
+# define XWIN 1000.0
+# define YWIN 800.0
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 # define INITIAL 0
@@ -106,7 +106,7 @@ int					convert_mapdis_to_screendis(float distance, t_context *ct);
 t_floatpoint		dda_return_posi(t_context *ct, float angle);
 float				dda_return_distance(t_context *ct, float angle);
 void				key_events_movein_2d(t_context *ct, Uint8 *state);
-void	key_events_movein_3d(t_context *ct, Uint8 *state);
+void				key_events_movein_3d(t_context *ct, Uint8 *state);
 
 
 
