@@ -12,29 +12,57 @@
 
 #include "wolf3d.h"
 
-t_distance		dda(t_context *ct, float angle)
+float		dda_return_distance(t_context *ct, float angle) // fisheye corrected in this dda fucntion
 {
-	t_distance		d;
 	t_floatpoint 	posi_ver;
 	t_floatpoint 	posi_hor;
 	float 			distance_ver;
 	float 			distance_hor;
 
+
 	posi_ver = vertial_wall_position_calcu(ct, angle);
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
-	distance_ver = ft_float_abs((((float)posi_ver.x) - ct->cam.cam_position.x) / cos(convert_degree_to_radian(angle)));
-	distance_hor = ft_float_abs((ct->cam.cam_position.y - (float)posi_hor.y) / sin(convert_degree_to_radian(angle)));
+	distance_ver = ft_float_abs((posi_ver.x - ct->cam.posi.x) * cos(convert_degree_to_radian(ct->cam.angle)))
+	+ ft_float_abs((posi_ver.y - ct->cam.posi.y) * sin(convert_degree_to_radian(ct->cam.angle)));
+	distance_hor = ft_float_abs((posi_hor.x - ct->cam.posi.x) * cos(convert_degree_to_radian(ct->cam.angle)))
+	+ ft_float_abs((posi_hor.y - ct->cam.posi.y) * sin(convert_degree_to_radian( ct->cam.angle)));
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
-		d.posi = posi_ver;
+		return (NO_WALL);
 	else if (posi_ver.x == NO_WALL)
-		d.posi = posi_hor;
+		return (distance_hor);
 	else if (posi_hor.x == NO_WALL)
-		d.posi = posi_ver;
+		return(distance_ver);
+	else if (distance_ver < distance_hor)
+		return (distance_ver);
 	else
-		(distance_ver < distance_hor) ? (d.posi = posi_ver) : (d.posi = posi_hor);
-	(distance_ver < distance_hor) ? (d.distance = distance_ver) : (d.distance = distance_hor);
-	return (d);
+		return(distance_hor);
 }
+
+t_floatpoint		dda_return_posi(t_context *ct, float angle)
+{
+	t_floatpoint 	posi_ver;
+	t_floatpoint 	posi_hor;
+	float 			distance_ver;
+	float 			distance_hor;
+
+	distance_hor = INITIAL;
+	distance_ver = INITIAL;
+	posi_ver = vertial_wall_position_calcu(ct, angle);
+	posi_hor = horizontal_wall_position_calcu(ct, angle);
+	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
+		return (posi_ver);
+	else if (posi_ver.x == NO_WALL)
+		return (posi_hor);
+	else if (posi_hor.x == NO_WALL)
+		return (posi_ver);
+	else
+	{
+		distance_ver = ft_float_abs((posi_ver.x - ct->cam.posi.x) / cos(convert_degree_to_radian(angle)));
+		distance_hor = ft_float_abs((ct->cam.posi.y - posi_hor.y) / sin(convert_degree_to_radian(angle)));
+		return (distance_ver < distance_hor ? posi_ver : posi_hor);
+	}
+}
+
 
 
 t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle)
@@ -44,12 +72,12 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle)
 	angle = set_neg_posi(ct, angle);
 	if (angle > 90 && angle < 270)
 	{
-		d.x = ct->cam.cam_position.x - (float)(int)(ct->cam.cam_position.x);
+		d.x = ct->cam.posi.x - (float)(int)(ct->cam.posi.x);
 		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(angle)));
 	}
 	else
 	{
-		d.x = ((float)(int)(ct->cam.cam_position.x + 1)) - ct->cam.cam_position.x;
+		d.x = ((float)(int)(ct->cam.posi.x + 1)) - ct->cam.posi.x;
 		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(angle)));
 	}
 	return (d);
@@ -102,8 +130,8 @@ t_floatpoint			vertial_wall_position_calcu(t_context *ct, float angle)
 	int				count = 0;
 	SDL_Point		to_int;
 
-	detect.x = ct->cam.cam_position.x;
-	detect.y = ct->cam.cam_position.y;
+	detect.x = ct->cam.posi.x;
+	detect.y = ct->cam.posi.y;
 	to_int.x = (int)detect.x;
 	to_int.y = (int)detect.y;
 

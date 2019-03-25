@@ -14,31 +14,53 @@
 
 void		draw_background(t_context *ct)
 {
-	int		x;
-	int		y;
 
-	x = 0;
-	y = 0;
-	SDL_SetRenderDrawColor(ct->rend, 21, 24, 30, 255);
-	while (y < YWIN / 2)
-	{
-		while (x < XWIN)
-		{
-			SDL_RenderDrawPoint(ct->rend, x, y);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-	SDL_SetRenderDrawColor(ct->rend, 95, 99, 107, 255);
-	while (y >= YWIN / 2 && y < YWIN)
-	{
-		while (x < XWIN)
-		{
-			SDL_RenderDrawPoint(ct->rend, x, y);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
+	SDL_Rect	*rect1;
+	SDL_Rect	*rect2;
+
+	rect1 = (SDL_Rect*)malloc(sizeof(SDL_Rect));
+	rect2 = (SDL_Rect*)malloc(sizeof(SDL_Rect));
+	SDL_SetRenderDrawColor(ct->rend, 21, 24, 30, SDL_ALPHA_OPAQUE);
+	rect1->x = 0;
+	rect1->y = 0;
+	rect1->w = XWIN;
+	rect1->h = YWIN / 2;
+	SDL_RenderFillRect(ct->rend, rect1);
+	SDL_SetRenderDrawColor(ct->rend, 95, 99, 107, SDL_ALPHA_OPAQUE);
+	rect2->x = 0;
+	rect2->y = YWIN / 2;
+	rect2->w = XWIN;
+	rect2->h = YWIN / 2;
+	SDL_RenderFillRect(ct->rend, rect2);
+
+
+// draw pixel by pixel make it very slow, it will be replaced by texture
+
+	// int		x;
+	// int		y;
+
+	// x = 0;
+	// y = 0;
+	// SDL_SetRenderDrawColor(ct->rend, 21, 24, 30, 255);
+	// while (y < YWIN / 2)
+	// {
+	// 	while (x < XWIN)
+	// 	{
+	// 		SDL_RenderDrawPoint(ct->rend, x, y);
+	// 		x++;
+	// 	}
+	// 	x = 0;
+	// 	y++;
+	// }
+	// SDL_SetRenderDrawColor(ct->rend, 95, 99, 107, 255);
+	// while (y >= YWIN / 2 && y < YWIN)
+	// {
+	// 	while (x < XWIN)
+	// 	{
+	// 		SDL_RenderDrawPoint(ct->rend, x, y);
+	// 		x++;
+	// 	}
+	// 	x = 0;
+	// 	y++;
+	// }
 }

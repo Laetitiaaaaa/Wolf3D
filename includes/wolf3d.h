@@ -19,16 +19,16 @@
 # include "SDL.h"
 # include <stdio.h>
 
-# define XWIN 500
-# define YWIN 500
+# define XWIN 1000.0
+# define YWIN 800.0
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
+# define INITIAL 0
 
 typedef enum 		e_interface
 {
 	MAP = 0,
 	GAME,
-	MENU,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
 
@@ -50,7 +50,7 @@ typedef struct		s_map_params
 	int				x;  // x and y are the number of points  for map 42, x = 10 y = 11
 	int				y;
 	int				ret;
-	float			d;
+//	float			d;
 	int				**map;
 }					t_map_params;
 
@@ -60,15 +60,9 @@ typedef struct 		s_floatpoint
 	float			y;
 }					t_floatpoint;
 
-typedef struct 		s_distance
-{
-	float 			distance;
-	t_floatpoint 	posi;
-}					t_distance;
-
 typedef struct  	s_camera
 {
-	t_floatpoint	cam_position;
+	t_floatpoint	posi;
 	float			angle; // angle is between 0 and 360
 	SDL_Point		neg_posi;
 }					t_camera;
@@ -79,8 +73,7 @@ typedef struct		s_context
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	t_camera		cam;
-	SDL_Point		pixel;
-SDL_Surface		*surface;
+	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
 	SDL_Texture		*texture;
 	int				choose_inter;
@@ -91,7 +84,6 @@ int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
-t_distance			dda(t_context *ct, float angle);
 double				convert_degree_to_radian(double angle);
 SDL_Point			convert_plan_to_pixel(float x, float y, t_context *ct);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle);
@@ -105,12 +97,17 @@ void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_event(t_context *ct);
-void				draw_line_wall(t_context *ct, float angle);
 void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
-void	draw_wall(t_context *ct);
-void		draw_line_wall(t_context *ct, float angle);
-void			print_menu(t_context *ct);
+void				draw_wall(t_context *ct);
+void				print_menu(t_context *ct);
+void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
+int					convert_mapdis_to_screendis(float distance, t_context *ct);
+t_floatpoint		dda_return_posi(t_context *ct, float angle);
+float				dda_return_distance(t_context *ct, float angle);
+void				key_events_movein_2d(t_context *ct, Uint8 *state);
+void				key_events_movein_3d(t_context *ct, Uint8 *state);
+
 
 
 

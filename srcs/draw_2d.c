@@ -22,13 +22,13 @@ void		draw_2d(t_context *ct)
 	angle = ct->cam.angle;
 	while (angle <= (ct->cam.angle + 30.0))
 	{
-		angle += 30.0 / 500.0;
+		angle += 30.0 / (float)(XWIN / 2) ;
 		draw_ray(ct, angle);
 	}
 	angle = ct->cam.angle;
 	while (angle >= ct->cam.angle - 30.0)
 	{
-		angle -= 30.0 / 500.0;
+		angle -= 30.0 / (float)(XWIN / 2);
 		draw_ray(ct, angle);
 	}
 
@@ -36,15 +36,15 @@ void		draw_2d(t_context *ct)
 
 void	draw_ray(t_context *ct, float angle)
 {
-	SDL_Point    	pix_cam;
-	SDL_Point    	pix_wall;
-	t_distance		wall_p;
+	SDL_Point			pix_cam;
+	SDL_Point			pix_wall;
+	t_floatpoint		wall_p;
 
-	wall_p = dda(ct, angle);
-	if (wall_p.posi.x == NO_WALL)
+	wall_p = dda_return_posi(ct, angle);
+	if (wall_p.x == NO_WALL)
 		return ;
-	pix_cam = convert_plan_to_pixel(ct->cam.cam_position.x, ct->cam.cam_position.y, ct);
-	pix_wall = convert_plan_to_pixel(wall_p.posi.x, wall_p.posi.y, ct);
+	pix_cam = convert_plan_to_pixel(ct->cam.posi.x, ct->cam.posi.y, ct);
+	pix_wall = convert_plan_to_pixel(wall_p.x, wall_p.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 226, 83, 83, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLine(ct->rend, pix_cam.x, pix_cam.y, pix_wall.x, pix_wall.y);
 }
@@ -53,7 +53,7 @@ void	draw_camera(t_context *ct)
 {
 	SDL_Point    	pixel;
 
-	pixel = convert_plan_to_pixel(ct->cam.cam_position.x, ct->cam.cam_position.y, ct);
+	pixel = convert_plan_to_pixel(ct->cam.posi.x, ct->cam.posi.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 89, 224, 192, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
 }

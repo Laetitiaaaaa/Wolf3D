@@ -4,57 +4,64 @@
 void	draw_wall(t_context *ct)
 {
 	float	angle;
+	int		x_pixel;
 
-	draw_background(ct);
 	angle = ct->cam.angle;
-	ct->pixel.x = XWIN / 2;
-	draw_line_wall(ct, angle);
-	while (angle <= (ct->cam.angle + 30))
+	x_pixel = XWIN / 2;
+	draw_line_wall(ct, angle, x_pixel);
+	while (x_pixel >= 0)
 	{
-		ct->pixel.x++;
-		angle += 30.0 / 500.0;
-		draw_line_wall(ct, angle);
+		x_pixel--;
+		angle += 30.0 / (float)(XWIN / 2);
+		draw_line_wall(ct, angle, x_pixel);
 
 	}
 	angle = ct->cam.angle;
-	ct->pixel.x = XWIN / 2;
-	while (angle >= (ct->cam.angle - 30))
+	x_pixel = XWIN / 2;
+	while (x_pixel <= XWIN)
 	{
-		ct->pixel.x--;
-		angle -= 30.0 / 500.0;
-		draw_line_wall(ct, angle);
+		x_pixel++;
+		angle -= 30.0 / (float)(XWIN / 2);
+		draw_line_wall(ct, angle, x_pixel);
 	}
 }
 
-void	draw_line_wall(t_context *ct, float angle)
+void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 {
-	int		D;
-	int		h;
-	int		H;
-	int		i;
-	t_distance 	val;
+	float		distance;
+	int			wall_height;
+	SDL_Point 	top;
+	SDL_Point 	down;
 
-	i = 0;
-	D = 100;
-	h = 2;
-	val = dda(ct, angle);
-	if (val.posi.x == NO_WALL)
+
+	distance = dda_return_distance(ct, angle);
+	if (distance < 0) // distance will be negative if no wall
 		return ;
-	H = (D * h) / val.distance;
-	ct->pixel.y = YWIN / 2;
-	SDL_SetRenderDrawColor(ct->rend, 86, 11 , 209, SDL_ALPHA_OPAQUE);
-	while (i < (H / 2))
-	{
-		SDL_RenderDrawPoint(ct->rend, ct->pixel.x, ct->pixel.y);
-		ct->pixel.y++;
-		i++;
-	}
-	i = 0;
-	ct->pixel.y = YWIN / 2;
-	while (i < (H / 2))
-	{
-		SDL_RenderDrawPoint(ct->rend, ct->pixel.x, ct->pixel.y);
-		ct->pixel.y--;
-		i++;
-	}
+	wall_height = convert_mapdis_to_screendis(distance, ct);
+	top.x = x_pixel;
+	top.y = (YWIN - wall_height) / 2;
+	down.x = x_pixel;
+	down.y = (YWIN + wall_height) / 2;
+	SDL_SetRenderDrawColor(ct->rend, 0, 51 , 102, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
+}
+
+int		convert_mapdis_to_screendis(float distance, t_context *ct)
+{
+	float	dis_max;
+	// float	dis_min;
+	int		wall_height;
+
+	dis_max = sqrt(pow(ct->mpp.x, 2) + pow(ct->mpp.y, 2));
+	// dis_min = 0.1;
+	// if (distance < dis_min)
+	// 	distance = dis_min;
+
+	// wall_height = YWIN - ((distance - dis_min) / (dis_max - dis_min) * YWIN) + 10;
+
+
+	wall_height = (int)((dis_max - distance) * 20.0 / distance) + 5;
+	if (wall_height > YWIN)
+		wall_height = YWIN;
+	return (wall_height);
 }
