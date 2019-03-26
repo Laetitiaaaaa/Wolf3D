@@ -46,10 +46,10 @@ void	choose_interface(t_context *ct)
 		draw_background(ct);
 		draw_wall(ct);
 	}
-	// if (ct->choose_inter == MENU)
-	// {
-	// 	print_menu(ct);
-	// }
+	if (ct->choose_inter == MENU)
+	{
+		print_menu(ct);
+	}	
 }
 
 void	key_events(t_context *ct, Uint8 *state)

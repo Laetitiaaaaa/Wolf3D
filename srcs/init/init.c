@@ -35,6 +35,11 @@ void	init_sdl(t_context *ct)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
 
+	if (!(ct->surface = SDL_LoadBMP("./murwolf.bmp")))
+		quit("can't find murwolf.bmp\n", ct);
+	if (!(ct->wall_texture = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
+		quit("texturefromsurface failed\n", ct);
+	SDL_FreeSurface(ct->surface);
 }
 
 

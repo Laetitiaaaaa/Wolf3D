@@ -29,6 +29,7 @@ typedef enum 		e_interface
 {
 	MAP = 0,
 	GAME,
+	MENU,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
 
@@ -60,6 +61,13 @@ typedef struct 		s_floatpoint
 	float			y;
 }					t_floatpoint;
 
+/*typedef struct 		s_wall_params
+{
+	t_floatpoint	posi_ver;
+	t_floatpoint 	posi_hor;
+	t_floatpoint	posi;
+}					t_wall_params;*/
+
 typedef struct  	s_camera
 {
 	t_floatpoint	posi;
@@ -76,6 +84,7 @@ typedef struct		s_context
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
 	SDL_Texture		*texture;
+	SDL_Texture		*wall_texture;
 	int				choose_inter;
 }					t_context;
 
@@ -99,7 +108,6 @@ float 				set_neg_posi(t_context *ct, float angle);
 void				init_event(t_context *ct);
 void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
-void				draw_wall(t_context *ct);
 void				print_menu(t_context *ct);
 void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
 int					convert_mapdis_to_screendis(float distance, t_context *ct);
@@ -107,7 +115,7 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle);
 float				dda_return_distance(t_context *ct, float angle);
 void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
-
+SDL_Rect			*define_rect(int x, int y, int w, int h);
 
 
 

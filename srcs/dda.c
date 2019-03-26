@@ -49,6 +49,11 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 	distance_ver = INITIAL;
 	posi_ver = vertial_wall_position_calcu(ct, angle);
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
+	// if (wall != NULL)
+	// {
+	// 	wall->posi_ver = posi_ver;
+	// 	wall->posi_hor = posi_hor;
+	// }
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (posi_ver);
 	else if (posi_ver.x == NO_WALL)
