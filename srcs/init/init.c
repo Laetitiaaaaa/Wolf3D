@@ -37,7 +37,7 @@ void	init_sdl(t_context *ct)
 
 	if (!(ct->surface = SDL_LoadBMP("./murwolf.bmp")))
 		quit("can't find murwolf.bmp\n", ct);
-	if (!(ct->wall_texture = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
+	if (!(ct->wall_texture1 = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
 		quit("texturefromsurface failed\n", ct);
 	SDL_FreeSurface(ct->surface);
 }

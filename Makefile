@@ -79,6 +79,9 @@ re: fclean
 libft.a:
 	make -C libft
 
+debug: wolf3d libft.a $(OBJ)
+	$(CC) $(CFLAG) -g -fsanitize=address -o $(NAME) $(OBJ) $(LFLAG)
+
 image: ttf
 	mkdir -p libraries
 	tar -xzf filetar/SDL2_image-2.0.4.tar.gz -C libraries

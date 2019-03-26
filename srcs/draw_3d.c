@@ -25,6 +25,18 @@ void	draw_wall(t_context *ct)
 	}
 }
 
+SDL_Rect	*define_rect(int x, int y, int w, int h)
+{
+	SDL_Rect	*rect;
+	
+	rect = NULL;
+	rect->x = x;
+	rect->y = y;
+	rect->w = w;
+	rect->h = h;
+	return (rect);
+}
+
 void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 {
 	float		distance;
@@ -33,9 +45,15 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	SDL_Point 	down;
 	t_floatpoint wall;
 
-	// SDL_Rect 	src;
-	// SDL_Rect 	dst;
+	SDL_Rect 	src;
+	SDL_Rect 	dst;
 
+
+
+	// src = NULL;
+	// dst = NULL;
+	// src = malloc(sizeof(src));
+	// dst = malloc(sizeof(dst));
 	wall = dda_return_posi(ct, angle);
 	distance = dda_return_distance(ct, angle);
 	if (distance < 0) // distance will be negative if no wall
@@ -45,35 +63,42 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	top.y = (YWIN - wall_height) / 2;
 	down.x = x_pixel;
 	down.y = (YWIN + wall_height) / 2;
+	SDL_QueryTexture(ct->wall_texture1, NULL, NULL, &src.x, &src.h);
+	// printf("YOOOOOOOOOOOOOOO\n");
+	// src = define_rect((src->x) / 2, 0, 1, src->h);
+	// printf("YOOOOOOOOOOOOOOO\n");
+	// dst = define_rect(x_pixel, top.y, 1, wall_height);
+	// printf("YOOOOOOOOOOOOOOO\n");
+	src.x = src.x / 2;
+	src.y = 0;
+	src.w = 1;
 
-	// SDL_QueryTexture(ct->wall_texture, NULL, NULL, &src.x, &src.h);
-	// src.x = src.x/ 2;
-	// src.y = 0;
-	// src.w = 1;
-	while (angle >= 360)
+	dst.x = x_pixel;
+	dst.y = top.y;
+	dst.w = 1;
+	dst.h = wall_height + 1;
+while (angle >= 360)
 		angle = angle - 360;
 	while (angle < 0)
 		angle = angle + 360;
-	// dst.x = x_pixel;
-	// dst.y = top.y;
-	// dst.w = 1;
-	// dst.h = wall_height + 1;
-
-	if (((int)(wall.x * 10000.0) % 10000) == 0 && (angle >= 90 && angle <= 270))
-		SDL_SetRenderDrawColor(ct->rend, 255, 150, 255, SDL_ALPHA_OPAQUE);
-	else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 0 && angle <= 180))
-		SDL_SetRenderDrawColor(ct->rend, 255, 200, 0, SDL_ALPHA_OPAQUE);
-	else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 180 && angle < 360))
-	 	SDL_SetRenderDrawColor(ct->rend, 255, 0, 100, SDL_ALPHA_OPAQUE);
-	else if (((int)(wall.x * 10000.0) % 10000) == 0 && ((angle >= 270 && angle < 360) || (angle >= 0 && angle <= 90)))
-		SDL_SetRenderDrawColor(ct->rend, 50, 225, 175, SDL_ALPHA_OPAQUE);
+	
+ 	if (((int)(wall.x * 10000.0) % 10000) == 0 && (angle >= 90 && angle <= 270))
+	{
+		if (SDL_RenderCopy(ct->rend, ct->wall_texture1, &src, &dst) < 0)
+			quit("SDL_SetRenderCopy failed\n", ct);
+	}
+	// 	SDL_SetRenderDrawColor(ct->rend, 255, 150, 255, SDL_ALPHA_OPAQUE);
+	// else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 0 && angle <= 180))
+	// 	SDL_SetRenderDrawColor(ct->rend, 255, 200, 0, SDL_ALPHA_OPAQUE);
+	// else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 180 && angle < 360))
+	//  	SDL_SetRenderDrawColor(ct->rend, 255, 0, 100, SDL_ALPHA_OPAQUE);
+	// else if (((int)(wall.x * 10000.0) % 10000) == 0 && ((angle >= 270 && angle < 360) || (angle >= 0 && angle <= 90)))
+	// 	SDL_SetRenderDrawColor(ct->rend, 50, 225, 175, SDL_ALPHA_OPAQUE);
 //		SDL_SetRenderDrawColor(ct->rend, (int)(angle * 255) >> 3, 0, (int)(angle * 255) >> 3, SDL_ALPHA_OPAQUE);
-	
-	// // SDL_SetRenderDrawColor(ct->rend, angle * 255 / 10, 0, angle * 255 / 10, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
-	
-	// if (SDL_RenderCopy(ct->rend, ct->wall_texture, &src, &dst) < 0)// NE PAS OUBLIER DE FREE LA TEXTURE A LA FIN
-	// 	quit("SDL_SetRenderCopy failed\n", ct);
+	// if (SDL_RenderCopy(ct->rend, ct->wall_texture1, &src, &dst) < 0)
+	// 		quit("SDL_SetRenderCopy failed\n", ct);
+	// SDL_SetRenderDrawColor(ct->rend, angle * 255 / 10, 0, angle * 255 / 10, SDL_ALPHA_OPAQUE);
+	// SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
 }
 
 int		convert_mapdis_to_screendis(float distance, t_context *ct)

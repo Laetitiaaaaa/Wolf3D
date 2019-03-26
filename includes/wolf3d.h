@@ -61,13 +61,6 @@ typedef struct 		s_floatpoint
 	float			y;
 }					t_floatpoint;
 
-/*typedef struct 		s_wall_params
-{
-	t_floatpoint	posi_ver;
-	t_floatpoint 	posi_hor;
-	t_floatpoint	posi;
-}					t_wall_params;*/
-
 typedef struct  	s_camera
 {
 	t_floatpoint	posi;
@@ -84,7 +77,7 @@ typedef struct		s_context
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
 	SDL_Texture		*texture;
-	SDL_Texture		*wall_texture;
+	SDL_Texture		*wall_texture1;
 	int				choose_inter;
 }					t_context;
 
