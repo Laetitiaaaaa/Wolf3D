@@ -21,6 +21,8 @@
 
 # define XWIN 1000.0
 # define YWIN 800.0
+# define XIMG_SKY 4000.0
+
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 # define INITIAL 0
@@ -107,6 +109,9 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle);
 float				dda_return_distance(t_context *ct, float angle);
 void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
+
+void		draw_ground(t_context *ct);
+void	angle_limit(t_context *ct);
 
 
 
