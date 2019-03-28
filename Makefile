@@ -44,7 +44,7 @@ LIB_DIR = ./libft \
 
 FRAMEWORK = OpenGL AppKit
 
-CC = gcc
+CC = gcc -g -ggdb
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 

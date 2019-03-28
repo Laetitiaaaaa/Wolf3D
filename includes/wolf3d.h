@@ -20,7 +20,7 @@
 # include <stdio.h>
 
 # define XWIN 1000.0
-# define YWIN 1000.0
+# define YWIN 800.0
 # define XIMG_SKY 4000.0
 
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
@@ -51,8 +51,7 @@ typedef struct		s_map_params
 {
 	int				x;  // x and y are the number of points  for map 42, x = 10 y = 11
 	int				y;
-	int				ret;
-//	float			d;
+//	int				ret;
 	int				**map;
 }					t_map_params;
 
@@ -81,6 +80,7 @@ typedef struct		s_context
 	int				choose_inter;
 }					t_context;
 
+void				quit_map(char *msg);
 int					load_map(t_context *ct, const char *argv);
 int					init(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);

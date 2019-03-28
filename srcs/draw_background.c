@@ -33,10 +33,10 @@ void		draw_ground(t_context *ct)
 
 void		draw_background(t_context *ct)
 {
-	SDL_Surface	*tmp;
-	SDL_Rect dst_sky = {0, 0, XWIN, YWIN / 2};
-	SDL_Rect src_sky;
-	SDL_Texture *textu_sky;
+	// SDL_Surface	*tmp;
+	// SDL_Rect dst_sky = {0, 0, XWIN, YWIN / 2};
+	// SDL_Rect src_sky;
+	// SDL_Texture *textu_sky;
 
 	// SDL_Rect	*rect1;
 	// SDL_Rect	*rect2;
@@ -57,21 +57,21 @@ void		draw_background(t_context *ct)
 	// SDL_RenderFillRect(ct->rend, rect2);
 	draw_ground(ct);
 
-	tmp = SDL_LoadBMP("./srcs/init/Sky.bmp");
-	if (tmp == NULL)
-		quit("Error SDL_LoadBMP", ct);
-	textu_sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (textu_sky == NULL)
-		quit("Error SDL_CreateTextureFromSurface", ct);
-	SDL_FreeSurface(tmp);
-	src_sky.x = XIMG_SKY - (int) (((XIMG_SKY - XWIN / XWIN) / 360 ) * ct->cam.angle);
-	if (src_sky.x == XIMG_SKY - XWIN )
-		src_sky.x = 0;
+	// tmp = SDL_LoadBMP("./srcs/init/Sky.bmp");
+	// if (tmp == NULL)`
+	// 	quit("Error SDL_LoadBMP", ct);
+	// textu_sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
+	// if (textu_sky == NULL)
+	// 	quit("Error SDL_CreateTextureFromSurface", ct);
+	// SDL_FreeSurface(tmp);
+	// src_sky.x = XIMG_SKY - (int) (((XIMG_SKY - XWIN / XWIN) / 360 ) * ct->cam.angle);
+	// if (src_sky.x == XIMG_SKY - XWIN )
+	// 	src_sky.x = 0;
 
-	// printf("src.x :%d   angle:%f\n", src_sky.x, ct->cam.angle);
-	src_sky.y = 0;
-	src_sky.w = XWIN;
-	src_sky.h = YWIN / 2;
-	SDL_RenderCopy(ct->rend, textu_sky, &src_sky, &dst_sky);
+	// // printf("src.x :%d   angle:%f\n", src_sky.x, ct->cam.angle);
+	// src_sky.y = 0;
+	// src_sky.w = XWIN;
+	// src_sky.h = YWIN / 2;
+	// SDL_RenderCopy(ct->rend, textu_sky, &src_sky, &dst_sky);
 
 }

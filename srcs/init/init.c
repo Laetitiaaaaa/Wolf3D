@@ -16,10 +16,10 @@
 // error information for maps
 void	error_info(int x)
 {
-	if (x == -2)
-		ft_putendl("map file should not be empty");
-	if (x == -3)
-		ft_putendl("content of map file is not right");
+	// if (x == -2)
+	// 	ft_putendl("map file should not be empty");
+	// if (x == -3)
+	// 	ft_putendl("content of map file is not right");
 	if (x == -1)
 		ft_putendl("error");
 	if (x == -4)
