@@ -20,7 +20,7 @@
 # include <stdio.h>
 
 # define XWIN 1000.0
-# define YWIN 800.0
+# define YWIN 1000.0
 # define XIMG_SKY 4000.0
 
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work

@@ -68,7 +68,7 @@ void		draw_background(t_context *ct)
 	if (src_sky.x == XIMG_SKY - XWIN )
 		src_sky.x = 0;
 
-	printf("src.x :%d   angle:%f\n", src_sky.x, ct->cam.angle);
+	// printf("src.x :%d   angle:%f\n", src_sky.x, ct->cam.angle);
 	src_sky.y = 0;
 	src_sky.w = XWIN;
 	src_sky.h = YWIN / 2;

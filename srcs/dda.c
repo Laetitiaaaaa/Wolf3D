@@ -49,6 +49,8 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 	distance_ver = INITIAL;
 	posi_ver = vertial_wall_position_calcu(ct, angle);
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
+
+
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (posi_ver);
 	else if (posi_ver.x == NO_WALL)
@@ -57,8 +59,8 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 		return (posi_ver);
 	else
 	{
-		distance_ver = ft_float_abs((posi_ver.x - ct->cam.posi.x) / cos(convert_degree_to_radian(angle)));
-		distance_hor = ft_float_abs((ct->cam.posi.y - posi_hor.y) / sin(convert_degree_to_radian(angle)));
+		distance_ver = sqrt(pow(posi_ver.x - ct->cam.posi.x, 2) + pow(posi_ver.y - ct->cam.posi.y, 2));
+		distance_hor = sqrt(pow(posi_hor.x - ct->cam.posi.x, 2) + pow(posi_hor.y - ct->cam.posi.y, 2));
 		return (distance_ver < distance_hor ? posi_ver : posi_hor);
 	}
 }
