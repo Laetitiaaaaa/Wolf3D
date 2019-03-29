@@ -68,6 +68,16 @@ typedef struct  	s_camera
 	SDL_Point		neg_posi;
 }					t_camera;
 
+typedef struct 		s_wall_texture
+{
+	SDL_Texture 	*motif_red;
+	SDL_Texture		*motif_yellow;
+	SDL_Texture		*motif_green;
+	SDL_Texture		*motif_blue;
+	int 			width;
+	int 			height;
+}					t_wall_texture;
+
 typedef struct		s_context
 {
 	t_map_params	mpp;
@@ -77,7 +87,7 @@ typedef struct		s_context
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
 	SDL_Texture		*texture;
-	SDL_Texture		*wall_texture1;
+	t_wall_texture	wall;
 	int				choose_inter;
 }					t_context;
 
@@ -108,7 +118,7 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle);
 float				dda_return_distance(t_context *ct, float angle);
 void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
-SDL_Rect			*define_rect(int x, int y, int w, int h);
+SDL_Rect			define_rect(int x, int y, int w, int h);
 
 
 

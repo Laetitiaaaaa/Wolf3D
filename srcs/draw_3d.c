@@ -6,9 +6,9 @@ void	draw_wall(t_context *ct)
 	float	angle;
 	int		x_pixel;
 
+	SDL_QueryTexture(ct->wall.motif_red, NULL, NULL, &ct->wall.width, &ct->wall.height);
 	angle = ct->cam.angle;
 	x_pixel = XWIN / 2;
-//	draw_line_wall(ct, angle, x_pixel);
 	while (x_pixel >= 0)
 	{
 		angle += 30.0 / (float)(XWIN / 2);
@@ -25,15 +25,14 @@ void	draw_wall(t_context *ct)
 	}
 }
 
-SDL_Rect	*define_rect(int x, int y, int w, int h)
+SDL_Rect	define_rect(int x, int y, int w, int h)
 {
-	SDL_Rect	*rect;
+	SDL_Rect	rect;
 	
-	rect = NULL;
-	rect->x = x;
-	rect->y = y;
-	rect->w = w;
-	rect->h = h;
+	rect.x = x;
+	rect.y = y;
+	rect.w = w;
+	rect.h = h;
 	return (rect);
 }
 
@@ -47,13 +46,9 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 
 	SDL_Rect 	src;
 	SDL_Rect 	dst;
+	float 		pos_text;
 
-
-
-	// src = NULL;
-	// dst = NULL;
-	// src = malloc(sizeof(src));
-	// dst = malloc(sizeof(dst));
+	pos_text = 0.0;
 	wall = dda_return_posi(ct, angle);
 	distance = dda_return_distance(ct, angle);
 	if (distance < 0) // distance will be negative if no wall
@@ -63,42 +58,42 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	top.y = (YWIN - wall_height) / 2;
 	down.x = x_pixel;
 	down.y = (YWIN + wall_height) / 2;
-	SDL_QueryTexture(ct->wall_texture1, NULL, NULL, &src.x, &src.h);
-	// printf("YOOOOOOOOOOOOOOO\n");
-	// src = define_rect((src->x) / 2, 0, 1, src->h);
-	// printf("YOOOOOOOOOOOOOOO\n");
-	// dst = define_rect(x_pixel, top.y, 1, wall_height);
-	// printf("YOOOOOOOOOOOOOOO\n");
-	src.x = src.x / 2;
-	src.y = 0;
-	src.w = 1;
 
-	dst.x = x_pixel;
-	dst.y = top.y;
-	dst.w = 1;
-	dst.h = wall_height + 1;
-while (angle >= 360)
+	dst = define_rect(x_pixel, top.y, 1, wall_height);	
+
+	while (angle >= 360)
 		angle = angle - 360;
 	while (angle < 0)
 		angle = angle + 360;
 	
- 	if (((int)(wall.x * 10000.0) % 10000) == 0 && (angle >= 90 && angle <= 270))
+	if (((int)(wall.x * 10000.0) % 10000) == 0 && (angle >= 90 && angle <= 270))
 	{
-		if (SDL_RenderCopy(ct->rend, ct->wall_texture1, &src, &dst) < 0)
-			quit("SDL_SetRenderCopy failed\n", ct);
+		pos_text = wall.y * ct->wall.width / (int)(wall.y + 1);
+		src = define_rect((int)pos_text, 0, 1, ct->wall.height);
+		if (SDL_RenderCopy(ct->rend, ct->wall.motif_red, &src, &dst) < 0)
+			quit("SDL_SetRenderCopy RED failed\n", ct);
 	}
-	// 	SDL_SetRenderDrawColor(ct->rend, 255, 150, 255, SDL_ALPHA_OPAQUE);
-	// else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 0 && angle <= 180))
-	// 	SDL_SetRenderDrawColor(ct->rend, 255, 200, 0, SDL_ALPHA_OPAQUE);
-	// else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 180 && angle < 360))
-	//  	SDL_SetRenderDrawColor(ct->rend, 255, 0, 100, SDL_ALPHA_OPAQUE);
-	// else if (((int)(wall.x * 10000.0) % 10000) == 0 && ((angle >= 270 && angle < 360) || (angle >= 0 && angle <= 90)))
-	// 	SDL_SetRenderDrawColor(ct->rend, 50, 225, 175, SDL_ALPHA_OPAQUE);
-//		SDL_SetRenderDrawColor(ct->rend, (int)(angle * 255) >> 3, 0, (int)(angle * 255) >> 3, SDL_ALPHA_OPAQUE);
-	// if (SDL_RenderCopy(ct->rend, ct->wall_texture1, &src, &dst) < 0)
-	// 		quit("SDL_SetRenderCopy failed\n", ct);
-	// SDL_SetRenderDrawColor(ct->rend, angle * 255 / 10, 0, angle * 255 / 10, SDL_ALPHA_OPAQUE);
-	// SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
+	else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 0 && angle <= 180))
+	{
+		pos_text = wall.x * ct->wall.width / (int)(wall.x + 1);
+		src = define_rect((int)pos_text, 0, 1, ct->wall.height);
+		if (SDL_RenderCopy(ct->rend, ct->wall.motif_yellow, &src, &dst) < 0)
+			quit("SDL_SetRenderCopy YELLOW failed\n", ct);
+	}
+	else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 180 && angle < 360))
+	{
+		pos_text = wall.x * ct->wall.width / (int)(wall.x + 1);
+		src = define_rect((int)pos_text, 0, 1, ct->wall.height);
+		if (SDL_RenderCopy(ct->rend, ct->wall.motif_green, &src, &dst) < 0)
+			quit("SDL_SetRenderCopy GREEN failed\n", ct);
+	}
+	else if (((int)(wall.x * 10000.0) % 10000) == 0 && ((angle >= 270 && angle < 360) || (angle >= 0 && angle <= 90)))
+	{
+		pos_text = wall.y * ct->wall.width / (int)(wall.y + 1);
+		src = define_rect((int)pos_text, 0, 1, ct->wall.height);
+		if (SDL_RenderCopy(ct->rend, ct->wall.motif_blue, &src, &dst) < 0)
+			quit("SDL_SetRenderCopy BLUE failed\n", ct);
+	}
 }
 
 int		convert_mapdis_to_screendis(float distance, t_context *ct)
