@@ -71,18 +71,13 @@ void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 
 void	draw_cubes(t_context *ct)
 {
-	SDL_Rect		*rects;
+	SDL_Rect rects[ct->mpp.x * ct->mpp.y];
 	SDL_Point		pixel;
 	int				i;
 	int				j;
 
 	i = 0;
 	j = 0;
-	rects= (SDL_Rect*)malloc(sizeof(SDL_Rect) * ct->mpp.x * ct->mpp.y);  //free malloc code not written yet
-	if (rects == NULL)
-	{
-		quit("malloc in function drawcubes failed", ct);
-	}
 	while (j < ct->mpp.y)
 	{
 		while (i < ct->mpp.x)
