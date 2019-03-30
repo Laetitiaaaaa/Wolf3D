@@ -31,7 +31,7 @@ SRC = loop.c \
 	  draw_background.c \
 	  menu.c \
 	  draw_3d.c \
-
+	  quit.c \
 
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
@@ -44,7 +44,8 @@ LIB_DIR = ./libft \
 
 FRAMEWORK = OpenGL AppKit
 
-CC = gcc -g -ggdb
+CC = gcc
+#-g -ggdb
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
@@ -53,7 +54,7 @@ IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) -I libraries/dist/include -I /usr/
 CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
-  -L /usr/local/Cellar/sdl2/2.0.9/lib \
+#  -L /usr/local/Cellar/sdl2/2.0.9/lib \
   -L libraries/dist/lib
 
 HEADER = includes/wolf3d.h

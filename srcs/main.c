@@ -12,16 +12,7 @@
 
 #include "wolf3d.h"
 
-void	quit(char *msg, t_context *ct)
-{
-	ft_putendl(msg);
-	(void)ct;
-	//codes to add :free the structure and all its contents here
-	SDL_DestroyRenderer(ct->rend);
-	SDL_DestroyWindow(ct->window);
-	SDL_Quit();
-	exit(0);
-}
+
 
 int main(int argc, char const **argv)
 {
@@ -39,5 +30,5 @@ int main(int argc, char const **argv)
 	loop(&ct);
 
 
-	return 0;
+	return (0);
 }

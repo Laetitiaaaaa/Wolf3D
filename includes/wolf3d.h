@@ -49,9 +49,8 @@ typedef enum 		e_neg_or_posi
 
 typedef struct		s_map_params
 {
-	int				x;  // x and y are the number of points  for map 42, x = 10 y = 11
+	int				x;  // x and y are the number of points  Ex : for map 42, x = 10 y = 11
 	int				y;
-//	int				ret;
 	int				**map;
 }					t_map_params;
 
@@ -80,10 +79,12 @@ typedef struct		s_context
 	int				choose_inter;
 }					t_context;
 
-void				quit_map(char *msg);
-int					load_map(t_context *ct, const char *argv);
-int					init(t_context *ct, const char *argv);
+void				load_map(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
+void				quit_nothing_to_free(char *msg);
+void				free_map(t_context *ct);
+
+int					init(t_context *ct, const char *argv);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
 double				convert_degree_to_radian(double angle);
