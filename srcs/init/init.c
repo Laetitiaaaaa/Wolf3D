@@ -12,20 +12,11 @@
 
 #include "wolf3d.h"
 
-
-// error information for maps
-void	error_info(int x)
+void	init_struct(t_context *ct)
 {
-	if (x == -2)
-		ft_putendl("map file should not be empty");
-	if (x == -3)
-		ft_putendl("content of map file is not right");
-	if (x == -1)
-		ft_putendl("error");
-	if (x == -4)
-		ft_putendl("error:the LENGTH OF EACH LINE SHOULD BE THE SAMe");
+	ct->mpp.map = NULL;
+	ct->window = NULL;
 }
-
 
 void	init_sdl(t_context *ct)
 {
@@ -60,16 +51,31 @@ void	init_sdl(t_context *ct)
 	SDL_FreeSurface(ct->surface);
 }
 
+void	load_texture_backgr(t_context *ct)
+{
+	SDL_Surface	*tmp;
+
+	tmp = SDL_LoadBMP("./srcs/init/Floor.bmp");
+	if (tmp == NULL)
+		quit("Error SDL_LoadBMP", ct);
+	ct->tex_ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
+	if (ct->tex_ground == NULL)
+		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
+	SDL_FreeSurface(tmp);
+	tmp = SDL_LoadBMP("./srcs/init/Sky.bmp");
+	if (tmp == NULL)
+		quit("Error SDL_LoadBMP", ct);
+	ct->tex_sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
+	if (ct->tex_sky == NULL)
+		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
+	SDL_FreeSurface(tmp);
+}
+
+
 int		init(t_context *ct, const char *argv)
 {
-	int		ret;
-
-	ret = load_map(ct, argv);
-	if (ret == -1)
-	{
-		quit("error", ct);
-		return (0);
-	}
+	init_struct(ct);
+	load_map(ct, argv);
 /// ---------unleve les commentaires pour affichier le map
 	// printf("mppx et mppy(%d, %d)\n", ct->mpp.x, ct->mpp.y);
 	// int	i = 0;
@@ -88,6 +94,7 @@ int		init(t_context *ct, const char *argv)
 // ---------------------------------
 	init_event(ct);
 	init_sdl(ct);
+	load_texture_backgr(ct);
 
 	return (0);
 }

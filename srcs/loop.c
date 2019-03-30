@@ -25,8 +25,10 @@ void		loop(t_context *ct)
 		{
 			if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
 				ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
+			// SDL_Delay(20);
 		}
 		key_events(ct, state);
+		angle_limit(ct);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(ct->rend);
 		choose_interface(ct);
@@ -46,10 +48,17 @@ void	choose_interface(t_context *ct)
 		draw_background(ct);
 		draw_wall(ct);
 	}
-	if (ct->choose_inter == MENU)
-	{
-		print_menu(ct);
-	}	
+	// if (ct->choose_inter == MENU)
+	// {
+	// 	print_menu(ct);
+	// }
+}
+void	angle_limit(t_context *ct)
+{
+	while (ct->cam.angle >= 360)
+		ct->cam.angle = ct->cam.angle - 360;
+	while (ct->cam.angle < 0)
+		ct->cam.angle = ct->cam.angle + 360;
 }
 
 void	key_events(t_context *ct, Uint8 *state)
