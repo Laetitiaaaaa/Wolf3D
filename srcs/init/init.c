@@ -28,6 +28,27 @@ void	init_sdl(t_context *ct)
 
 }
 
+void	load_texture_backgr(t_context *ct)
+{
+	SDL_Surface	*tmp;
+
+	tmp = SDL_LoadBMP("./srcs/init/Floor.bmp");
+	if (tmp == NULL)
+		quit("Error SDL_LoadBMP", ct);
+	ct->tex_ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
+	if (ct->tex_ground == NULL)
+		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
+	SDL_FreeSurface(tmp);
+	tmp = SDL_LoadBMP("./srcs/init/Sky.bmp");
+	if (tmp == NULL)
+		quit("Error SDL_LoadBMP", ct);
+	ct->tex_sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
+	if (ct->tex_sky == NULL)
+		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
+	SDL_FreeSurface(tmp);
+
+}
+
 
 int		init(t_context *ct, const char *argv)
 {
@@ -51,6 +72,7 @@ int		init(t_context *ct, const char *argv)
 // ---------------------------------
 	init_event(ct);
 	init_sdl(ct);
+	load_texture_backgr(ct);
 
 	return (0);
 }

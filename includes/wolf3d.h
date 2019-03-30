@@ -21,7 +21,9 @@
 
 # define XWIN 1000.0
 # define YWIN 800.0
-# define XIMG_SKY 4000.0
+# define X_SKY 2000
+# define Y_SKY 400
+# define X_CUT_SKY 600
 
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
@@ -73,6 +75,10 @@ typedef struct		s_context
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	t_camera		cam;
+	SDL_Texture		*tex_ground;
+	SDL_Texture		*tex_sky;
+
+
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
 	SDL_Texture		*texture;
