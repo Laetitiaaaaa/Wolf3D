@@ -24,7 +24,7 @@ void		draw_background(t_context *ct)
 	SDL_Rect src_sky;
 
 	draw_ground(ct);
-	src_sky.x = (int)(1400.0 -  1400.0 * ct->cam.angle / 360.0);
+	src_sky.x = (X_SKY - X_CUT_SKY) - ((X_SKY - X_CUT_SKY) * ct->cam.angle / 360 );
 	src_sky.y = 0;
 	src_sky.w = X_CUT_SKY;
 	src_sky.h = Y_SKY;
