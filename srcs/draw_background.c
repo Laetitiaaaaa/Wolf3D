@@ -22,22 +22,11 @@ void		draw_background(t_context *ct)
 {
 	SDL_Rect dst_sky = {0, 0, XWIN, YWIN / 2};
 	SDL_Rect src_sky;
+
 	draw_ground(ct);
-
-
-
-	// printf("%f\n", ct->cam.angle );
-	src_sky.x = (X_SKY - X_CUT_SKY) - ((X_SKY - X_CUT_SKY)/ 360 ) * ct->cam.angle;
-	if (src_sky.x < 0)
-		src_sky.x += (X_SKY - X_CUT_SKY) ;
-	if (src_sky.x > (X_SKY - X_CUT_SKY))
-		src_sky.x = 0;
-
-
-	// printf("src.x :%d   angle:%f\n", src_sky.x, ct->cam.angle);
+	src_sky.x = (int)(1400.0 -  1400.0 * ct->cam.angle / 360.0);
 	src_sky.y = 0;
 	src_sky.w = X_CUT_SKY;
 	src_sky.h = Y_SKY;
 	SDL_RenderCopy(ct->rend, ct->tex_sky, &src_sky, &dst_sky);
-
 }
