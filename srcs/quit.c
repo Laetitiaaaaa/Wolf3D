@@ -12,34 +12,31 @@
 
 #include "wolf3d.h"
 
-void				quit_map(char *msg, t_context *ct)
+void				free_map(t_context *ct)
 {
 	int		i;
 
 	i = 0;
-	while (i < ct->mpp.y)
+	while ((i < ct->mpp.y) && (ct->mpp.map[i] != NULL))
 	{
 		free(ct->mpp.map[i]);
 		i++;
 	}
 	free(ct->mpp.map);
-	ft_putendl(msg);
-	exit(0);
 }
 
-void				quit_without_malloc(char *msg)
+void				quit_nothing_to_free(char *msg)
 {
 	ft_putendl(msg);
 	exit(0);
 }
 
-void	quit_sdl(char *msg, t_context *ct)
+void				quit(char *msg, t_context *ct)
 {
 	ft_putendl(msg);
-	(void)ct;
-	//codes to add :free the structure and all its contents here
-	SDL_DestroyRenderer(ct->rend);
-	SDL_DestroyWindow(ct->window);
+	ct->mpp.map != NULL ? free_map(ct) : 0;
+	ct->window != NULL ? SDL_DestroyWindow(ct->window) : 0;
+	ct->rend != NULL ?	SDL_DestroyRenderer(ct->rend) : 0;
 	SDL_Quit();
 	exit(0);
 }

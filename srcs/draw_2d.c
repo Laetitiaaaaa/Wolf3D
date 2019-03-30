@@ -71,7 +71,7 @@ void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 
 void	draw_cubes(t_context *ct)
 {
-	SDL_Rect rects[ct->mpp.x * ct->mpp.y];
+	SDL_Rect 		rects[ct->mpp.x * ct->mpp.y];
 	SDL_Point		pixel;
 	int				i;
 	int				j;

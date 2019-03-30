@@ -83,7 +83,6 @@ void				load_map(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
 void				quit_nothing_to_free(char *msg);
 void				free_map(t_context *ct);
-
 int					init(t_context *ct, const char *argv);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
