@@ -128,13 +128,13 @@ float				dda_return_distance(t_context *ct, float angle);
 void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
 
-void		draw_ground(t_context *ct);
-float	angle_limit(float angle);
-void	draw_sprite_in_2d(t_context *ct);
-void		sprite_visible(t_context *ct, SDL_Point to_int);
+void				draw_ground(t_context *ct);
+float				angle_limit(float angle);
+void				draw_sprite_in_2d(t_context *ct);
+void				sprite_visible(t_context *ct, SDL_Point to_int);
 
-void	draw_sprite_in_3d(t_context *ct, float angle, int x_pixel);
-void	load_texture_obj(t_context *ct);
+void				draw_sprite_in_3d(t_context *ct, float angle, int x_pixel);
+void				load_texture_obj(t_context *ct);
 
 
 
