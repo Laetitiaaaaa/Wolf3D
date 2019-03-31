@@ -19,13 +19,14 @@ float		dda_return_distance(t_context *ct, float angle) // fisheye corrected in t
 	float 			distance_ver;
 	float 			distance_hor;
 
-
 	posi_ver = vertical_wall_position_calcu(ct, angle);
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
-	distance_ver = ft_float_abs((posi_ver.x - ct->cam.posi.x) * cos(convert_degree_to_radian(ct->cam.angle)))
-	+ ft_float_abs((posi_ver.y - ct->cam.posi.y) * sin(convert_degree_to_radian(ct->cam.angle)));
-	distance_hor = ft_float_abs((posi_hor.x - ct->cam.posi.x) * cos(convert_degree_to_radian(ct->cam.angle)))
-	+ ft_float_abs((posi_hor.y - ct->cam.posi.y) * sin(convert_degree_to_radian( ct->cam.angle)));
+	distance_ver = sqrt(pow(posi_ver.x - ct->cam.posi.x, 2)
+		+ pow(posi_ver.y - ct->cam.posi.y, 2))
+	* ft_float_abs(cos(convert_degree_to_radian(angle - ct->cam.angle)));
+	distance_hor = sqrt(pow(posi_hor.x - ct->cam.posi.x, 2)
+		+ pow(posi_hor.y - ct->cam.posi.y, 2))
+	* ft_float_abs(cos(convert_degree_to_radian(angle - ct->cam.angle)));
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (NO_WALL);
 	else if (posi_ver.x == NO_WALL)
@@ -49,8 +50,6 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 	distance_ver = INITIAL;
 	posi_ver = vertical_wall_position_calcu(ct, angle);
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
-
-
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (posi_ver);
 	else if (posi_ver.x == NO_WALL)
@@ -59,8 +58,10 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 		return (posi_ver);
 	else
 	{
-		distance_ver = sqrt(pow(posi_ver.x - ct->cam.posi.x, 2) + pow(posi_ver.y - ct->cam.posi.y, 2));
-		distance_hor = sqrt(pow(posi_hor.x - ct->cam.posi.x, 2) + pow(posi_hor.y - ct->cam.posi.y, 2));
+		distance_ver = sqrt(pow(posi_ver.x - ct->cam.posi.x, 2)
+			+ pow(posi_ver.y - ct->cam.posi.y, 2));
+		distance_hor = sqrt(pow(posi_hor.x - ct->cam.posi.x, 2)
+			+ pow(posi_hor.y - ct->cam.posi.y, 2));
 		return (distance_ver < distance_hor ? posi_ver : posi_hor);
 	}
 }
@@ -68,10 +69,6 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 float 	set_neg_posi(t_context *ct, float angle)
 {
 	angle = angle_limit(angle);
-	while (angle >= 360)
-		angle = angle - 360;
-	while (angle < 0)
-		angle = angle + 360;
 	if ((angle > 0) && (angle < 90))
 	{
 		ct->cam.neg_posi.x = POSITIVE;
