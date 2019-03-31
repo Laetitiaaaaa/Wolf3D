@@ -34,20 +34,22 @@ void	draw_sprite_in_2d(t_context *ct)
 	ct->sp_visible = FALSE;
 }
 
-// void	draw_sprite_in_3d(t_context *ct, float angle)
-// {
-// 	// (void)ct;
-// 	// (void)angle;
-// 	float	distance;
-// 	int		sp_height;
-// 	SDL_Rect	rect;
+void	draw_sprite_in_3d(t_context *ct, float angle, int x_pixel)
+{
+	// (void)ct;
+	// (void)angle;
+	float	distance;
+	int		sp_height;
+	SDL_Rect	dst;
 
-// 	distance = sqrt(pow(ct->sp_posi.x - ct->cam.posi.x, 2)	+ pow(ct->sp_posi.y - ct->cam.posi.y, 2));
-// 	sp_height = convert_mapdis_to_screendis(distance, ct);
+	distance = sqrt(pow(ct->sp_posi.x - ct->cam.posi.x, 2)	+ pow(ct->sp_posi.y - ct->cam.posi.y, 2));
+	sp_height = convert_mapdis_to_screendis(distance, ct);
 
-// 	rect.w = sp_height;
-// 	rect.h = sp_height;
-// 	SDL_SetRenderDrawColor(ct->rend, 211, 77 , 14, SDL_ALPHA_OPAQUE);
-// 	SDL_RenderFillRect(ct->rend, &rect);
-// 	ct->sp_visible = FALSE;
-// }
+	(void)angle;
+	dst.x = x_pixel;
+	dst.y = YWIN / 2 ;
+	dst.w = sp_height;
+	dst.h = sp_height;
+	SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
+	ct->sp_visible = FALSE;
+}

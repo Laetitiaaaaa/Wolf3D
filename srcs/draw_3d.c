@@ -15,15 +15,15 @@ void	draw_wall(t_context *ct)
 		angle -= 60.0 / ((float)XWIN);
 		x_pixel++;
 		draw_line_wall(ct, angle, x_pixel);
-		// if ((ct->sp_visible == TRUE) && (count == 0))
-		// {
-		// 	count++;
-		// 	draw_sprite_in_3d(ct, angle);
-		// }
+		if ((ct->sp_visible == TRUE) && (count == 0))
+		{
+			count++;
+			draw_sprite_in_3d(ct, angle, x_pixel);
+		}
 	}
 }
 
-void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
+void	draw_line_wall(t_context *ct, float angle, int x_pixel)
 {
 	float		distance;
 	int			wall_height;

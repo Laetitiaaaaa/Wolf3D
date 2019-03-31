@@ -17,6 +17,7 @@
 # include <math.h>
 # include "libft.h"
 # include "SDL.h"
+# include "SDL_image.h"
 # include <stdio.h>
 
 # define XWIN 1000.0
@@ -132,7 +133,8 @@ float	angle_limit(float angle);
 void	draw_sprite_in_2d(t_context *ct);
 void		sprite_visible(t_context *ct, SDL_Point to_int);
 
-void	draw_sprite_in_3d(t_context *ct, float angle);
+void	draw_sprite_in_3d(t_context *ct, float angle, int x_pixel);
+void	load_texture_obj(t_context *ct);
 
 
 
