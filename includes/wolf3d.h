@@ -76,7 +76,7 @@ typedef struct 		s_texture
 	SDL_Texture		*ground;
 	SDL_Texture		*sky;
 	SDL_Texture		*key;
-}
+}					t_texture;
 
 
 typedef struct		s_context
@@ -85,7 +85,7 @@ typedef struct		s_context
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	t_camera		cam;
-	t_texture
+	t_texture		tex;
 	int				sp_visible;
 	t_floatpoint	sp_posi;
 
