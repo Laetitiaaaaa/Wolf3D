@@ -53,7 +53,7 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 	int				count;
 
 	count = 0;
-	while (ct->mpp.map[to_int.y][to_int.x] == 0)
+	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)
 	{
 		if (count == 0)
 		{
@@ -64,6 +64,7 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 			detect = continue_vertical_step(ct, angle, detect);
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
+
 		if (angle > 90 && angle < 270)
 			to_int.x--;
 		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y <= 0 || detect.y >= ct->mpp.y)
@@ -71,6 +72,13 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
 			return (detect);
+		}
+		if (ct->mpp.map[to_int.y][to_int.x] == 2)
+		{
+			ct->sprite_visible = TRUE;
+			// printf("to int x y(%d, %d)\n", to_int.x, to_int.y );
+
+			ct->sprite_posi = to_int;
 		}
 	}
 	return (detect);

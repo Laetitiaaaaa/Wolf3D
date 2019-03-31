@@ -53,7 +53,7 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 	int				count;
 
 	count = 0;
-	while (ct->mpp.map[to_int.y][to_int.x] == 0)  //attention for -1 here
+	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)  //attention for -1 here
 	{
 		if (count == 0)
 		{
@@ -64,10 +64,7 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 			detect = continue_horizontal_step(ct, angle, detect);
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
-		if (ct->mpp.map[to_int.y][to_int.x] == 2)
-		{
-			ct->sprite_visible = TRUE;
-		}
+
 		if (angle > 0 && angle < 180)
 			to_int.y--;
 		if (detect.x >= ct->mpp.x || detect.x <= 0 || detect.y < 1 || detect.y > ct->mpp.y - 1)
@@ -75,6 +72,13 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
 			return(detect) ;
+		}
+		if (ct->mpp.map[to_int.y][to_int.x] == 2)
+		{
+			ct->sprite_visible = TRUE;
+			// printf("to int x y(%d, %d)\n", to_int.x, to_int.y );
+
+			ct->sprite_posi = to_int;
 		}
 	}
 	return (detect);

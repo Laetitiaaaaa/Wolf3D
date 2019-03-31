@@ -41,6 +41,7 @@ void	choose_interface(t_context *ct)
 
 	if (ct->choose_inter == MAP)
 	{
+		// ct->sprite_visible = FALSE;
 		draw_2d(ct);
 	}
 	if (ct->choose_inter == GAME)
@@ -53,14 +54,7 @@ void	choose_interface(t_context *ct)
 	// 	print_menu(ct);
 	// }
 }
-float	angle_limit(float angle)
-{
-	while (angle >= 360)
-		angle = angle - 360;
-	while (angle < 0)
-		angle = angle + 360;
-	return (angle);
-}
+
 
 void	key_events(t_context *ct, Uint8 *state)
 {
