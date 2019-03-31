@@ -71,14 +71,21 @@ typedef struct  	s_camera
 	SDL_Point		neg_posi;
 }					t_camera;
 
+typedef struct 		s_texture
+{
+	SDL_Texture		*ground;
+	SDL_Texture		*sky;
+	SDL_Texture		*key;
+}
+
+
 typedef struct		s_context
 {
 	t_map_params	mpp;
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	t_camera		cam;
-	SDL_Texture		*tex_ground;
-	SDL_Texture		*tex_sky;
+	t_texture
 	int				sp_visible;
 	t_floatpoint	sp_posi;
 
