@@ -74,13 +74,11 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 			return(detect) ;
 		}
 		if (ct->mpp.map[to_int.y][to_int.x] == 2)
-		{
-			ct->sp_visible = TRUE;
-			ct->sp_posi = to_int;
-		}
+			sprite_visible(ct, to_int);
 	}
 	return (detect);
 }
+
 
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle)
 {

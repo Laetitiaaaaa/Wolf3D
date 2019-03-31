@@ -37,6 +37,7 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	distance = dda_return_distance(ct, angle);
 	if (distance < 0) // distance will be negative if no wall
 		return ;
+
 	wall_height = convert_mapdis_to_screendis(distance, ct);
 	top.x = x_pixel;
 	top.y = (YWIN - wall_height) / 2;
@@ -44,6 +45,8 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	down.y = (YWIN + wall_height) / 2;
 	SDL_SetRenderDrawColor(ct->rend, 0, 51 , 102, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
+	// if (ct->sp_visible == TRUE)
+	// 	draw_sprite_in_3d(ct, angle);
 }
 
 int		convert_mapdis_to_screendis(float distance, t_context *ct)

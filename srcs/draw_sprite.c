@@ -12,22 +12,29 @@
 
 #include "wolf3d.h"
 
+void		sprite_visible(t_context *ct, SDL_Point to_int)
+{
+	ct->sp_visible = TRUE;
+	ct->sp_posi.x = (float)to_int.x + 0.5;
+	ct->sp_posi.y = (float)to_int.y + 0.5;
+}
+
+
 void	draw_sprite_in_2d(t_context *ct)
 {
-	SDL_Rect		rec_sp;
 	SDL_Point		pixel;
 
 	pixel = convert_plan_to_pixel(ct->sp_posi.x, ct->sp_posi.y, ct);
-	rec_sp.x = pixel.x;
-	rec_sp.y = pixel.y;
-	rec_sp.w = (XWIN / ct->mpp.x) - 20;
-	rec_sp.h = (YWIN / ct->mpp.y) - 20;
 	SDL_SetRenderDrawColor(ct->rend, 134, 244, 66, SDL_ALPHA_OPAQUE);
-	SDL_RenderFillRect(ct->rend, &rec_sp);
+	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
+	SDL_RenderDrawPoint(ct->rend, pixel.x - 1, pixel.y);
+	SDL_RenderDrawPoint(ct->rend, pixel.x + 1, pixel.y);
+	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y - 1);
+	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y + 1);
 	ct->sp_visible = FALSE;
 }
 
-// void	draw_sprite_in_3d(t_context *ct)
+// void	draw_sprite_in_3d(t_context *ct, float angle)
 // {
 // 	float	distance;
 // 	int		sp_height;
@@ -40,4 +47,5 @@ void	draw_sprite_in_2d(t_context *ct)
 // 	rect.h = sp_height;
 // 	SDL_SetRenderDrawColor(ct->rend, 211, 77 , 14, SDL_ALPHA_OPAQUE);
 // 	SDL_RenderFillRect(ct->rend, &rect);
+// 	ct->sp_visible = FALSE;
 // }

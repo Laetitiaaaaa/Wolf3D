@@ -28,6 +28,7 @@
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 # define WALL_CUBE 1
+# define SPRITE_CUBE 2
 # define INITIAL 0
 
 typedef enum 		e_interface
@@ -79,7 +80,7 @@ typedef struct		s_context
 	SDL_Texture		*tex_ground;
 	SDL_Texture		*tex_sky;
 	int				sp_visible;
-	SDL_Point		sp_posi;
+	t_floatpoint	sp_posi;
 
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
@@ -122,6 +123,7 @@ void				key_events_movein_3d(t_context *ct, Uint8 *state);
 void		draw_ground(t_context *ct);
 float	angle_limit(float angle);
 void	draw_sprite_in_2d(t_context *ct);
+void		sprite_visible(t_context *ct, SDL_Point to_int);
 
 
 

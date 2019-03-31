@@ -50,8 +50,6 @@ void	choose_interface(t_context *ct)
 	{
 		draw_background(ct);
 		draw_wall(ct);
-		// if (ct->sp_visible == TRUE)
-		// 	draw_sprite_in_3d(ct);
 	}
 	// if (ct->choose_inter == MENU)
 	// {
