@@ -31,24 +31,9 @@ void		draw_2d(t_context *ct)
 		angle -= 30.0 / (float)(XWIN / 2);
 		draw_ray(ct, angle);
 	}
-	if (ct->sprite_visible == TRUE)
-		draw_sprite_in_2d(ct);
 }
 
-void	draw_sprite_in_2d(t_context *ct)
-{
-	SDL_Rect		rec_sp;
-	SDL_Point		pixel;
 
-	pixel = convert_plan_to_pixel(ct->sprite_posi.x, ct->sprite_posi.y, ct);
-	rec_sp.x = pixel.x;
-	rec_sp.y = pixel.y;
-	rec_sp.w = (XWIN / ct->mpp.x) - 20;
-	rec_sp.h = (YWIN / ct->mpp.y) - 20;
-	SDL_SetRenderDrawColor(ct->rend, 134, 244, 66, SDL_ALPHA_OPAQUE);
-	SDL_RenderFillRect(ct->rend, &rec_sp);
-	ct->sprite_visible = FALSE;
-}
 
 void	draw_ray(t_context *ct, float angle)
 {

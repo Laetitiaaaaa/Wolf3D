@@ -78,8 +78,8 @@ typedef struct		s_context
 	t_camera		cam;
 	SDL_Texture		*tex_ground;
 	SDL_Texture		*tex_sky;
-	int				sprite_visible;
-	SDL_Point		sprite_posi;
+	int				sp_visible;
+	SDL_Point		sp_posi;
 
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;

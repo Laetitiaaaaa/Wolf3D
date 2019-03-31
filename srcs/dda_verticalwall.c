@@ -75,10 +75,9 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 		}
 		if (ct->mpp.map[to_int.y][to_int.x] == 2)
 		{
-			ct->sprite_visible = TRUE;
-			// printf("to int x y(%d, %d)\n", to_int.x, to_int.y );
+			ct->sp_visible = TRUE;
 
-			ct->sprite_posi = to_int;
+			ct->sp_posi = to_int;
 		}
 	}
 	return (detect);
