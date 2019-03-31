@@ -125,6 +125,7 @@ float	angle_limit(float angle);
 void	draw_sprite_in_2d(t_context *ct);
 void		sprite_visible(t_context *ct, SDL_Point to_int);
 
+void	draw_sprite_in_3d(t_context *ct, float angle);
 
 
 

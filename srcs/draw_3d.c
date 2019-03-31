@@ -6,24 +6,34 @@ void	draw_wall(t_context *ct)
 	float	angle;
 	int		x_pixel;
 
-	angle = ct->cam.angle;
-	x_pixel = XWIN / 2;
-	draw_line_wall(ct, angle, x_pixel);
-	while (x_pixel >= 0)
+	angle = ct->cam.angle + 30;
+	x_pixel = 0;
+	while (x_pixel < XWIN)
 	{
-		x_pixel--;
-		angle += 30.0 / (float)(XWIN / 2);
+		angle -= 60.0 / ((float)XWIN);
+		x_pixel++;
 		draw_line_wall(ct, angle, x_pixel);
 
 	}
-	angle = ct->cam.angle;
-	x_pixel = XWIN / 2;
-	while (x_pixel <= XWIN)
-	{
-		x_pixel++;
-		angle -= 30.0 / (float)(XWIN / 2);
-		draw_line_wall(ct, angle, x_pixel);
-	}
+
+	// angle = ct->cam.angle;
+	// x_pixel = XWIN / 2;
+	// draw_line_wall(ct, angle, x_pixel);
+	// while (x_pixel >= 0)
+	// {
+	// 	x_pixel--;
+	// 	angle += 30.0 / (float)(XWIN / 2);
+	// 	draw_line_wall(ct, angle, x_pixel);
+
+	// }
+	// angle = ct->cam.angle;
+	// x_pixel = XWIN / 2;
+	// while (x_pixel <= XWIN)
+	// {
+	// 	x_pixel++;
+	// 	angle -= 30.0 / (float)(XWIN / 2);
+	// 	draw_line_wall(ct, angle, x_pixel);
+	// }
 }
 
 void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
@@ -45,8 +55,8 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	down.y = (YWIN + wall_height) / 2;
 	SDL_SetRenderDrawColor(ct->rend, 0, 51 , 102, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
-	// if (ct->sp_visible == TRUE)
-	// 	draw_sprite_in_3d(ct, angle);
+	if (ct->sp_visible == TRUE)
+		draw_sprite_in_3d(ct, angle);
 }
 
 int		convert_mapdis_to_screendis(float distance, t_context *ct)
