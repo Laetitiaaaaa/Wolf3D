@@ -26,6 +26,7 @@ SRC = loop.c \
 	  convert.c \
 	  dda.c \
 	  dda_horizontalwall.c \
+	  dda_verticalwall.c \
 	  init_event.c \
 	  draw_2d.c \
 	  draw_background.c \

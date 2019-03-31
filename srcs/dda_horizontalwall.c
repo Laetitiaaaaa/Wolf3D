@@ -14,20 +14,20 @@
 
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle)
 {
-	t_floatpoint	d;
+	t_floatpoint	delta;
 
 	angle = set_neg_posi(ct, angle);
 	if (angle > 0 && angle < 180)
 	{
-		d.y = ct->cam.posi.y -(float)(int)(ct->cam.posi.y);
-		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(angle)));
+		delta.y = ct->cam.posi.y -(float)(int)(ct->cam.posi.y);
+		delta.x = ft_float_abs(delta.y / tan(convert_degree_to_radian(angle)));
 	}
 	else
 	{
-		d.y = (float)(int)(ct->cam.posi.y) + 1 - ct->cam.posi.y;
-		d.x = ft_float_abs(d.y / tan(convert_degree_to_radian(angle)));
+		delta.y = (float)(int)(ct->cam.posi.y) + 1 - ct->cam.posi.y;
+		delta.x = ft_float_abs(delta.y / tan(convert_degree_to_radian(angle)));
 	}
-	return (d);
+	return (delta);
 }
 
 t_floatpoint		first_horizontal_step(t_context *ct, float angle, t_floatpoint detect)
