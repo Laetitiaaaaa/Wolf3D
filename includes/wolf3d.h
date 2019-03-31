@@ -118,7 +118,7 @@ void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
 
 void		draw_ground(t_context *ct);
-void	angle_limit(t_context *ct);
+float	angle_limit(float angle);
 
 
 

@@ -67,6 +67,7 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 
 float 	set_neg_posi(t_context *ct, float angle)
 {
+	angle = angle_limit(angle);
 	while (angle >= 360)
 		angle = angle - 360;
 	while (angle < 0)
