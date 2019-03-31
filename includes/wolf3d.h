@@ -77,7 +77,7 @@ typedef struct		s_context
 	t_camera		cam;
 	SDL_Texture		*tex_ground;
 	SDL_Texture		*tex_sky;
-
+	int				sprite = FALSE;
 
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;

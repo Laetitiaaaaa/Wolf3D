@@ -12,8 +12,6 @@
 
 #include "wolf3d.h"
 
-
-
 int main(int argc, char const **argv)
 {
 	t_context	ct;
@@ -23,12 +21,7 @@ int main(int argc, char const **argv)
 		ft_putendl("Usage : ./wolf3d <map file name>");
 		return (0);
 	}
-
 	init(&ct, argv[1]);
-
-
 	loop(&ct);
-
-
 	return (0);
 }

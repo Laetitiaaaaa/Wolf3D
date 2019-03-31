@@ -64,7 +64,7 @@ float	angle_limit(float angle)
 
 void	key_events(t_context *ct, Uint8 *state)
 {
-	state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
+	state[SDL_SCANCODE_ESCAPE] ? quit("quit", ct) : 0;
 	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 0.15 : 0;
 	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 0.15 : 0;
 	key_events_movein_2d(ct, state);

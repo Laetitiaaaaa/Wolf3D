@@ -49,17 +49,9 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 int		convert_mapdis_to_screendis(float distance, t_context *ct)
 {
 	float	dis_max;
-	// float	dis_min;
 	int		wall_height;
 
 	dis_max = sqrt(pow(ct->mpp.x, 2) + pow(ct->mpp.y, 2));
-	// dis_min = 0.1;
-	// if (distance < dis_min)
-	// 	distance = dis_min;
-
-	// wall_height = YWIN - ((distance - dis_min) / (dis_max - dis_min) * YWIN) + 10;
-
-
 	wall_height = (int)((dis_max - distance) * 20.0 / distance) + 5;
 	if (wall_height > YWIN)
 		wall_height = YWIN;
