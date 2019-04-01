@@ -27,3 +27,12 @@ double		convert_degree_to_radian(double angle)
 {
 	return(((double)angle) * M_PI / (double)180);
 }
+
+float	angle_limit(float angle)
+{
+	while (angle >= 360)
+		angle = angle - 360;
+	while (angle < 0)
+		angle = angle + 360;
+	return (angle);
+}

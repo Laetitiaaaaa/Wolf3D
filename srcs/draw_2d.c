@@ -18,20 +18,15 @@ void		draw_2d(t_context *ct)
 
 	draw_cubes(ct);
 	draw_camera(ct);
-	draw_ray(ct, ct->cam.angle);
-	angle = ct->cam.angle;
-	while (angle <= (ct->cam.angle + 30.0))
+	angle = ct->cam.angle + 30;
+	while (angle >= (ct->cam.angle - 30.0))
 	{
-		angle += 30.0 / (float)(XWIN / 2);
-		draw_ray(ct, angle);
-	}
-	angle = ct->cam.angle;
-	while (angle >= ct->cam.angle - 30.0)
-	{
-		angle -= 30.0 / (float)(XWIN / 2);
+		angle -= 60.0 / (float)XWIN;
 		draw_ray(ct, angle);
 	}
 }
+
+
 
 void	draw_ray(t_context *ct, float angle)
 {

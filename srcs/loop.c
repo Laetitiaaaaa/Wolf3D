@@ -27,7 +27,7 @@ void	loop(t_context *ct)
 			// SDL_Delay(20);
 		}
 		key_events(ct, state);
-		angle_limit(ct);
+		ct->cam.angle = angle_limit(ct->cam.angle);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(ct->rend);
 		choose_interface(ct);
@@ -38,28 +38,31 @@ void	loop(t_context *ct)
 void	choose_interface(t_context *ct)
 {
 	if (ct->choose_inter == MAP)
+	{
+
 		draw_2d(ct);
-	else if (ct->choose_inter == GAME)
+		if (ct->sp_visible == TRUE)
+			draw_sprite_in_2d(ct);
+	}
+	if (ct->choose_inter == GAME)
 	{
 		draw_background(ct);
 		draw_wall(ct);
+		if (ct->sp_visible == TRUE)
+		{
+			draw_sprite_in_3d(ct);
+		}
 	}
 	// if (ct->choose_inter == MENU)
 	// {
 	// 	print_menu(ct);
 	// }
 }
-void	angle_limit(t_context *ct)
-{
-	while (ct->cam.angle >= 360)
-		ct->cam.angle = ct->cam.angle - 360;
-	while (ct->cam.angle < 0)
-		ct->cam.angle = ct->cam.angle + 360;
-}
+
 
 void	key_events(t_context *ct, Uint8 *state)
 {
-	state[SDL_SCANCODE_ESCAPE] ? exit(0) : 0;
+	state[SDL_SCANCODE_ESCAPE] ? quit("quit", ct) : 0;
 	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 0.15 : 0;
 	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 0.15 : 0;
 	key_events_movein_2d(ct, state);

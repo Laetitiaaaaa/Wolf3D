@@ -15,7 +15,7 @@
 void		draw_ground(t_context *ct)
 {
 	SDL_Rect dst_ground = {0, YWIN / 2, XWIN, YWIN / 2};
-	SDL_RenderCopy(ct->rend, ct->tex_ground, NULL, &dst_ground);
+	SDL_RenderCopy(ct->rend, ct->tex.ground, NULL, &dst_ground);
 }
 
 void		draw_background(t_context *ct)
@@ -28,5 +28,5 @@ void		draw_background(t_context *ct)
 	src_sky.y = 0;
 	src_sky.w = X_CUT_SKY;
 	src_sky.h = Y_SKY;
-	SDL_RenderCopy(ct->rend, ct->tex_sky, &src_sky, &dst_sky);
+	SDL_RenderCopy(ct->rend, ct->tex.sky, &src_sky, &dst_sky);
 }

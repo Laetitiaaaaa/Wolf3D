@@ -18,28 +18,34 @@ void	draw_wall(t_context *ct)
 	int		x_pixel;
 
 	SDL_QueryTexture(ct->wall.motif_red, NULL, NULL, &ct->wall.width, &ct->wall.height);
-	angle = ct->cam.angle;
-	x_pixel = XWIN / 2;
-	while (x_pixel >= 0)
-	{
-		angle += 30.0 / (float)(XWIN / 2);
-		draw_line_wall(ct, angle, x_pixel);
-		x_pixel--;
-	}
-	angle = ct->cam.angle;
-	x_pixel = XWIN / 2;
+	// angle = ct->cam.angle;
+	// x_pixel = XWIN / 2;
+	// while (x_pixel >= 0)
+	// {
+	// 	angle += 30.0 / (float)(XWIN / 2);
+	// 	draw_line_wall(ct, angle, x_pixel);
+	// 	x_pixel--;
+	// }
+	// angle = ct->cam.angle;
+	// x_pixel = XWIN / 2;
+	// while (x_pixel < XWIN)
+	// {
+	// 	angle -= 30.0 / (float)(XWIN / 2);
+	angle = ct->cam.angle + 30;
+	x_pixel = 0;
 	while (x_pixel < XWIN)
 	{
-		angle -= 30.0 / (float)(XWIN / 2);
+		angle -= 60.0 / ((float)XWIN);
 		draw_line_wall(ct, angle, x_pixel);
 		x_pixel++;
 	}
+
 }
 
 SDL_Rect	define_rect(int x, int y, int w, int h)
 {
 	SDL_Rect	rect;
-	
+
 	rect.x = x;
 	rect.y = y;
 	rect.w = w;
@@ -58,7 +64,7 @@ void	copy_texture_wall(float wall_point, t_context *ct, SDL_Texture *wall_textur
 		quit("SDL_SetRenderCopy failed\n", ct);
 }
 
-void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
+void	draw_line_wall(t_context *ct, float angle, int x_pixel)
 {
 	float		distance;
 	int			wall_height;
@@ -68,7 +74,7 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	if ((distance = dda_return_distance(ct, angle)) < 0) // distance will be negative if no wall
 		return ;
 	wall_height = convert_mapdis_to_screendis(distance, ct);
-	ct->wall.dst = define_rect(x_pixel, (YWIN - wall_height) / 2, 1, wall_height);	
+	ct->wall.dst = define_rect(x_pixel, (YWIN - wall_height) / 2, 1, wall_height);
 	while (angle >= 360)
 		angle = angle - 360;
 	while (angle < 0)
@@ -82,23 +88,22 @@ void	draw_line_wall(t_context *ct, float angle, int	x_pixel)
 	else if (((int)(wall.x * 10000.0) % 10000) == 0 && ((angle >= 270 && angle < 360)
 		|| (angle >= 0 && angle <= 90)))
 		copy_texture_wall(wall.y, ct, ct->wall.motif_blue);
+	// top.x = x_pixel;
+	// top.y = (YWIN - wall_height) / 2;
+	// down.x = x_pixel;
+	// down.y = (YWIN + wall_height) / 2;
+	// SDL_SetRenderDrawColor(ct->rend, 0, 51 , 102, SDL_ALPHA_OPAQUE);
+	// SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
+
 }
 
 int		convert_mapdis_to_screendis(float distance, t_context *ct)
 {
 	float	dis_max;
-	// float	dis_min;
 	int		wall_height;
 
 	dis_max = sqrt(pow(ct->mpp.x, 2) + pow(ct->mpp.y, 2));
-	// dis_min = 0.1;
-	// if (distance < dis_min)
-	// 	distance = dis_min;
-
-	// wall_height = YWIN - ((distance - dis_min) / (dis_max - dis_min) * YWIN) + 10;
-
-
-	wall_height = (int)((dis_max - distance) * 50.0 / distance) + 5;
+	wall_height = (int)((dis_max - distance) * 50.0 / distance) + 5; //it was 20.0 rather than 50.0 before
 	if (wall_height > YWIN)
 		wall_height = YWIN;
 	return (wall_height);

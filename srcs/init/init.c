@@ -16,6 +16,8 @@ void	init_struct(t_context *ct)
 {
 	ct->mpp.map = NULL;
 	ct->window = NULL;
+	ct->sp_angle_min = 360.0;
+	ct->sp_angle_max = 0.0;
 }
 
 
@@ -36,11 +38,11 @@ SDL_Texture 	*init_texture(char *path, t_context *ct)
 void	init_sdl(t_context *ct)
 {
 	SDL_Init(SDL_INIT_EVERYTHING) != 0 ? quit("Initiation failed", ct) : 0;
+	IMG_Init(IMG_INIT_PNG);
 	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, XWIN, YWIN, SDL_WINDOW_SHOWN);
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
-	load_texture_wall(ct);
 }
 
 void	load_texture_wall(t_context *ct)
@@ -58,16 +60,29 @@ void	load_texture_backgr(t_context *ct)
 	tmp = SDL_LoadBMP("./srcs/init/Floor.bmp");
 	if (tmp == NULL)
 		quit("Error SDL_LoadBMP", ct);
-	ct->tex_ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (ct->tex_ground == NULL)
+	ct->tex.ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
+	if (ct->tex.ground == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
 	SDL_FreeSurface(tmp);
 	tmp = SDL_LoadBMP("./srcs/init/Sky.bmp");
 	if (tmp == NULL)
 		quit("Error SDL_LoadBMP", ct);
-	ct->tex_sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (ct->tex_sky == NULL)
+	ct->tex.sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
+	if (ct->tex.sky == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
+	SDL_FreeSurface(tmp);
+}
+
+void	load_texture_obj(t_context *ct)
+{
+	SDL_Surface	*tmp;
+
+	tmp =  IMG_Load("./srcs/init/Key.png");
+	if (tmp == NULL)
+		quit("Error IMG_Load Key.png", ct);
+	ct->tex.key = SDL_CreateTextureFromSurface(ct->rend, tmp);
+ 	if (ct->tex.key == NULL)
+		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
 	SDL_FreeSurface(tmp);
 }
 
@@ -95,6 +110,7 @@ int		init(t_context *ct, const char *argv)
 	init_event(ct);
 	init_sdl(ct);
 	load_texture_backgr(ct);
-
+	load_texture_obj(ct);
+	load_texture_wall(ct);
 	return (0);
 }
