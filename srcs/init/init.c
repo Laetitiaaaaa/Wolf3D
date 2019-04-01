@@ -48,24 +48,24 @@ void	init_sdl(t_context *ct)
 
 void	load_texture_wall(t_context *ct)
 {
-	ct->wall.motif_red = init_texture("./mariowallred.bmp", ct);
-	ct->wall.motif_yellow = init_texture("./mariowallyellow.bmp", ct);
-	ct->wall.motif_green = init_texture("./mariowallgreen.bmp", ct);
-	ct->wall.motif_blue = init_texture("./mariowallblue.bmp", ct);
+	ct->wall.motif_red = init_texture("./images/mariowallred.bmp", ct);
+	ct->wall.motif_yellow = init_texture("./images/mariowallyellow.bmp", ct);
+	ct->wall.motif_green = init_texture("./images/mariowallgreen.bmp", ct);
+	ct->wall.motif_blue = init_texture("./images/mariowallblue.bmp", ct);
 }
 
 void	load_texture_backgr(t_context *ct)
 {
 	SDL_Surface	*tmp;
 
-	tmp = SDL_LoadBMP("./srcs/init/Floor.bmp");
+	tmp = SDL_LoadBMP("./images/Floor.bmp");
 	if (tmp == NULL)
 		quit("Error SDL_LoadBMP", ct);
 	ct->tex.ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
 	if (ct->tex.ground == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
 	SDL_FreeSurface(tmp);
-	tmp = SDL_LoadBMP("./srcs/init/Sky.bmp");
+	tmp = SDL_LoadBMP("./images/Sky.bmp");
 	if (tmp == NULL)
 		quit("Error SDL_LoadBMP", ct);
 	ct->tex.sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
@@ -78,7 +78,7 @@ void	load_texture_obj(t_context *ct)
 {
 	SDL_Surface	*tmp;
 
-	tmp =  IMG_Load("./srcs/init/Key.png");
+	tmp =  IMG_Load("./images/Key.png");
 	if (tmp == NULL)
 		quit("Error IMG_Load Key.png", ct);
 	ct->tex.key = SDL_CreateTextureFromSurface(ct->rend, tmp);

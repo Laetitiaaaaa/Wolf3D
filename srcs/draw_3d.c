@@ -104,8 +104,6 @@ int		convert_mapdis_to_screendis(float distance, t_context *ct)
 
 	dis_max = sqrt(pow(ct->mpp.x, 2) + pow(ct->mpp.y, 2));
 	wall_height = (int)((dis_max - distance) * 50.0 / distance) + 5; //it was 20.0 rather than 50.0 before
-	if (wall_height > YWIN)
-		wall_height = YWIN;
 	return (wall_height);
 }
 
