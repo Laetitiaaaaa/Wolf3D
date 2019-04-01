@@ -29,9 +29,9 @@
 
 typedef enum 		e_interface
 {
-	MAP = 0,
+	MENU = 0,
 	GAME,
-	MENU,
+	MAP,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
 
@@ -78,7 +78,14 @@ typedef struct 		s_wall_texture
 	SDL_Texture		*motif_blue;
 	int 			width;
 	int 			height;
+	SDL_Rect 		dst;
 }					t_wall_texture;
+
+typedef struct 		s_menu
+{
+	SDL_Texture		*texture;
+	int 			in;
+}					t_menu;
 
 typedef struct		s_context
 {
@@ -86,9 +93,7 @@ typedef struct		s_context
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	t_camera		cam;
-	SDL_Surface		*surface;
-	SDL_Texture		*tmp;
-	SDL_Texture		*texture;
+	t_menu			menu;
 	t_wall_texture	wall;
 	int				choose_inter;
 }					t_context;
@@ -122,8 +127,8 @@ void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
 SDL_Rect			define_rect(int x, int y, int w, int h);
 SDL_Texture			*init_texture(char *path, t_context *ct);
-
-
+void				copy_texture_wall(float wall_point, t_context *ct, SDL_Texture *wall_texture);
+void 				load_texture_wall(t_context *ct);
 
 
 #endif

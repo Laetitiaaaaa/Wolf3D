@@ -30,13 +30,14 @@ void	error_info(int x)
 SDL_Texture 	*init_texture(char *path, t_context *ct)
 {
 	SDL_Texture 	*texture;
+	SDL_Surface 	*surface;
 
 	texture = NULL;
-	if (!(ct->surface = SDL_LoadBMP(path)))
-		quit("can't find mariowallred.bmp\n", ct);
-	if (!(texture = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
+	if (!(surface = SDL_LoadBMP(path)))
+		quit("wrong path\n", ct);
+	if (!(texture = SDL_CreateTextureFromSurface(ct->rend, surface)))
 		quit("texturefromsurface failed\n", ct);
-	SDL_FreeSurface(ct->surface);
+	SDL_FreeSurface(surface);
 	return (texture);
 }
 
@@ -47,6 +48,11 @@ void	init_sdl(t_context *ct)
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
+	load_texture_wall(ct);
+}
+
+void	load_texture_wall(t_context *ct)
+{
 	ct->wall.motif_red = init_texture("./mariowallred.bmp", ct);
 	ct->wall.motif_yellow = init_texture("./mariowallyellow.bmp", ct);
 	ct->wall.motif_green = init_texture("./mariowallgreen.bmp", ct);
