@@ -27,6 +27,19 @@ void	error_info(int x)
 }
 
 
+SDL_Texture 	*init_texture(char *path, t_context *ct)
+{
+	SDL_Texture 	*texture;
+
+	texture = NULL;
+	if (!(ct->surface = SDL_LoadBMP(path)))
+		quit("can't find mariowallred.bmp\n", ct);
+	if (!(texture = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
+		quit("texturefromsurface failed\n", ct);
+	SDL_FreeSurface(ct->surface);
+	return (texture);
+}
+
 void	init_sdl(t_context *ct)
 {
 	SDL_Init(SDL_INIT_EVERYTHING) != 0 ? quit("Initiation failed", ct) : 0;
@@ -34,30 +47,10 @@ void	init_sdl(t_context *ct)
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
-
-	if (!(ct->surface = SDL_LoadBMP("./mariowallred.bmp")))
-		quit("can't find mariowallred.bmp\n", ct);
-	if (!(ct->wall.motif_red = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
-		quit("texturefromsurface failed\n", ct);
-	SDL_FreeSurface(ct->surface);
-
-	if (!(ct->surface = SDL_LoadBMP("./mariowallyellow.bmp")))
-		quit("can't find mariowallyellow.bmp\n", ct);
-	if (!(ct->wall.motif_yellow = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
-		quit("texturefromsurface failed\n", ct);
-	SDL_FreeSurface(ct->surface);
-
-	if (!(ct->surface = SDL_LoadBMP("./mariowallgreen.bmp")))
-		quit("can't find mariowallgreen.bmp\n", ct);
-	if (!(ct->wall.motif_green = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
-		quit("texturefromsurface failed\n", ct);
-	SDL_FreeSurface(ct->surface);
-
-	if (!(ct->surface = SDL_LoadBMP("./mariowallblue.bmp")))
-		quit("can't find mariowallblue.bmp\n", ct);
-	if (!(ct->wall.motif_blue = SDL_CreateTextureFromSurface(ct->rend, ct->surface)))
-		quit("texturefromsurface failed\n", ct);
-	SDL_FreeSurface(ct->surface);
+	ct->wall.motif_red = init_texture("./mariowallred.bmp", ct);
+	ct->wall.motif_yellow = init_texture("./mariowallyellow.bmp", ct);
+	ct->wall.motif_green = init_texture("./mariowallgreen.bmp", ct);
+	ct->wall.motif_blue = init_texture("./mariowallblue.bmp", ct);
 }
 
 int		init(t_context *ct, const char *argv)

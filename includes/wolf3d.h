@@ -17,6 +17,8 @@
 # include <math.h>
 # include "libft.h"
 # include "SDL.h"
+// # include "SDL_image.h"
+# include "SDL_ttf.h"
 # include <stdio.h>
 
 # define XWIN 1000.0
@@ -119,7 +121,7 @@ float				dda_return_distance(t_context *ct, float angle);
 void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
 SDL_Rect			define_rect(int x, int y, int w, int h);
-
+SDL_Texture			*init_texture(char *path, t_context *ct);
 
 
 
