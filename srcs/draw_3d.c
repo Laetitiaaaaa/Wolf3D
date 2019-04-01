@@ -5,9 +5,7 @@ void	draw_wall(t_context *ct)
 {
 	float	angle;
 	int		x_pixel;
-	int		count;
 
-	count = 0;
 	angle = ct->cam.angle + 30;
 	x_pixel = 0;
 	while (x_pixel < XWIN)
@@ -15,12 +13,8 @@ void	draw_wall(t_context *ct)
 		angle -= 60.0 / ((float)XWIN);
 		x_pixel++;
 		draw_line_wall(ct, angle, x_pixel);
-		if ((ct->sp_visible == TRUE) && (count == 0))
-		{
-			count++;
-			draw_sprite_in_3d(ct, angle, x_pixel);
-		}
 	}
+
 }
 
 void	draw_line_wall(t_context *ct, float angle, int x_pixel)

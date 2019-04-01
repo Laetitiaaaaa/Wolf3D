@@ -89,6 +89,12 @@ typedef struct		s_context
 	t_texture		tex;
 	int				sp_visible;
 	t_floatpoint	sp_posi;
+	// t_floatpoint	sp_detect;
+	float			sp_angle_min;
+	float			sp_angle_max;
+	int				sp_x_pixel;
+	float			sp_angle;
+	float			sp_dis_min;
 
 	SDL_Surface		*surface;
 	SDL_Texture		*tmp;
@@ -131,10 +137,10 @@ void				key_events_movein_3d(t_context *ct, Uint8 *state);
 void				draw_ground(t_context *ct);
 float				angle_limit(float angle);
 void				draw_sprite_in_2d(t_context *ct);
-void				sprite_visible(t_context *ct, SDL_Point to_int);
 
-void				draw_sprite_in_3d(t_context *ct, float angle, int x_pixel);
+void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
+void		sprite_visible(t_context *ct, t_floatpoint detect, SDL_Point to_int, float angle);
 
 
 

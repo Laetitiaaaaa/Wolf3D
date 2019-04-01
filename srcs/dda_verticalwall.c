@@ -74,7 +74,7 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 			return (detect);
 		}
 		if (ct->mpp.map[to_int.y][to_int.x] == SPRITE_CUBE)
-			sprite_visible(ct, to_int);
+			sprite_visible(ct, detect, to_int, angle);
 	}
 	return (detect);
 }
