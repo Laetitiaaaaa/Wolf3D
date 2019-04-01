@@ -85,4 +85,6 @@ void	draw_sprite_in_3d(t_context *ct)
 	dst.h = sp_height;
 	SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
 	ct->sp_visible = FALSE;
+	ct->sp_angle_min = 360.0;
+	ct->sp_angle_max = 0.0;
 }

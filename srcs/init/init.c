@@ -43,7 +43,6 @@ void	init_sdl(t_context *ct)
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
-	load_texture_wall(ct);
 }
 
 void	load_texture_wall(t_context *ct)
@@ -56,22 +55,8 @@ void	load_texture_wall(t_context *ct)
 
 void	load_texture_backgr(t_context *ct)
 {
-	SDL_Surface	*tmp;
-
-	tmp = SDL_LoadBMP("./images/Floor.bmp");
-	if (tmp == NULL)
-		quit("Error SDL_LoadBMP", ct);
-	ct->tex.ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (ct->tex.ground == NULL)
-		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
-	SDL_FreeSurface(tmp);
-	tmp = SDL_LoadBMP("./images/Sky.bmp");
-	if (tmp == NULL)
-		quit("Error SDL_LoadBMP", ct);
-	ct->tex.sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (ct->tex.sky == NULL)
-		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
-	SDL_FreeSurface(tmp);
+	ct->tex.ground = init_texture("./images/Floor.bmp", ct);
+	ct->tex.sky = init_texture("./images/Sky.bmp", ct);
 }
 
 void	load_texture_obj(t_context *ct)
@@ -112,6 +97,8 @@ int		init(t_context *ct, const char *argv)
 	init_sdl(ct);
 	load_texture_backgr(ct);
 	load_texture_obj(ct);
+	load_texture_wall(ct);
+
 
 	return (0);
 }
