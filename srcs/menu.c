@@ -37,5 +37,6 @@ void	print_menu(t_context *ct)
 	if (ct->menu.in == 1)
 	{
 		copy_texture_menu(ct, "./game.bmp");
+		
 	}
 }

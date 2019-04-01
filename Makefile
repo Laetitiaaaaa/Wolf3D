@@ -30,6 +30,8 @@ SRC = loop.c \
 	  draw_3d.c \
 	  draw_background.c \
 	  menu.c \
+	  quit.c \
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
@@ -41,15 +43,16 @@ LIB_DIR = ./libft \
 
 FRAMEWORK = OpenGL AppKit
 
-CC = gcc
+CC = gcc -g -ggdb
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
-IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) 
+IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
 
 CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
+
 
 all: $(NAME)
 

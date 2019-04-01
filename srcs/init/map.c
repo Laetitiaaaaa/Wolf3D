@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-int					check_map_line(char *line)
+void					check_map_line(char *line)
 {
 	int		i;
 
@@ -22,59 +22,54 @@ int					check_map_line(char *line)
 		if ((line[i] != ' ') && (line[i] != '-')
 			&& ((line[i] < '0') || (line[i] > '9')))
 		{
-			return (-1);
+			quit_nothing_to_free("content of map file is not right");
 		}
 		i++;
 	}
-	return (0);
 }
 
-int					check_map(const char *argv, t_map_params *mpp)
+void					check_map(const char *argv, t_context *ct)
 {
 	int		fd;
 	char	*line;
+	int		ret_gnl;
 
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		return (-1);
-	mpp->y = 0;
+		quit_nothing_to_free("map load failed, error with open()");
+	ct->mpp.y = 0;
 	while (1)
 	{
-		mpp->ret = get_next_line(fd, &line);
-		if (mpp->ret == -1)
-			return (-1);
-		if ((mpp->y == 0) && (mpp->ret == 0))
-			return (-2);
-		if (mpp->ret == 0)
+		ret_gnl = get_next_line(fd, &line);
+		if (ret_gnl == -1)
+			quit_nothing_to_free("error with get_next_line()");
+		if ((ct->mpp.y == 0) && (ret_gnl == 0))
+			quit_nothing_to_free("map file shold not be empty");
+		if (ret_gnl == 0)
 			break ;
-		mpp->ret = check_map_line(line);
-		if (mpp->ret == -1)
-			return (-3);
-		mpp->y++;
+		check_map_line(line);
+		ct->mpp.y++;
 		free(line);
-		line = 0;
+		line = NULL;
 	}
 	close(fd);
-	return (0);
 }
 
-int					*aatoii(char **pptr, int *mppx)
+int					*aatoii(char **pptr, t_context *ct)
 {
 	int		*tab;
 	int		j;
 
-	*mppx = 0;
-	while (pptr[*mppx] != 0)
+	ct->mpp.x = 0;
+	while (pptr[ct->mpp.x] != 0)
+		(ct->mpp.x)++;
+	if (!(tab = (int*)malloc((ct->mpp.x) * sizeof(int))))
+		quit("malloc one line of map failed", ct);
+	ct->mpp.x = 0;
+	while (pptr[ct->mpp.x] != 0)
 	{
-		(*mppx)++;
-	}
-	if (!(tab = (int*)malloc((*mppx) * sizeof(int))))
-		return (0);
-	*mppx = 0;
-	while (pptr[*mppx] != 0)
-	{
-		tab[*mppx] = ft_atoi(pptr[*mppx]);
-		(*mppx)++;
+		tab[ct->mpp.x] = ft_atoi(pptr[ct->mpp.x]);
+		(ct->mpp.x)++;
 	}
 	j = 0;
 	while (pptr[j] != NULL)
@@ -86,51 +81,48 @@ int					*aatoii(char **pptr, int *mppx)
 	return (tab);
 }
 
-t_map_params		stock_map(int fd, t_map_params mpp)
+
+void		stock_map(int fd, t_context *ct)
 {
 	char			*line;
 	int				temp;
+	int				ret;
 
 	temp = 0;
+	ct->mpp.y = 0;
 	while (1)
 	{
-		mpp.ret = get_next_line(fd, &line);
-		if (mpp.ret == -1)
-			return (mpp);
-		if (mpp.ret == 0)
+		ret = get_next_line(fd, &line);
+		if (ret == -1)
+			quit("error with get_next_line()", ct);
+		if (ret == 0)
 			break ;
-		mpp.map[mpp.y] = aatoii(ft_strsplit(line, ' '), &mpp.x);
-		if (mpp.y == 0)
-			temp = mpp.x;
-		else if (mpp.x != temp)
+		ct->mpp.map[ct->mpp.y] = aatoii(ft_strsplit(line, ' '), ct);
+		if (ct->mpp.y == 0)
+			temp = ct->mpp.x;
+		else if (ct->mpp.x != temp)
 		{
-			mpp.ret = -4;
-			return (mpp);
+			free(line);
+			quit("error:the LENGTH OF EACH LINE SHOULD BE THE SAME", ct);
 		}
-		mpp.y++;
+		ct->mpp.y++;
 		free(line);
 		line = NULL;
 	}
-	return (mpp);
 }
 
 
-int		load_map(t_context *ct, const char *argv)
+void	load_map(t_context *ct, const char *argv)
 {
 	int				fd;
-	int				ret;
 
-	ret = check_map(argv, &(ct->mpp));
-	if ((ret == -1) || (ret == -2) || (ret == -3))
-		return (ret);
+	check_map(argv, ct);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		return (-1);
+		quit_nothing_to_free("error with open() in load_map");
 	ct->mpp.map = (int**)malloc(sizeof(int*) * ct->mpp.y);
 	if (ct->mpp.map == NULL)
-		return (-1);
-	ct->mpp.y = 0;
-	ct->mpp = stock_map(fd, ct->mpp);
+		quit_nothing_to_free("failed to malloc for ct->mpp.map");
+	stock_map(fd, ct);
 	close(fd);
-	return (0);
 }
