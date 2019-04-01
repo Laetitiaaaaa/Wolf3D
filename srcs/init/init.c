@@ -43,6 +43,7 @@ void	init_sdl(t_context *ct)
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
+	load_texture_wall(ct);
 }
 
 void	load_texture_wall(t_context *ct)
@@ -111,6 +112,6 @@ int		init(t_context *ct, const char *argv)
 	init_sdl(ct);
 	load_texture_backgr(ct);
 	load_texture_obj(ct);
-	load_texture_wall(ct);
+
 	return (0);
 }

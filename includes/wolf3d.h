@@ -112,7 +112,7 @@ typedef struct		s_context
 	int				sp_x_pixel;
 	float			sp_angle;
 	float			sp_dis_min;
-
+	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
 	int				choose_inter;

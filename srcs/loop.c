@@ -53,10 +53,10 @@ void	choose_interface(t_context *ct)
 			draw_sprite_in_3d(ct);
 		}
 	}
-	// if (ct->choose_inter == MENU)
-	// {
-	// 	print_menu(ct);
-	// }
+	if (ct->choose_inter == MENU)
+	{
+		print_menu(ct);
+	}
 }
 
 
