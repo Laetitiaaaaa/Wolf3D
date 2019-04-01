@@ -18,21 +18,15 @@ void		draw_2d(t_context *ct)
 
 	draw_cubes(ct);
 	draw_camera(ct);
-	draw_ray(ct, ct->cam.angle);
-	angle = ct->cam.angle;
-	while (angle <= (ct->cam.angle + 30.0))
+	angle = ct->cam.angle + 30;
+	while (angle >= (ct->cam.angle - 30.0))
 	{
-		angle += 30.0 / (float)(XWIN / 2) ;
+		angle -= 60.0 / (float)XWIN;
 		draw_ray(ct, angle);
 	}
-	angle = ct->cam.angle;
-	while (angle >= ct->cam.angle - 30.0)
-	{
-		angle -= 30.0 / (float)(XWIN / 2);
-		draw_ray(ct, angle);
-	}
-
 }
+
+
 
 void	draw_ray(t_context *ct, float angle)
 {
@@ -72,18 +66,13 @@ void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 
 void	draw_cubes(t_context *ct)
 {
-	SDL_Rect		*rects;
+	SDL_Rect 		rects[ct->mpp.x * ct->mpp.y];
 	SDL_Point		pixel;
 	int				i;
 	int				j;
 
 	i = 0;
 	j = 0;
-	rects= (SDL_Rect*)malloc(sizeof(SDL_Rect) * ct->mpp.x * ct->mpp.y);  //free malloc code not written yet
-	if (rects == NULL)
-	{
-		quit("malloc in function drawcubes failed", ct);
-	}
 	while (j < ct->mpp.y)
 	{
 		while (i < ct->mpp.x)

@@ -12,55 +12,21 @@
 
 #include "wolf3d.h"
 
+void		draw_ground(t_context *ct)
+{
+	SDL_Rect dst_ground = {0, YWIN / 2, XWIN, YWIN / 2};
+	SDL_RenderCopy(ct->rend, ct->tex.ground, NULL, &dst_ground);
+}
+
 void		draw_background(t_context *ct)
 {
+	SDL_Rect dst_sky = {0, 0, XWIN, YWIN / 2};
+	SDL_Rect src_sky;
 
-	SDL_Rect	*rect1;
-	SDL_Rect	*rect2;
-
-	rect1 = (SDL_Rect*)malloc(sizeof(SDL_Rect));
-	rect2 = (SDL_Rect*)malloc(sizeof(SDL_Rect));
-	SDL_SetRenderDrawColor(ct->rend, 21, 24, 30, SDL_ALPHA_OPAQUE);
-	rect1->x = 0;
-	rect1->y = 0;
-	rect1->w = XWIN;
-	rect1->h = YWIN / 2;
-	SDL_RenderFillRect(ct->rend, rect1);
-	SDL_SetRenderDrawColor(ct->rend, 95, 99, 107, SDL_ALPHA_OPAQUE);
-	rect2->x = 0;
-	rect2->y = YWIN / 2;
-	rect2->w = XWIN;
-	rect2->h = YWIN / 2;
-	SDL_RenderFillRect(ct->rend, rect2);
-
-
-// draw pixel by pixel make it very slow, it will be replaced by texture
-
-	// int		x;
-	// int		y;
-
-	// x = 0;
-	// y = 0;
-	// SDL_SetRenderDrawColor(ct->rend, 21, 24, 30, 255);
-	// while (y < YWIN / 2)
-	// {
-	// 	while (x < XWIN)
-	// 	{
-	// 		SDL_RenderDrawPoint(ct->rend, x, y);
-	// 		x++;
-	// 	}
-	// 	x = 0;
-	// 	y++;
-	// }
-	// SDL_SetRenderDrawColor(ct->rend, 95, 99, 107, 255);
-	// while (y >= YWIN / 2 && y < YWIN)
-	// {
-	// 	while (x < XWIN)
-	// 	{
-	// 		SDL_RenderDrawPoint(ct->rend, x, y);
-	// 		x++;
-	// 	}
-	// 	x = 0;
-	// 	y++;
-	// }
+	draw_ground(ct);
+	src_sky.x = (X_SKY - X_CUT_SKY) - ((X_SKY - X_CUT_SKY) * ct->cam.angle / 360 );
+	src_sky.y = 0;
+	src_sky.w = X_CUT_SKY;
+	src_sky.h = Y_SKY;
+	SDL_RenderCopy(ct->rend, ct->tex.sky, &src_sky, &dst_sky);
 }

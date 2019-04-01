@@ -25,11 +25,15 @@ SRC = loop.c \
 	  convert.c \
 	  dda.c \
 	  dda_horizontalwall.c \
+	  dda_verticalwall.c \
 	  init_event.c \
 	  draw_2d.c \
 	  draw_3d.c \
 	  draw_background.c \
 	  menu.c \
+	  quit.c \
+	  draw_sprite.c \
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
@@ -43,13 +47,15 @@ FRAMEWORK = OpenGL AppKit
 
 CC = gcc
 
+
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
-IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) 
+IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
 
 CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
+
 
 all: $(NAME)
 
@@ -81,6 +87,8 @@ libft.a:
 
 debug: wolf3d libft.a $(OBJ)
 	$(CC) $(CFLAG) -g -fsanitize=address -o $(NAME) $(OBJ) $(LFLAG)
+	#-g -ggdb
+#-fsanitize=address
 
 image: ttf
 	mkdir -p libraries

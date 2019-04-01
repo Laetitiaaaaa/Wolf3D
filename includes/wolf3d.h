@@ -17,14 +17,19 @@
 # include <math.h>
 # include "libft.h"
 # include "SDL.h"
-// # include "SDL_image.h"
-# include "SDL_ttf.h"
+# include "SDL_image.h"
 # include <stdio.h>
 
 # define XWIN 1000.0
 # define YWIN 800.0
+# define X_SKY 2000
+# define Y_SKY 400
+# define X_CUT_SKY 600
+
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
+# define WALL_CUBE 1
+# define SPRITE_CUBE 2
 # define INITIAL 0
 
 typedef enum 		e_interface
@@ -50,10 +55,8 @@ typedef enum 		e_neg_or_posi
 
 typedef struct		s_map_params
 {
-	int				x;  // x and y are the number of points  for map 42, x = 10 y = 11
+	int				x;  // x and y are the number of points  Ex : for map 42, x = 10 y = 11
 	int				y;
-	int				ret;
-//	float			d;
 	int				**map;
 }					t_map_params;
 
@@ -87,31 +90,50 @@ typedef struct 		s_menu
 	int 			in;
 }					t_menu;
 
+typedef struct 		s_texture
+{
+	SDL_Texture		*ground;
+	SDL_Texture		*sky;
+	SDL_Texture		*key;
+}					t_texture;
+
 typedef struct		s_context
 {
 	t_map_params	mpp;
 	SDL_Window		*window;
 	SDL_Renderer	*rend;
 	t_camera		cam;
+	t_texture		tex;
+	int				sp_visible;
+	t_floatpoint	sp_posi;
+	// t_floatpoint	sp_detect;
+	float			sp_angle_min;
+	float			sp_angle_max;
+	int				sp_x_pixel;
+	float			sp_angle;
+	float			sp_dis_min;
 	t_menu			menu;
+	SDL_Texture		*texture;
 	t_wall_texture	wall;
 	int				choose_inter;
 }					t_context;
 
-int					load_map(t_context *ct, const char *argv);
-int					init(t_context *ct, const char *argv);
+void				load_map(t_context *ct, const char *argv);
 void				quit(char *msg, t_context *ct);
+void				quit_nothing_to_free(char *msg);
+void				free_map(t_context *ct);
+int					init(t_context *ct, const char *argv);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
 double				convert_degree_to_radian(double angle);
 SDL_Point			convert_plan_to_pixel(float x, float y, t_context *ct);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
-t_floatpoint		vertial_wall_position_calcu(t_context *ct, float angle);
+t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle);
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle);
 void				draw_2d(t_context *ct);
-void				key_events(t_context *ct, Uint8 *state);
 void				draw_cubes(t_context *ct);
+void				key_events(t_context *ct, Uint8 *state);
 void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
@@ -129,6 +151,16 @@ SDL_Rect			define_rect(int x, int y, int w, int h);
 SDL_Texture			*init_texture(char *path, t_context *ct);
 void				copy_texture_wall(float wall_point, t_context *ct, SDL_Texture *wall_texture);
 void 				load_texture_wall(t_context *ct);
+void				draw_ground(t_context *ct);
+float				angle_limit(float angle);
+void				draw_sprite_in_2d(t_context *ct);
+void				draw_sprite_in_3d(t_context *ct);
+void				load_texture_obj(t_context *ct);
+void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
+
+
+
+
 
 
 #endif
