@@ -53,10 +53,10 @@ void	init_sdl(t_context *ct)
 
 void	load_texture_wall(t_context *ct)
 {
-	ct->wall.motif_red = init_texture("./mariowallred.bmp", ct);
-	ct->wall.motif_yellow = init_texture("./mariowallyellow.bmp", ct);
-	ct->wall.motif_green = init_texture("./mariowallgreen.bmp", ct);
-	ct->wall.motif_blue = init_texture("./mariowallblue.bmp", ct);
+	ct->wall.motif_red = init_texture("./images/mariowallred.bmp", ct);
+	ct->wall.motif_yellow = init_texture("./images/mariowallyellow.bmp", ct);
+	ct->wall.motif_green = init_texture("./images/mariowallgreen.bmp", ct);
+	ct->wall.motif_blue = init_texture("./images/mariowallblue.bmp", ct);
 }
 
 int		init(t_context *ct, const char *argv)
