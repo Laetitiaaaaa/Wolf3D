@@ -16,9 +16,23 @@ void	init_struct(t_context *ct)
 {
 	ct->mpp.map = NULL;
 	ct->window = NULL;
-	// ct->sp_dis_min = sqrt(pow(ct->mpp.x, 2) + pow(ct->mpp.y, 2));
 	ct->sp_angle_min = 360.0;
 	ct->sp_angle_max = 0.0;
+}
+
+
+SDL_Texture 	*init_texture(char *path, t_context *ct)
+{
+	SDL_Texture 	*texture;
+	SDL_Surface 	*surface;
+
+	texture = NULL;
+	if (!(surface = SDL_LoadBMP(path)))
+		quit("wrong path\n", ct);
+	if (!(texture = SDL_CreateTextureFromSurface(ct->rend, surface)))
+		quit("texturefromsurface failed\n", ct);
+	SDL_FreeSurface(surface);
+	return (texture);
 }
 
 void	init_sdl(t_context *ct)
@@ -29,39 +43,46 @@ void	init_sdl(t_context *ct)
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
+	load_texture_wall(ct);
+}
 
+void	load_texture_wall(t_context *ct)
+{
+	ct->wall.motif_red = init_texture("./images/mariowallred.bmp", ct);
+	ct->wall.motif_yellow = init_texture("./images/mariowallyellow.bmp", ct);
+	ct->wall.motif_green = init_texture("./images/mariowallgreen.bmp", ct);
+	ct->wall.motif_blue = init_texture("./images/mariowallblue.bmp", ct);
 }
 
 void	load_texture_backgr(t_context *ct)
 {
 	SDL_Surface	*tmp;
 
-	tmp = SDL_LoadBMP("./srcs/init/Floor.bmp");
+	tmp = SDL_LoadBMP("./images/Floor.bmp");
 	if (tmp == NULL)
 		quit("Error SDL_LoadBMP", ct);
 	ct->tex.ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
 	if (ct->tex.ground == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
 	SDL_FreeSurface(tmp);
-	tmp = SDL_LoadBMP("./srcs/init/Sky.bmp");
+	tmp = SDL_LoadBMP("./images/Sky.bmp");
 	if (tmp == NULL)
 		quit("Error SDL_LoadBMP", ct);
 	ct->tex.sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
 	if (ct->tex.sky == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
 	SDL_FreeSurface(tmp);
-
 }
 
 void	load_texture_obj(t_context *ct)
 {
 	SDL_Surface	*tmp;
 
-	tmp =  IMG_Load("./srcs/init/Key.png");
+	tmp =  IMG_Load("./images/Key.png");
 	if (tmp == NULL)
 		quit("Error IMG_Load Key.png", ct);
 	ct->tex.key = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (ct->tex.key == NULL)
+ 	if (ct->tex.key == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
 	SDL_FreeSurface(tmp);
 }

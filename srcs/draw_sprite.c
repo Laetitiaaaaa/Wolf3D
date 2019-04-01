@@ -75,11 +75,11 @@ void	draw_sprite_in_3d(t_context *ct)
 		ct->sp_angle = (ct->sp_angle_max - 360.0 + ct->sp_angle_min) / 2;
 		ct->sp_angle = angle_limit(ct->sp_angle);
 	}
-	printf("sp_angle cam.angle(%f, %f)\n", ct->sp_angle, ct->cam.angle );
-	printf("max_angle min.angle(%f, %f)\n", ct->sp_angle_max, ct->sp_angle_min );
+	// printf("sp_angle cam.angle(%f, %f)\n", ct->sp_angle, ct->cam.angle );
+	// printf("max_angle min.angle(%f, %f)\n", ct->sp_angle_max, ct->sp_angle_min );
 
 	dst.x = get_xpixel_based_on_angle(ct, ct->sp_angle);
-	printf("pix%d\n", dst.x);
+	// printf("pix%d\n", dst.x);
 	dst.y = YWIN / 2 ;
 	dst.w = sp_height;
 	dst.h = sp_height;

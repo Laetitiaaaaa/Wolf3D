@@ -14,8 +14,9 @@
 
 void	init_event(t_context *ct)
 {
-	ct->cam.posi.x = 2.5;
-	ct->cam.posi.y = 2.5;
-	ct->cam.angle = 0.0 ;
+	ct->menu.in = 1;
+	ct->cam.posi.x = 2.2;
+	ct->cam.posi.y = 2.2;
+	ct->cam.angle = 5.0;
 	ct->choose_inter = MAP;
 }

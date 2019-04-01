@@ -12,8 +12,6 @@
 
 #include "wolf3d.h"
 
-
-
 void					check_map_line(char *line)
 {
 	int		i;

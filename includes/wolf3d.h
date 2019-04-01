@@ -34,8 +34,9 @@
 
 typedef enum 		e_interface
 {
-	MAP = 0,
+	MENU = 0,
 	GAME,
+	MAP,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
 
@@ -72,13 +73,29 @@ typedef struct  	s_camera
 	SDL_Point		neg_posi;
 }					t_camera;
 
+typedef struct 		s_wall_texture
+{
+	SDL_Texture 	*motif_red;
+	SDL_Texture		*motif_yellow;
+	SDL_Texture		*motif_green;
+	SDL_Texture		*motif_blue;
+	int 			width;
+	int 			height;
+	SDL_Rect 		dst;
+}					t_wall_texture;
+
+typedef struct 		s_menu
+{
+	SDL_Texture		*texture;
+	int 			in;
+}					t_menu;
+
 typedef struct 		s_texture
 {
 	SDL_Texture		*ground;
 	SDL_Texture		*sky;
 	SDL_Texture		*key;
 }					t_texture;
-
 
 typedef struct		s_context
 {
@@ -95,10 +112,9 @@ typedef struct		s_context
 	int				sp_x_pixel;
 	float			sp_angle;
 	float			sp_dis_min;
-
-	SDL_Surface		*surface;
-	SDL_Texture		*tmp;
+	t_menu			menu;
 	SDL_Texture		*texture;
+	t_wall_texture	wall;
 	int				choose_inter;
 }					t_context;
 
@@ -124,7 +140,6 @@ float 				set_neg_posi(t_context *ct, float angle);
 void				init_event(t_context *ct);
 void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
-void				draw_wall(t_context *ct);
 void				print_menu(t_context *ct);
 void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
 int					convert_mapdis_to_screendis(float distance, t_context *ct);
@@ -132,11 +147,13 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle);
 float				dda_return_distance(t_context *ct, float angle);
 void				key_events_movein_2d(t_context *ct, Uint8 *state);
 void				key_events_movein_3d(t_context *ct, Uint8 *state);
-
+SDL_Rect			define_rect(int x, int y, int w, int h);
+SDL_Texture			*init_texture(char *path, t_context *ct);
+void				copy_texture_wall(float wall_point, t_context *ct, SDL_Texture *wall_texture);
+void 				load_texture_wall(t_context *ct);
 void				draw_ground(t_context *ct);
 float				angle_limit(float angle);
 void				draw_sprite_in_2d(t_context *ct);
-
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
 void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
