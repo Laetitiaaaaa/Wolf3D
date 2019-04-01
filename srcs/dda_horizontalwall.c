@@ -74,7 +74,7 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 			return(detect) ;
 		}
 		if (ct->mpp.map[to_int.y][to_int.x] == 2)
-			sprite_visible(ct, detect, to_int, angle);
+			sprite_visible(ct, to_int, angle);
 	}
 	return (detect);
 }

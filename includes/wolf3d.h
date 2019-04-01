@@ -140,7 +140,7 @@ void				draw_sprite_in_2d(t_context *ct);
 
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
-void		sprite_visible(t_context *ct, t_floatpoint detect, SDL_Point to_int, float angle);
+void		sprite_visible(t_context *ct, SDL_Point to_int, float angle);
 
 
 

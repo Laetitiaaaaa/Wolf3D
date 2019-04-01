@@ -12,21 +12,8 @@
 
 #include "wolf3d.h"
 
-void		sprite_visible(t_context *ct, t_floatpoint detect, SDL_Point to_int, float angle)
+void		sprite_visible(t_context *ct, SDL_Point to_int, float angle)
 {
-	// float	distance;
-
-	// distance = sqrt(pow(detect.x - ct->cam.posi.x, 2) + pow(detect.y - ct->cam.posi.y, 2));
-
-	// if (distance < ct->sp_dis_min)
-	// {
-	// 	ct->sp_visible = TRUE;
-	// 	ct->sp_dis_min = distance;
-	// 	ct->sp_angle = angle;
-	// 	ct->sp_posi.x = (float)to_int.x + 0.5;
-	// 	ct->sp_posi.y = (float)to_int.y + 0.5;
-	// }
-	(void)detect;
 	ct->sp_visible = TRUE;
 	if (angle < ct->sp_angle_min)
 	{
@@ -49,6 +36,7 @@ int		get_xpixel_based_on_angle(t_context *ct, float angle)
 
 	angle_max = ct->cam.angle + 30.0;
 	angle_max = angle_limit(angle_max);
+	angle = angle_limit(angle);
 	if (angle_max - angle >= 0)
 		delta_angle = (angle_max - angle);
 	if (angle_max - angle < 0)
@@ -87,11 +75,11 @@ void	draw_sprite_in_3d(t_context *ct)
 		ct->sp_angle = (ct->sp_angle_max - 360.0 + ct->sp_angle_min) / 2;
 		ct->sp_angle = angle_limit(ct->sp_angle);
 	}
-	// printf("sp_angle cam.angle(%f, %f)\n", ct->sp_angle, ct->cam.angle );
-	// printf("max_angle min.angle(%f, %f)\n", ct->sp_angle_max, ct->sp_angle_min );
+	printf("sp_angle cam.angle(%f, %f)\n", ct->sp_angle, ct->cam.angle );
+	printf("max_angle min.angle(%f, %f)\n", ct->sp_angle_max, ct->sp_angle_min );
 
 	dst.x = get_xpixel_based_on_angle(ct, ct->sp_angle);
-	// printf("pix%d\n", dst.x);
+	printf("pix%d\n", dst.x);
 	dst.y = YWIN / 2 ;
 	dst.w = sp_height;
 	dst.h = sp_height;
