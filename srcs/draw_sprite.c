@@ -17,15 +17,16 @@ t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible)
 {
 	t_sp_lst	*current;
 
-	if (lst == NULL)
+	current = lst;
+	if (current == NULL)
 	{
 		lst = (t_sp_lst*)malloc(sizeof(t_sp_lst));
 		current = lst;
 	}
 	else
 	{
-		while(lst != NULL)
-			current = lst->next;
+		while(current != NULL)
+			current = current->next;
 		current = (t_sp_lst*)malloc(sizeof(t_sp_lst));
 	}
 	current->posi = posi;
@@ -35,12 +36,20 @@ t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible)
 	return (lst);
 }
 
-// void		*lst_iter_id(t_sp_lst *lst, int id)
-// {
-// 	t_sp_lst	*current;
+int		lst_idcheck(t_sp_lst *lst, int id)
+{
+	int			new_sprite;
 
-// 	current = lst;
-// }
+	if (lst == NULL)
+		return (new_sprite = TRUE);
+	while (lst != NULL)
+	{
+		if (lst->id == id)
+			return(new_sprite = FALSE);
+		lst = lst->next;
+	}
+	return (new_sprite = TRUE);
+}
 
 void		hit_sprite(t_context *ct, SDL_Point to_int)
 {
@@ -54,10 +63,10 @@ void		hit_sprite(t_context *ct, SDL_Point to_int)
 	posi.y = (float)to_int.y + (CUBESIZE / 2.0);
 	id = ct->mpp.map[to_int.y][to_int.x];
 
-	if (ct->lst == NULL)
+	if (lst_idcheck(ct->lst, id) == TRUE)
 	{
 		ct->lst = lst_fill(ct->lst, id, posi, visible);
-		printf("test%d\n", ct->lst->id);
+		printf("lstid id(%d, %d)\n", ct->lst->id, id);
 	}
 
 
