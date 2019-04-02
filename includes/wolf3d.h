@@ -34,8 +34,8 @@
 
 typedef enum 		e_interface
 {
-	MENU = 0,
-	GAME,
+	// MENU = 0,
+	GAME = 0,
 	MAP,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
@@ -107,11 +107,8 @@ typedef struct		s_context
 	int				sp_visible;
 	t_floatpoint	sp_posi;
 	// t_floatpoint	sp_detect;
-	float			sp_angle_min;
-	float			sp_angle_max;
 	int				sp_x_pixel;
-	float			sp_angle;
-	float			sp_dis_min;
+	// float			sp_dis_min;
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
@@ -125,7 +122,7 @@ void				free_map(t_context *ct);
 int					init(t_context *ct, const char *argv);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
-double				convert_degree_to_radian(double angle);
+double				convert_deg_to_rad(double angle);
 SDL_Point			convert_plan_to_pixel(float x, float y, t_context *ct);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
@@ -156,7 +153,10 @@ float				angle_limit(float angle);
 void				draw_sprite_in_2d(t_context *ct);
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
-void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
+void				hit_sprite(t_context *ct, SDL_Point to_int);
+double				convert_rad_to_deg(double radian);
+
+
 
 
 

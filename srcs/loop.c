@@ -53,10 +53,10 @@ void	choose_interface(t_context *ct)
 			draw_sprite_in_3d(ct);
 		}
 	}
-	if (ct->choose_inter == MENU)
-	{
-		print_menu(ct);
-	}
+	// if (ct->choose_inter == MENU)
+	// {
+	// 	print_menu(ct);
+	// }
 }
 
 
@@ -92,8 +92,8 @@ void	key_events_movein_3d(t_context *ct, Uint8 *state)
 	float	dy;
 
 	d = 0.005;
-	dy = d * sin(convert_degree_to_radian(ct->cam.angle));
-	dx = d * cos(convert_degree_to_radian(ct->cam.angle));
+	dy = d * sin(convert_deg_to_rad(ct->cam.angle));
+	dx = d * cos(convert_deg_to_rad(ct->cam.angle));
 	if ((ct->cam.posi.y - dy > 0) && (ct->cam.posi.y - dy < ct->mpp.y)
 		&& (ct->cam.posi.x + dx < ct->mpp.x) && (ct->cam.posi.x + dx > 0)
 		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)] != 1)

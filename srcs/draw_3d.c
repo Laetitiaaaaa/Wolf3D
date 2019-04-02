@@ -18,19 +18,6 @@ void	draw_wall(t_context *ct)
 	int		x_pixel;
 
 	SDL_QueryTexture(ct->wall.motif_red, NULL, NULL, &ct->wall.width, &ct->wall.height);
-	// angle = ct->cam.angle;
-	// x_pixel = XWIN / 2;
-	// while (x_pixel >= 0)
-	// {
-	// 	angle += 30.0 / (float)(XWIN / 2);
-	// 	draw_line_wall(ct, angle, x_pixel);
-	// 	x_pixel--;
-	// }
-	// angle = ct->cam.angle;
-	// x_pixel = XWIN / 2;
-	// while (x_pixel < XWIN)
-	// {
-	// 	angle -= 30.0 / (float)(XWIN / 2);
 	angle = ct->cam.angle + 30;
 	x_pixel = 0;
 	while (x_pixel < XWIN)

@@ -16,8 +16,6 @@ void	init_struct(t_context *ct)
 {
 	ct->mpp.map = NULL;
 	ct->window = NULL;
-	ct->sp_angle_min = 360.0;
-	ct->sp_angle_max = 0.0;
 }
 
 

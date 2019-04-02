@@ -20,12 +20,12 @@ t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle)
 	if (angle > 0 && angle < 180)
 	{
 		delta.y = ct->cam.posi.y -(float)(int)(ct->cam.posi.y);
-		delta.x = ft_float_abs(delta.y / tan(convert_degree_to_radian(angle)));
+		delta.x = ft_float_abs(delta.y / tan(convert_deg_to_rad(angle)));
 	}
 	else
 	{
 		delta.y = (float)(int)(ct->cam.posi.y) + 1 - ct->cam.posi.y;
-		delta.x = ft_float_abs(delta.y / tan(convert_degree_to_radian(angle)));
+		delta.x = ft_float_abs(delta.y / tan(convert_deg_to_rad(angle)));
 	}
 	return (delta);
 }
@@ -43,7 +43,7 @@ t_floatpoint		first_horizontal_step(t_context *ct, float angle, t_floatpoint det
 t_floatpoint		continue_horizontal_step(t_context *ct, float angle, t_floatpoint detect)
 {
 	detect.x += ct->cam.neg_posi.x * CUBESIZE
-	/ ft_float_abs(tan(convert_degree_to_radian(angle)));
+	/ ft_float_abs(tan(convert_deg_to_rad(angle)));
 	detect.y += ct->cam.neg_posi.y * CUBESIZE;
 	return (detect);
 }
@@ -55,13 +55,15 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 	count = 0;
 	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)  //attention for -1 here
 	{
-		if (count == 0)
-		{
-			detect = first_horizontal_step(ct, angle, detect);
-			count++;
-		}
-		else
-			detect = continue_horizontal_step(ct, angle, detect);
+		// if (count == 0)
+		// {
+		// 	detect = first_horizontal_step(ct, angle, detect);
+		// 	count++;
+		// }
+		detect = (count == 0 ? first_horizontal_step(ct, angle, detect) : continue_horizontal_step(ct, angle, detect));
+		count++;
+		// else
+			// detect = continue_horizontal_step(ct, angle, detect);
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
 
@@ -74,7 +76,7 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 			return(detect) ;
 		}
 		if (ct->mpp.map[to_int.y][to_int.x] == 2)
-			sprite_visible(ct, to_int, angle);
+			hit_sprite(ct, to_int);
 	}
 	return (detect);
 }
