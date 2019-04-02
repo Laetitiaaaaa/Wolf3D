@@ -28,9 +28,15 @@
 
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
-# define WALL_CUBE 1
-# define SPRITE_CUBE 2
 # define INITIAL 0
+
+typedef enum  		e_map_content
+{
+	EMPTY = 0,
+	WALL_CUBE,
+	CAM_CUBE,
+	SPRITE_CUBE,
+}					t_map_content;
 
 typedef enum 		e_interface
 {
@@ -97,6 +103,25 @@ typedef struct 		s_texture
 	SDL_Texture		*key;
 }					t_texture;
 
+// typedef struct 		s_sprite
+// {
+// 	int				visible;
+// 	t_floatpoint	posi;
+// 	// int				nb;
+// }					t_sprite;
+
+
+typedef struct	s_sp_lst
+{
+
+	// t_sprite		sp;
+	int				id;
+	int				visible;
+	t_floatpoint	posi;
+	struct s_sp_lst	*next;
+}				t_sp_lst;
+
+
 typedef struct		s_context
 {
 	t_map_params	mpp;
@@ -104,11 +129,11 @@ typedef struct		s_context
 	SDL_Renderer	*rend;
 	t_camera		cam;
 	t_texture		tex;
+	t_sp_lst		*lst; // liste chainé de sprite
+
+
 	int				sp_visible;
 	t_floatpoint	sp_posi;
-	// t_floatpoint	sp_detect;
-	int				sp_x_pixel;
-	// float			sp_dis_min;
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
@@ -134,7 +159,7 @@ void				key_events(t_context *ct, Uint8 *state);
 void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
-void				init_event(t_context *ct);
+void				init_valeur(t_context *ct);
 void				draw_wall(t_context *ct);
 void				choose_interface(t_context *ct);
 void				print_menu(t_context *ct);

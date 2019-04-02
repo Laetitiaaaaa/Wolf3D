@@ -91,7 +91,7 @@ int		init(t_context *ct, const char *argv)
 	// 	j++;
 	// }
 // ---------------------------------
-	init_event(ct);
+	init_valeur(ct);
 	init_sdl(ct);
 	load_texture_backgr(ct);
 	load_texture_obj(ct);

@@ -24,7 +24,6 @@ void	loop(t_context *ct)
 		{
 			if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
 				ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
-			// SDL_Delay(20);
 		}
 		key_events(ct, state);
 		ct->cam.angle = angle_limit(ct->cam.angle);
@@ -62,7 +61,7 @@ void	choose_interface(t_context *ct)
 
 void	key_events(t_context *ct, Uint8 *state)
 {
-	state[SDL_SCANCODE_ESCAPE] ? quit("quit", ct) : 0;
+	state[SDL_SCANCODE_ESCAPE] ? quit("Thank you for playing", ct) : 0;
 	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 0.15 : 0;
 	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 0.15 : 0;
 	key_events_movein_2d(ct, state);

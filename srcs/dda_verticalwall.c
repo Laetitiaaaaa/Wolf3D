@@ -67,7 +67,7 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 			detect.y = NO_WALL;
 			return (detect);
 		}
-		if (ct->mpp.map[to_int.y][to_int.x] == SPRITE_CUBE)
+		if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
 			hit_sprite(ct, to_int);
 	}
 	return (detect);
