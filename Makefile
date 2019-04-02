@@ -12,6 +12,8 @@
 
 NAME = wolf3d
 
+HDR = $(shell find includes -type f) $(shell find libft/includes -type f) $(shell find ~/.brew/include/SDL2 -type f)
+
 INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d)
 
 SRC_DIR = $(shell find srcs -type d)
@@ -47,7 +49,6 @@ FRAMEWORK = OpenGL AppKit
 
 CC = gcc
 
-
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
 IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
@@ -56,13 +57,12 @@ CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
 
-
 all: $(NAME)
 
-$(NAME): libft.a $(OBJ)
+$(NAME): $(OBJ) libft ./libft/libft.a
 	$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG)
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c $(HDR)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
 
@@ -82,7 +82,7 @@ re: fclean
 	@echo "Restarting the compilation"
 	make $(NAME)
 
-libft.a:
+./libft/libft.a:
 	make -C libft
 
 debug: wolf3d libft.a $(OBJ)
@@ -111,3 +111,5 @@ ttf: ftype
 	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/SDL2_ttf-2.0.15
 	make -C ./libraries/SDL2_ttf-2.0.15 install
+
+.PHONY: all clean fclean re debug image ftype ttf libft
