@@ -55,15 +55,8 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 	count = 0;
 	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)  //attention for -1 here
 	{
-		// if (count == 0)
-		// {
-		// 	detect = first_horizontal_step(ct, angle, detect);
-		// 	count++;
-		// }
 		detect = (count == 0 ? first_horizontal_step(ct, angle, detect) : continue_horizontal_step(ct, angle, detect));
 		count++;
-		// else
-			// detect = continue_horizontal_step(ct, angle, detect);
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
 

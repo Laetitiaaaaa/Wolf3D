@@ -35,13 +35,14 @@ void	draw_sprite_in_2d(t_context *ct)
 
 
 
-void		print_sprite(t_context *ct)
+void		print_sprite(t_context *ct, float distance, float sp_position_angle)
 {
 	SDL_Rect	dst;
 	int			sp_height;
+	float		delta_angle;
+
 
 	sp_height = convert_mapdis_to_screendis(distance, ct);
-
 	delta_angle = sp_position_angle - ct->cam.angle;
 	dst.x = XWIN / 2 - XWIN / 60 * delta_angle;
 	dst.y = YWIN / 2 ;
@@ -55,19 +56,13 @@ void	draw_sprite_in_3d(t_context *ct)
 {
 	float		distance;
 	float		sp_position_angle;
-	float		delta_angle;
-	float wall_dis;
+	float 		wall_dis;
 
 	distance = sqrt(pow(ct->sp_posi.x - ct->cam.posi.x, 2)	+ pow(ct->sp_posi.y - ct->cam.posi.y, 2));
 	sp_position_angle = convert_rad_to_deg(atan2((ct->sp_posi.y - ct->cam.posi.y) * (-1) , (ct->sp_posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
-
 	wall_dis = dda_return_distance(ct, sp_position_angle);
 	if (wall_dis < 0 || wall_dis > distance )
-	{
-
-	}
-
-
+		print_sprite(ct, distance, sp_position_angle);
 	ct->sp_visible = FALSE;
 }
