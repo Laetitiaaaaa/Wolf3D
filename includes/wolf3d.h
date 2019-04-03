@@ -132,8 +132,9 @@ typedef struct		s_context
 	t_sp_lst		*lst; // liste chainé de sprite
 
 
-	int				sp_visible;
-	t_floatpoint	sp_posi;
+	int				at_least_one_sprite;				
+	
+	// t_floatpoint	sp_posi;
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;

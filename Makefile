@@ -56,7 +56,7 @@ IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) -I libraries/dist/include -I /usr/
 CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
-#  -L /usr/local/Cellar/sdl2/2.0.9/lib \
+ -L /usr/local/Cellar/sdl2/2.0.9/lib \
   -L libraries/dist/lib
 
 HEADER = includes/wolf3d.h

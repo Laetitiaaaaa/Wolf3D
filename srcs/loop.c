@@ -40,14 +40,14 @@ void	choose_interface(t_context *ct)
 	{
 
 		draw_2d(ct);
-		if (ct->sp_visible == TRUE)
+		if (ct->at_least_one_sprite == TRUE)
 			draw_sprite_in_2d(ct);
 	}
 	if (ct->choose_inter == GAME)
 	{
 		draw_background(ct);
 		draw_wall(ct);
-		if (ct->sp_visible == TRUE)
+		if (ct->at_least_one_sprite == TRUE)
 		{
 			draw_sprite_in_3d(ct);
 		}
