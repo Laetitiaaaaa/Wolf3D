@@ -33,6 +33,7 @@ SRC = loop.c \
 	  menu.c \
 	  quit.c \
 	  draw_sprite.c \
+	  event.c \
 
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
