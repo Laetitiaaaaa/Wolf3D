@@ -47,8 +47,8 @@ void	init_sdl(t_context *ct)
 
 void	load_texture_wall(t_context *ct)
 {
-	ct->wall.motif_red = init_texture("./images/murgris.bmp", ct);
-	ct->wall.motif_yellow = init_texture("./images/question.bmp", ct);
+	ct->wall.motif_red = init_texture("./images/blocgris.bmp", ct);
+	ct->wall.motif_yellow = init_texture("./images/murgris.bmp", ct);
 	ct->wall.motif_green = init_texture("./images/bloc.bmp", ct);
 	ct->wall.motif_blue = init_texture("./images/murroux.bmp", ct);
 }
