@@ -105,7 +105,6 @@ void	draw_sprite_in_3d(t_context *ct)
 		// }
 		// else
 		// {
-			printf("enter loop\n");
 			draw_one_sprite_in_3d(ct, lst->posi);
 			lst = lst->next;
 		// }
