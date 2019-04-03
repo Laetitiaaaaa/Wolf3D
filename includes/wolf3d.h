@@ -109,6 +109,8 @@ typedef struct		s_context
 {
 	t_map_params	mpp;
 	SDL_Window		*window;
+	int 			xwin;
+	int 			ywin;
 	SDL_Renderer	*rend;
 	t_camera		cam;
 	t_texture		tex;
@@ -124,6 +126,7 @@ typedef struct		s_context
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
 	int				choose_inter;
+	int 			full_screen;
 }					t_context;
 
 void				load_map(t_context *ct, const char *argv);

@@ -29,6 +29,17 @@ void	loop_menu(t_context *ct)
 			((state[SDL_SCANCODE_DOWN]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in + 1) % OUT : 0;
 			((state[SDL_SCANCODE_UP]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in - 1) % OUT : 0;
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == PLAY)) ? loop(ct) : 0;
+			((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ? ct->full_screen = -ct->full_screen : 0;
+		}
+		if (ct->full_screen < 0)
+		{
+			SDL_SetWindowFullscreen(ct->window, SDL_WINDOW_FULLSCREEN);
+			SDL_RestoreWindow(ct->window);
+		}
+		if (ct->full_screen > 0)
+		{
+			SDL_SetWindowFullscreen(ct->window, 0);
+			SDL_RestoreWindow(ct->window);
 		}
 		key_events(ct, state);
 		print_menu(ct);

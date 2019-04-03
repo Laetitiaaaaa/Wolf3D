@@ -14,6 +14,7 @@
 
 void	init_event(t_context *ct)
 {
+	ct->full_screen = 1;
 	ct->menu.in = PLAY;
 	ct->cam.posi.x = 2.2;
 	ct->cam.posi.y = 2.2;

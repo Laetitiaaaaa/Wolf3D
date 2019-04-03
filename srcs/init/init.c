@@ -18,6 +18,8 @@ void	init_struct(t_context *ct)
 	ct->window = NULL;
 	ct->sp_angle_min = 360.0;
 	ct->sp_angle_max = 0.0;
+	ct->xwin = XWIN;
+	ct->ywin = YWIN;
 }
 
 
@@ -39,7 +41,7 @@ void	init_sdl(t_context *ct)
 {
 	SDL_Init(SDL_INIT_EVERYTHING) != 0 ? quit("Initiation failed", ct) : 0;
 	IMG_Init(IMG_INIT_PNG);
-	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, XWIN, YWIN, SDL_WINDOW_SHOWN);
+	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ct->xwin, ct->ywin, SDL_WINDOW_SHOWN);
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);

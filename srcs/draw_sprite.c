@@ -41,7 +41,7 @@ int		get_xpixel_based_on_angle(t_context *ct, float angle)
 		delta_angle = (angle_max - angle);
 	if (angle_max - angle < 0)
 		delta_angle = angle_max + 360.0 - angle;
-	x_pixel = (int)(XWIN * delta_angle / 60.0);
+	x_pixel = (int)(ct->xwin * delta_angle / 60.0);
 	return (x_pixel);
 }
 
@@ -80,7 +80,7 @@ void	draw_sprite_in_3d(t_context *ct)
 
 	dst.x = get_xpixel_based_on_angle(ct, ct->sp_angle);
 	// printf("pix%d\n", dst.x);
-	dst.y = YWIN / 2 ;
+	dst.y = ct->ywin / 2 ;
 	dst.w = sp_height;
 	dst.h = sp_height;
 	SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);

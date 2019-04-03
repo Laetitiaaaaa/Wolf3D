@@ -14,13 +14,13 @@
 
 void		draw_ground(t_context *ct)
 {
-	SDL_Rect dst_ground = {0, YWIN / 2, XWIN, YWIN / 2};
+	SDL_Rect dst_ground = {0, ct->ywin / 2, ct->xwin, ct->ywin / 2};
 	SDL_RenderCopy(ct->rend, ct->tex.ground, NULL, &dst_ground);
 }
 
 void		draw_background(t_context *ct)
 {
-	SDL_Rect dst_sky = {0, 0, XWIN, YWIN / 2};
+	SDL_Rect dst_sky = {0, 0, ct->xwin, ct->ywin / 2};
 	SDL_Rect src_sky;
 
 	draw_ground(ct);

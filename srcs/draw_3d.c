@@ -20,9 +20,9 @@ void	draw_wall(t_context *ct)
 	SDL_QueryTexture(ct->wall.motif_red, NULL, NULL, &ct->wall.width, &ct->wall.height);
 	angle = ct->cam.angle + 30;
 	x_pixel = 0;
-	while (x_pixel < XWIN)
+	while (x_pixel < ct->xwin)
 	{
-		angle -= 60.0 / ((float)XWIN);
+		angle -= 60.0 / ((float)ct->xwin);
 		draw_line_wall(ct, angle, x_pixel);
 		x_pixel++;
 	}
@@ -61,7 +61,7 @@ void	draw_line_wall(t_context *ct, float angle, int x_pixel)
 	if ((distance = dda_return_distance(ct, angle)) < 0) // distance will be negative if no wall
 		return ;
 	wall_height = convert_mapdis_to_screendis(distance, ct);
-	ct->wall.dst = define_rect(x_pixel, (YWIN - wall_height) / 2, 1, wall_height);
+	ct->wall.dst = define_rect(x_pixel, (ct->ywin - wall_height) / 2, 1, wall_height);
 	while (angle >= 360)
 		angle = angle - 360;
 	while (angle < 0)
