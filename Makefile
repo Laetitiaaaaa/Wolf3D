@@ -48,7 +48,8 @@ LIB_DIR = ./libft \
 
 FRAMEWORK = OpenGL AppKit
 
-CC = gcc -g -ggdb
+CC = gcc
+ # -g -ggdb
 #-fsanitize=address
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
