@@ -53,6 +53,8 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 	int				count;
 
 	count = 0;
+	if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
+		hit_sprite(ct, to_int); // camera in the same cube of sprite
 	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)
 	{
 		detect = (count == 0 ? first_vertical_step(ct, angle, detect) : continue_vertical_step(ct, angle, detect));

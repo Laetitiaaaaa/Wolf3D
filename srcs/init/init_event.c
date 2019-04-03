@@ -49,5 +49,14 @@ void	init_valeur(t_context *ct)
 	find_cam(ct);
 	ct->cam.angle = 5.0;
 	ct->lst = NULL;
+	ct->sp.key_nb = 0;
+	ct->sp.mushroom_nb = 0;
 
 }
+
+void	init_struct(t_context *ct)
+{
+	ct->mpp.map = NULL;
+	ct->window = NULL;
+}
+

@@ -25,7 +25,6 @@
 # define X_SKY 2000
 # define Y_SKY 400
 # define X_CUT_SKY 600
-
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 # define INITIAL 0
@@ -36,12 +35,14 @@ typedef enum  		e_map_content
 	WALL_CUBE,
 	CAM_CUBE,
 	SPRITE_CUBE,
+	MUSHROOM_CUBE = 7,
+	KEY_CUBE = 8,
 }					t_map_content;
 
 typedef enum 		e_interface
 {
-	// MENU = 0,
-	GAME = 0,
+	MENU = 0,
+	GAME,
 	MAP,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
@@ -101,25 +102,24 @@ typedef struct 		s_texture
 	SDL_Texture		*ground;
 	SDL_Texture		*sky;
 	SDL_Texture		*key;
+	SDL_Texture		*mushroom;
+
 }					t_texture;
-
-// typedef struct 		s_sprite
-// {
-// 	int				visible;
-// 	t_floatpoint	posi;
-// 	// int				nb;
-// }					t_sprite;
-
 
 typedef struct	s_sp_lst
 {
 
-	// t_sprite		sp;
 	int				id;
 	int				visible;
 	t_floatpoint	posi;
 	struct s_sp_lst	*next;
 }				t_sp_lst;
+
+typedef struct s_sprite
+{
+	int				key_nb;
+	int				mushroom_nb;
+}				t_sprite;
 
 
 typedef struct		s_context
@@ -130,11 +130,8 @@ typedef struct		s_context
 	t_camera		cam;
 	t_texture		tex;
 	t_sp_lst		*lst; // liste chainé de sprite
-
-
+	t_sprite		sp;
 	int				at_least_one_sprite;
-
-	// t_floatpoint	sp_posi;
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
@@ -155,9 +152,6 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle);
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle);
 void				draw_2d(t_context *ct);
-void				draw_cubes(t_context *ct);
-void				draw_camera(t_context *ct);
-void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_valeur(t_context *ct);
 void				draw_wall(t_context *ct);
@@ -179,6 +173,11 @@ void				load_texture_obj(t_context *ct);
 void				hit_sprite(t_context *ct, SDL_Point to_int);
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
-void	free_lst_sp(t_sp_lst *lst);
+void				free_lst_sp(t_sp_lst *lst);
+t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
+int					lst_new_sprite_check(t_sp_lst *lst, int id);
+void				init_struct(t_context *ct);
+
+
 
 #endif

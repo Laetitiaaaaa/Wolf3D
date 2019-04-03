@@ -12,12 +12,6 @@
 
 #include "wolf3d.h"
 
-void	init_struct(t_context *ct)
-{
-	ct->mpp.map = NULL;
-	ct->window = NULL;
-}
-
 
 SDL_Texture 	*init_texture(char *path, t_context *ct)
 {
@@ -68,6 +62,14 @@ void	load_texture_obj(t_context *ct)
  	if (ct->tex.key == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
 	SDL_FreeSurface(tmp);
+	tmp =  IMG_Load("./images/Mushroom.png");
+	if (tmp == NULL)
+		quit("Error IMG_Load Mushroom.png", ct);
+	ct->tex.mushroom = SDL_CreateTextureFromSurface(ct->rend, tmp);
+ 	if (ct->tex.mushroom == NULL)
+		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
+	SDL_FreeSurface(tmp);
+
 }
 
 
