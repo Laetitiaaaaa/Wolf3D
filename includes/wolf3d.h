@@ -173,9 +173,9 @@ void				hit_sprite(t_context *ct, SDL_Point to_int);
 
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
-void	free_lst_sp(t_sp_lst *lst);
-t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
-int		lst_new_sprite_check(t_sp_lst *lst, int id);
+void				free_lst_sp(t_sp_lst *lst);
+t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
+int					lst_new_sprite_check(t_sp_lst *lst, int id);
 
 
 

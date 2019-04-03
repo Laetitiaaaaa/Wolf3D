@@ -73,7 +73,7 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_floatpoint posi)
 
 int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
 {
-	if (((int)posi_sp.x == (int)ct->cam.posi.x) && ((int)posi_sp.x == (int)ct->cam.posi.x))
+	if ((((int)posi_sp.x) == ((int)ct->cam.posi.x) && ((int)posi_sp.y) == (int)ct->cam.posi.y))
 	{
 		return (TRUE);
 	}
@@ -98,13 +98,15 @@ void	draw_sprite_in_3d(t_context *ct)
 		if (walk_on_sprite(ct, lst->posi) == TRUE)
 		{
 			// stock_sprite(ct);
-			printf("walk on sprite\n");
+			printf("walk on sprite camera posi(%f, %f) sprite posi(%f, %f)\n", ct->cam.posi.x, ct->cam.posi.y, lst->posi.x, lst->posi.y);
+
+			// printf("walk on sprite\n");
 			lst = lst->next;
 
 		}
 		else
 		{
-			// printf("camera posi(%f, %f) sprite posi(%f, %f)\n", ct->cam.posi.x, ct->cam.posi.y, lst->posi.x, lst->posi.y);
+			printf("camera posi(%f, %f) sprite posi(%f, %f)\n", ct->cam.posi.x, ct->cam.posi.y, lst->posi.x, lst->posi.y);
 			draw_one_sprite_in_3d(ct, lst->posi);
 			lst = lst->next;
 		}
