@@ -20,12 +20,12 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle)
 	if (angle > 90 && angle < 270)
 	{
 		d.x = ct->cam.posi.x - (float)(int)(ct->cam.posi.x);
-		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(angle)));
+		d.y = ft_float_abs(d.x * tan(convert_deg_to_rad(angle)));
 	}
 	else
 	{
 		d.x = ((float)(int)(ct->cam.posi.x + 1)) - ct->cam.posi.x;
-		d.y = ft_float_abs(d.x * tan(convert_degree_to_radian(angle)));
+		d.y = ft_float_abs(d.x * tan(convert_deg_to_rad(angle)));
 	}
 	return (d);
 }
@@ -44,7 +44,7 @@ t_floatpoint		continue_vertical_step(t_context *ct, float angle, t_floatpoint de
 {
 	detect.x += ct->cam.neg_posi.x * CUBESIZE;
 	detect.y += ct->cam.neg_posi.y * CUBESIZE
-	* ft_float_abs(tan(convert_degree_to_radian(angle)));
+	* ft_float_abs(tan(convert_deg_to_rad(angle)));
 	return (detect);
 }
 
@@ -53,18 +53,14 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 	int				count;
 
 	count = 0;
+	if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
+		hit_sprite(ct, to_int); // camera in the same cube of sprite
 	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)
 	{
-		if (count == 0)
-		{
-			detect = first_vertical_step(ct, angle, detect);
-			count++;
-		}
-		else
-			detect = continue_vertical_step(ct, angle, detect);
+		detect = (count == 0 ? first_vertical_step(ct, angle, detect) : continue_vertical_step(ct, angle, detect));
+		count++;
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
-
 		if (angle > 90 && angle < 270)
 			to_int.x--;
 		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y <= 0 || detect.y >= ct->mpp.y)
@@ -73,8 +69,8 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, SDL_P
 			detect.y = NO_WALL;
 			return (detect);
 		}
-		if (ct->mpp.map[to_int.y][to_int.x] == SPRITE_CUBE)
-			sprite_visible(ct, to_int, angle);
+		if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
+			hit_sprite(ct, to_int);
 	}
 	return (detect);
 }

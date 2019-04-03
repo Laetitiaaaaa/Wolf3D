@@ -23,7 +23,7 @@ SDL_Point	convert_plan_to_pixel(float x, float y, t_context *ct)
 	return (pixel);
 }
 
-double		convert_degree_to_radian(double angle)
+double		convert_deg_to_rad(double angle)
 {
 	return(((double)angle) * M_PI / (double)180);
 }
@@ -35,4 +35,9 @@ float	angle_limit(float angle)
 	while (angle < 0)
 		angle = angle + 360;
 	return (angle);
+}
+
+double		convert_rad_to_deg(double radian)
+{
+	return(radian * ((double)180) / M_PI);
 }

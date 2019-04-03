@@ -12,77 +12,83 @@
 
 #include "wolf3d.h"
 
-void		sprite_visible(t_context *ct, SDL_Point to_int, float angle)
-{
-	ct->sp_visible = TRUE;
-	if (angle < ct->sp_angle_min)
-	{
-		ct->sp_angle_min = angle;
-	}
-	if (angle > ct->sp_angle_max)
-	{
-		ct->sp_angle_max = angle;
-	}
-	ct->sp_posi.x = (float)to_int.x + 0.5;
-	ct->sp_posi.y = (float)to_int.y + 0.5;
 
+
+void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, int id)
+{
+	SDL_Rect	dst;
+	int			sp_height;
+	float		delta_angle;
+
+	sp_height = convert_mapdis_to_screendis(distance, ct);
+	delta_angle = sp_position_angle - ct->cam.angle;
+	if (ft_float_abs(delta_angle) > 60)
+		delta_angle = sp_position_angle - 360 - ct->cam.angle;
+	dst.x = XWIN / 2 - XWIN / 60 * delta_angle;
+	dst.y = YWIN / 2 ;
+	dst.w = sp_height / 2;
+	dst.h = sp_height / 2;
+	if (id % 10 == KEY_CUBE)
+		SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
+	if (id % 10 == MUSHROOM_CUBE)
+		SDL_RenderCopy(ct->rend, ct->tex.mushroom, NULL, &dst);
 }
 
-int		get_xpixel_based_on_angle(t_context *ct, float angle)
+static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 {
-	float	angle_max;
-	float	delta_angle;
-	int		x_pixel;
+	float		distance;
+	float		sp_position_angle;
+	float 		wall_dis;
 
-	angle_max = ct->cam.angle + 30.0;
-	angle_max = angle_limit(angle_max);
-	angle = angle_limit(angle);
-	if (angle_max - angle >= 0)
-		delta_angle = (angle_max - angle);
-	if (angle_max - angle < 0)
-		delta_angle = angle_max + 360.0 - angle;
-	x_pixel = (int)(ct->xwin * delta_angle / 60.0);
-	return (x_pixel);
+	sp_position_angle = convert_rad_to_deg(atan2((lst->posi.y - ct->cam.posi.y) * (-1) , (lst->posi.x - ct->cam.posi.x)));
+	sp_position_angle = angle_limit(sp_position_angle);
+	distance = sqrt(pow(lst->posi.x - ct->cam.posi.x, 2) + pow(lst->posi.y - ct->cam.posi.y, 2))
+	* ft_float_abs(cos(convert_deg_to_rad(sp_position_angle - ct->cam.angle)));
+	wall_dis = dda_return_distance(ct, sp_position_angle);
+	if (wall_dis < 0 || wall_dis > distance )
+		print_sprite_3d(ct, distance, sp_position_angle, lst->id);
 }
 
-
-void	draw_sprite_in_2d(t_context *ct)
+int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
 {
-	SDL_Point		pixel;
+	if ((((int)posi_sp.x) == ((int)ct->cam.posi.x) && ((int)posi_sp.y) == (int)ct->cam.posi.y))
+		return (TRUE);
+	else
+		return (FALSE);
+}
 
-	pixel = convert_plan_to_pixel(ct->sp_posi.x, ct->sp_posi.y, ct);
-	SDL_SetRenderDrawColor(ct->rend, 134, 244, 66, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
-	SDL_RenderDrawPoint(ct->rend, pixel.x - 1, pixel.y);
-	SDL_RenderDrawPoint(ct->rend, pixel.x + 1, pixel.y);
-	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y - 1);
-	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y + 1);
-	ct->sp_visible = FALSE;
+void	pickup_sprite(t_context *ct, t_sp_lst *lst)
+{
+	SDL_Point to_int;
+
+	if ((lst->id)% 10 == KEY_CUBE)
+		ct->sp.key_nb++;
+	if ((lst->id)% 10 == MUSHROOM_CUBE)
+		ct->sp.mushroom_nb++;
+	to_int.x = lst->posi.x;
+	to_int.y = lst->posi.y;
+	ct->mpp.map[to_int.y][to_int.x] = EMPTY;
 }
 
 void	draw_sprite_in_3d(t_context *ct)
 {
-	float	distance;
-	int		sp_height;
-	SDL_Rect	dst;
+	t_sp_lst *lst;
 
-	distance = sqrt(pow(ct->sp_posi.x - ct->cam.posi.x, 2)	+ pow(ct->sp_posi.y - ct->cam.posi.y, 2));
-	sp_height = convert_mapdis_to_screendis(distance, ct);
-	if ((ct->sp_angle_max - ct->sp_angle_min) <= 60 )
-		ct->sp_angle = (ct->sp_angle_max + ct->sp_angle_min) / 2;
-	else
+	lst = ct->lst;
+	while (lst != NULL)
 	{
-		ct->sp_angle = (ct->sp_angle_max - 360.0 + ct->sp_angle_min) / 2;
-		ct->sp_angle = angle_limit(ct->sp_angle);
+		if (walk_on_sprite(ct, lst->posi) == TRUE)
+		{
+			pickup_sprite(ct, lst);
+			lst = lst->next;
+		}
+		else
+		{
+			draw_one_sprite_in_3d(ct, lst);
+			lst = lst->next;
+		}
 	}
-	// printf("sp_angle cam.angle(%f, %f)\n", ct->sp_angle, ct->cam.angle );
-	// printf("max_angle min.angle(%f, %f)\n", ct->sp_angle_max, ct->sp_angle_min );
-
-	dst.x = get_xpixel_based_on_angle(ct, ct->sp_angle);
-	// printf("pix%d\n", dst.x);
-	dst.y = ct->ywin / 2 ;
-	dst.w = sp_height;
-	dst.h = sp_height;
-	SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
-	ct->sp_visible = FALSE;
+	free_lst_sp(ct->lst);
+	ct->lst = NULL;
+	ct->at_least_one_sprite = FALSE;
 }

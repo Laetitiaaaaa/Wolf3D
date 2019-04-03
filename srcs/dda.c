@@ -23,10 +23,10 @@ float		dda_return_distance(t_context *ct, float angle) // fisheye corrected in t
 	posi_hor = horizontal_wall_position_calcu(ct, angle);
 	distance_ver = sqrt(pow(posi_ver.x - ct->cam.posi.x, 2)
 		+ pow(posi_ver.y - ct->cam.posi.y, 2))
-	* ft_float_abs(cos(convert_degree_to_radian(angle - ct->cam.angle)));
+	* ft_float_abs(cos(convert_deg_to_rad(angle - ct->cam.angle)));
 	distance_hor = sqrt(pow(posi_hor.x - ct->cam.posi.x, 2)
 		+ pow(posi_hor.y - ct->cam.posi.y, 2))
-	* ft_float_abs(cos(convert_degree_to_radian(angle - ct->cam.angle)));
+	* ft_float_abs(cos(convert_deg_to_rad(angle - ct->cam.angle)));
 	if (posi_ver.x == NO_WALL && posi_hor.x == NO_WALL)
 		return (NO_WALL);
 	else if (posi_ver.x == NO_WALL)

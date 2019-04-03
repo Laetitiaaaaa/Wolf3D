@@ -12,16 +12,6 @@
 
 #include "wolf3d.h"
 
-void	init_struct(t_context *ct)
-{
-	ct->mpp.map = NULL;
-	ct->window = NULL;
-	ct->sp_angle_min = 360.0;
-	ct->sp_angle_max = 0.0;
-	ct->xwin = XWIN;
-	ct->ywin = YWIN;
-}
-
 
 SDL_Texture 	*init_texture(char *path, t_context *ct)
 {
@@ -57,22 +47,8 @@ void	load_texture_wall(t_context *ct)
 
 void	load_texture_backgr(t_context *ct)
 {
-	SDL_Surface	*tmp;
-
-	tmp = SDL_LoadBMP("./images/Floor.bmp");
-	if (tmp == NULL)
-		quit("Error SDL_LoadBMP", ct);
-	ct->tex.ground = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (ct->tex.ground == NULL)
-		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
-	SDL_FreeSurface(tmp);
-	tmp = SDL_LoadBMP("./images/Sky.bmp");
-	if (tmp == NULL)
-		quit("Error SDL_LoadBMP", ct);
-	ct->tex.sky = SDL_CreateTextureFromSurface(ct->rend, tmp);
-	if (ct->tex.sky == NULL)
-		quit("Error SDL_CreateTextureFromSurface from function load_texture()", ct);
-	SDL_FreeSurface(tmp);
+	ct->tex.ground = init_texture("./images/Floor.bmp", ct);
+	ct->tex.sky = init_texture("./images/Sky.bmp", ct);
 }
 
 void	load_texture_obj(t_context *ct)
@@ -86,6 +62,14 @@ void	load_texture_obj(t_context *ct)
  	if (ct->tex.key == NULL)
 		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
 	SDL_FreeSurface(tmp);
+	tmp =  IMG_Load("./images/Mushroom.png");
+	if (tmp == NULL)
+		quit("Error IMG_Load Mushroom.png", ct);
+	ct->tex.mushroom = SDL_CreateTextureFromSurface(ct->rend, tmp);
+ 	if (ct->tex.mushroom == NULL)
+		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
+	SDL_FreeSurface(tmp);
+
 }
 
 
@@ -109,7 +93,7 @@ int		init(t_context *ct, const char *argv)
 	// 	j++;
 	// }
 // ---------------------------------
-	init_event(ct);
+	init_valeur(ct);
 	init_sdl(ct);
 	load_texture_backgr(ct);
 	load_texture_obj(ct);

@@ -12,23 +12,7 @@
 
 #include "wolf3d.h"
 
-void		draw_2d(t_context *ct)
-{
-	float angle;
-
-	draw_cubes(ct);
-	draw_camera(ct);
-	angle = ct->cam.angle + 30;
-	while (angle >= (ct->cam.angle - 30.0))
-	{
-		angle -= 60.0 / (float)ct->xwin;
-		draw_ray(ct, angle);
-	}
-}
-
-
-
-void	draw_ray(t_context *ct, float angle)
+static void	draw_ray(t_context *ct, float angle)
 {
 	SDL_Point			pix_cam;
 	SDL_Point			pix_wall;
@@ -43,7 +27,7 @@ void	draw_ray(t_context *ct, float angle)
 	SDL_RenderDrawLine(ct->rend, pix_cam.x, pix_cam.y, pix_wall.x, pix_wall.y);
 }
 
-void	draw_camera(t_context *ct)
+static void	draw_camera(t_context *ct)
 {
 	SDL_Point    	pixel;
 
@@ -52,7 +36,7 @@ void	draw_camera(t_context *ct)
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
 }
 
-void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
+static void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 {
 	SDL_Rect		rec;
 
@@ -64,7 +48,7 @@ void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 	SDL_RenderFillRect(ct->rend, &rec);
 }
 
-void	draw_cubes(t_context *ct)
+static void	draw_cubes(t_context *ct)
 {
 	SDL_Rect 		rects[ct->mpp.x * ct->mpp.y];
 	SDL_Point		pixel;
@@ -91,3 +75,21 @@ void	draw_cubes(t_context *ct)
 	SDL_SetRenderDrawColor(ct->rend, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawRects(ct->rend, rects, ct->mpp.x * ct->mpp.y);
 }
+
+void		draw_2d(t_context *ct)
+{
+	float angle;
+
+	draw_cubes(ct);
+	draw_camera(ct);
+	angle = ct->cam.angle + 30;
+	while (angle >= (ct->cam.angle - 30.0))
+	{
+		angle -= 60.0 / (float)ct->xwin;
+		draw_ray(ct, angle);
+	}
+}
+
+
+
+
