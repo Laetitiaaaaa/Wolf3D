@@ -103,23 +103,20 @@ typedef struct 		s_texture
 	SDL_Texture		*key;
 }					t_texture;
 
-// typedef struct 		s_sprite
-// {
-// 	int				visible;
-// 	t_floatpoint	posi;
-// 	// int				nb;
-// }					t_sprite;
-
-
 typedef struct	s_sp_lst
 {
 
-	// t_sprite		sp;
 	int				id;
 	int				visible;
 	t_floatpoint	posi;
 	struct s_sp_lst	*next;
 }				t_sp_lst;
+
+typedef struct s_sprite
+{
+	int				key_nb;
+	int				mushroom_nb;
+}				t_sprite;
 
 
 typedef struct		s_context
@@ -130,11 +127,10 @@ typedef struct		s_context
 	t_camera		cam;
 	t_texture		tex;
 	t_sp_lst		*lst; // liste chainé de sprite
-
+	t_sprite		sp;
 
 	int				at_least_one_sprite;
 
-	// t_floatpoint	sp_posi;
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
@@ -155,9 +151,6 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle);
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle);
 void				draw_2d(t_context *ct);
-void				draw_cubes(t_context *ct);
-void				draw_camera(t_context *ct);
-void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_valeur(t_context *ct);
 void				draw_wall(t_context *ct);
@@ -177,8 +170,13 @@ void				draw_sprite_in_2d(t_context *ct);
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
 void				hit_sprite(t_context *ct, SDL_Point to_int);
+
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 void	free_lst_sp(t_sp_lst *lst);
+t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
+int		lst_new_sprite_check(t_sp_lst *lst, int id);
+
+
 
 #endif

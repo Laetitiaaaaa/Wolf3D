@@ -13,70 +13,10 @@
 #include "wolf3d.h"
 
 
-t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible)
-{
-	t_sp_lst	*current;
-
-	current = lst;
-	if (current == NULL)
-	{
-		lst = (t_sp_lst*)malloc(sizeof(t_sp_lst));
-		current = lst;
-	}
-	else
-	{
-		while(current->next != NULL)
-			current = current->next;
-		current->next = (t_sp_lst*)malloc(sizeof(t_sp_lst)); // malloc not freeed
-		current = current->next;
-	}
-	current->posi = posi;
-	current->visible = visible;
-	current->id = id;
-	current->next = NULL;
-	return (lst);
-}
-
-int		lst_new_sprite_check(t_sp_lst *lst, int id)
-{
-	int			new_sprite;
-
-	if (lst == NULL)
-		return (new_sprite = TRUE);
-	while (lst != NULL)
-	{
-		if (lst->id == id)
-			return(new_sprite = FALSE);
-		lst = lst->next;
-	}
-	return (new_sprite = TRUE);
-}
-
-void		hit_sprite(t_context *ct, SDL_Point to_int)
-{
-
-	int				id;
-	t_floatpoint	posi;
-	int 			visible;
-
-	ct->at_least_one_sprite = TRUE;
-
-	visible = TRUE;
-	posi.x = (float)to_int.x + (CUBESIZE / 2.0);
-	posi.y = (float)to_int.y + (CUBESIZE / 2.0);
-	id = ct->mpp.map[to_int.y][to_int.x];
-
-	if (lst_new_sprite_check(ct->lst, id) == TRUE)
-	{
-		ct->lst = lst_fill(ct->lst, id, posi, visible);
-	}
-}
-
 
 void	draw_one_sprite_in_2d(t_context *ct, t_floatpoint posi)
 {
 	SDL_Point		pixel;
-
 
 	pixel = convert_plan_to_pixel(posi.x, posi.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 134, 244, 66, SDL_ALPHA_OPAQUE);
@@ -86,8 +26,6 @@ void	draw_one_sprite_in_2d(t_context *ct, t_floatpoint posi)
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y - 1);
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y + 1);
 }
-
-
 
 void	draw_sprite_in_2d(t_context *ct)
 {
@@ -104,7 +42,7 @@ void	draw_sprite_in_2d(t_context *ct)
 	ct->at_least_one_sprite = FALSE;
 }
 
-void		print_sprite(t_context *ct, float distance, float sp_position_angle)
+void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle)
 {
 	SDL_Rect	dst;
 	int			sp_height;
@@ -130,8 +68,25 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_floatpoint posi)
 	sp_position_angle = angle_limit(sp_position_angle);
 	wall_dis = dda_return_distance(ct, sp_position_angle);
 	if (wall_dis < 0 || wall_dis > distance )
-		print_sprite(ct, distance, sp_position_angle);
+		print_sprite_3d(ct, distance, sp_position_angle);
 }
+
+int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
+{
+	if (((int)posi_sp.x == (int)ct->cam.posi.x) && ((int)posi_sp.x == (int)ct->cam.posi.x))
+	{
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
+
+// void	stock_sprite(t_context *ct)
+// {
+// 	{
+// 		/* code */
+// 	}
+// }
 
 void	draw_sprite_in_3d(t_context *ct)
 {
@@ -140,8 +95,20 @@ void	draw_sprite_in_3d(t_context *ct)
 	lst = ct->lst;
 	while (lst != NULL)
 	{
-		draw_one_sprite_in_3d(ct, lst->posi);
-		lst = lst->next;
+		if (walk_on_sprite(ct, lst->posi) == TRUE)
+		{
+			// stock_sprite(ct);
+			// printf("walk on sprite\n");
+			lst = lst->next;
+
+		}
+		else
+		{
+			printf("camera posi(%f, %f) sprite posi(%f, %f)\n", ct->cam.posi.x, ct->cam.posi.y, lst->posi.x, lst->posi.y);
+			draw_one_sprite_in_3d(ct, lst->posi);
+			lst = lst->next;
+		}
+
 	}
 	free_lst_sp(ct->lst);
 	ct->lst = NULL;
