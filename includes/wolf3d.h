@@ -36,6 +36,8 @@ typedef enum  		e_map_content
 	WALL_CUBE,
 	CAM_CUBE,
 	SPRITE_CUBE,
+	MUSHROOM_CUBE = 7,
+	KEY_CUBE = 8,
 }					t_map_content;
 
 typedef enum 		e_interface

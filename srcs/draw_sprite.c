@@ -82,12 +82,18 @@ int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
 		return (FALSE);
 }
 
-// void	stock_sprite(t_context *ct)
-// {
-// 	{
-// 		/* code */
-// 	}
-// }
+void	pickup_sprite(t_context *ct, t_sp_lst *lst)
+{
+	SDL_Point to_int;
+
+	if ((lst->id)% 10 == KEY_CUBE)
+		ct->sp.key_nb++;
+	if ((lst->id)% 10 == MUSHROOM_CUBE)
+		ct->sp.mushroom_nb++;
+	to_int.x = lst->posi.x;
+	to_int.y = lst->posi.y;
+	ct->mpp.map[to_int.y][to_int.x] = EMPTY;
+}
 
 void	draw_sprite_in_3d(t_context *ct)
 {
@@ -96,37 +102,18 @@ void	draw_sprite_in_3d(t_context *ct)
 	lst = ct->lst;
 	while (lst != NULL)
 	{
-		// if (walk_on_sprite(ct, lst->posi) == TRUE)
-		// {
-		// 	printf("walk on sprite camera posi(%f, %f) sprite posi(%f, %f)\n", ct->cam.posi.x, ct->cam.posi.y, lst->posi.x, lst->posi.y);
-
-		// 	lst = lst->next;
-
-		// }
-		// else
-		// {
+		if (walk_on_sprite(ct, lst->posi) == TRUE)
+		{
+			pickup_sprite(ct, lst);
+			lst = lst->next;
+		}
+		else
+		{
 			draw_one_sprite_in_3d(ct, lst->posi);
 			lst = lst->next;
-		// }
-
+		}
 	}
 	free_lst_sp(ct->lst);
 	ct->lst = NULL;
 	ct->at_least_one_sprite = FALSE;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
