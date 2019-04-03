@@ -57,12 +57,14 @@ CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
 
+LIBFTA = ./libft
+
 all: $(NAME)
 
-$(NAME): $(OBJ) libft ./libft/libft.a
+$(NAME): $(OBJ)
 	$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG)
 
-$(OBJ_DIR)/%.o: %.c $(HDR)
+$(OBJ_DIR)/%.o: %.c $(HDR) $(LIBFTA)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
 
@@ -75,15 +77,17 @@ clean:
 fclean: clean
 	make fclean -C libft
 	@echo "Fcleaning the project ... \c"
-	rm $(NAME)
+	rm -rf $(NAME)
 	@echo "DONE"
 
 re: fclean
 	@echo "Restarting the compilation"
 	make $(NAME)
 
-./libft/libft.a:
+$(LIBFTA): FORCE
 	make -C libft
+
+FORCE:
 
 debug: wolf3d libft.a $(OBJ)
 	$(CC) $(CFLAG) -g -fsanitize=address -o $(NAME) $(OBJ) $(LFLAG)
@@ -112,4 +116,4 @@ ttf: ftype
 	make -C ./libraries/SDL2_ttf-2.0.15
 	make -C ./libraries/SDL2_ttf-2.0.15 install
 
-.PHONY: all clean fclean re debug image ftype ttf libft
+.PHONY: all clean fclean re debug image ftype ttf

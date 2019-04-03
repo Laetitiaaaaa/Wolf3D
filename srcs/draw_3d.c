@@ -18,19 +18,6 @@ void	draw_wall(t_context *ct)
 	int		x_pixel;
 
 	SDL_QueryTexture(ct->wall.motif_red, NULL, NULL, &ct->wall.width, &ct->wall.height);
-	// angle = ct->cam.angle;
-	// x_pixel = XWIN / 2;
-	// while (x_pixel >= 0)
-	// {
-	// 	angle += 30.0 / (float)(XWIN / 2);
-	// 	draw_line_wall(ct, angle, x_pixel);
-	// 	x_pixel--;
-	// }
-	// angle = ct->cam.angle;
-	// x_pixel = XWIN / 2;
-	// while (x_pixel < XWIN)
-	// {
-	// 	angle -= 30.0 / (float)(XWIN / 2);
 	angle = ct->cam.angle + 30;
 	x_pixel = 0;
 	while (x_pixel < XWIN)
@@ -58,7 +45,7 @@ void	copy_texture_wall(float wall_point, t_context *ct, SDL_Texture *wall_textur
 	SDL_Rect 	src;
 	float 		pos_text;
 
-	pos_text = wall_point * ct->wall.width / (int)(wall_point + 1);
+	pos_text = (((int)(wall_point * 1000) % 1000) * ct->wall.width) / 1000;
 	src = define_rect((int)pos_text, 0, 1, ct->wall.height);
 	if (SDL_RenderCopy(ct->rend, wall_texture, &src, &ct->wall.dst) < 0)
 		quit("SDL_SetRenderCopy failed\n", ct);
@@ -88,13 +75,6 @@ void	draw_line_wall(t_context *ct, float angle, int x_pixel)
 	else if (((int)(wall.x * 10000.0) % 10000) == 0 && ((angle >= 270 && angle < 360)
 		|| (angle >= 0 && angle <= 90)))
 		copy_texture_wall(wall.y, ct, ct->wall.motif_blue);
-	// top.x = x_pixel;
-	// top.y = (YWIN - wall_height) / 2;
-	// down.x = x_pixel;
-	// down.y = (YWIN + wall_height) / 2;
-	// SDL_SetRenderDrawColor(ct->rend, 0, 51 , 102, SDL_ALPHA_OPAQUE);
-	// SDL_RenderDrawLine(ct->rend, top.x, top.y, down.x, down.y);
-
 }
 
 int		convert_mapdis_to_screendis(float distance, t_context *ct)

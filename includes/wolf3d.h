@@ -34,11 +34,19 @@
 
 typedef enum 		e_interface
 {
-	MENU = 0,
-	GAME,
+	// MENU = 0,
+	GAME = 0,
 	MAP,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
+
+typedef enum 		e_enum_menu
+{
+	PLAY = 0,
+	GUIDE,
+	QUIT,
+	OUT,
+}					t_enum_menu;
 
 typedef enum 		e_bool
 {
@@ -157,8 +165,8 @@ void				draw_sprite_in_2d(t_context *ct);
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
 void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
-
-
+void				choose_menu(t_context *ct);
+void				loop_menu(t_context *ct);
 
 
 
