@@ -42,8 +42,8 @@ typedef enum  		e_map_content
 
 typedef enum 		e_interface
 {
-	// MENU = 0,
-	GAME = 0,
+	MENU = 0,
+	GAME,
 	MAP,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
@@ -103,6 +103,8 @@ typedef struct 		s_texture
 	SDL_Texture		*ground;
 	SDL_Texture		*sky;
 	SDL_Texture		*key;
+	SDL_Texture		*mushroom;
+
 }					t_texture;
 
 typedef struct	s_sp_lst

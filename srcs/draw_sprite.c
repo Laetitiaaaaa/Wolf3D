@@ -40,7 +40,7 @@ void	draw_sprite_in_2d(t_context *ct)
 	ct->at_least_one_sprite = FALSE;
 }
 
-void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle)
+void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, int id)
 {
 	SDL_Rect	dst;
 	int			sp_height;
@@ -54,30 +54,30 @@ void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle)
 	dst.y = YWIN / 2 ;
 	dst.w = sp_height / 2;
 	dst.h = sp_height / 2;
-	SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
-
+	if (id % 10 == KEY_CUBE)
+		SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
+	if (id % 10 == MUSHROOM_CUBE)
+		SDL_RenderCopy(ct->rend, ct->tex.mushroom, NULL, &dst);
 }
-static void	draw_one_sprite_in_3d(t_context *ct, t_floatpoint posi)
+static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 {
 	float		distance;
 	float		sp_position_angle;
 	float 		wall_dis;
 
-	sp_position_angle = convert_rad_to_deg(atan2((posi.y - ct->cam.posi.y) * (-1) , (posi.x - ct->cam.posi.x)));
+	sp_position_angle = convert_rad_to_deg(atan2((lst->posi.y - ct->cam.posi.y) * (-1) , (lst->posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
-	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2) + pow(posi.y - ct->cam.posi.y, 2))
+	distance = sqrt(pow(lst->posi.x - ct->cam.posi.x, 2) + pow(lst->posi.y - ct->cam.posi.y, 2))
 	* ft_float_abs(cos(convert_deg_to_rad(sp_position_angle - ct->cam.angle)));
 	wall_dis = dda_return_distance(ct, sp_position_angle);
 	if (wall_dis < 0 || wall_dis > distance )
-		print_sprite_3d(ct, distance, sp_position_angle);
+		print_sprite_3d(ct, distance, sp_position_angle, lst->id);
 }
 
 int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
 {
 	if ((((int)posi_sp.x) == ((int)ct->cam.posi.x) && ((int)posi_sp.y) == (int)ct->cam.posi.y))
-	{
 		return (TRUE);
-	}
 	else
 		return (FALSE);
 }
@@ -109,7 +109,7 @@ void	draw_sprite_in_3d(t_context *ct)
 		}
 		else
 		{
-			draw_one_sprite_in_3d(ct, lst->posi);
+			draw_one_sprite_in_3d(ct, lst);
 			lst = lst->next;
 		}
 	}
