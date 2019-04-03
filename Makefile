@@ -34,7 +34,7 @@ SRC = loop.c \
 	  draw_3d.c \
 	  quit.c \
 	  draw_sprite.c \
-
+	  event.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
@@ -86,7 +86,7 @@ clean:
 
 fclean: clean
 	@echo "Fcleaning the project ... \c"
-	rm $(NAME)
+	rm -rf $(NAME)
 	@echo "DONE"
 
 re: fclean

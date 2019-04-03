@@ -132,8 +132,8 @@ typedef struct		s_context
 	t_sp_lst		*lst; // liste chainé de sprite
 
 
-	int				at_least_one_sprite;				
-	
+	int				at_least_one_sprite;
+
 	// t_floatpoint	sp_posi;
 	t_menu			menu;
 	SDL_Texture		*texture;
@@ -179,12 +179,6 @@ void				load_texture_obj(t_context *ct);
 void				hit_sprite(t_context *ct, SDL_Point to_int);
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
-
-
-
-
-
-
-
+void	free_lst_sp(t_sp_lst *lst);
 
 #endif

@@ -77,7 +77,7 @@ void	draw_one_sprite_in_2d(t_context *ct, t_floatpoint posi)
 {
 	SDL_Point		pixel;
 
-	
+
 	pixel = convert_plan_to_pixel(posi.x, posi.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 134, 244, 66, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
@@ -86,6 +86,7 @@ void	draw_one_sprite_in_2d(t_context *ct, t_floatpoint posi)
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y - 1);
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y + 1);
 }
+
 
 
 void	draw_sprite_in_2d(t_context *ct)
@@ -98,12 +99,10 @@ void	draw_sprite_in_2d(t_context *ct)
 		draw_one_sprite_in_2d(ct, lst->posi);
 		lst = lst->next;
 	}
-	free(ct->lst);
+	free_lst_sp(ct->lst);
 	ct->lst = NULL;
 	ct->at_least_one_sprite = FALSE;
 }
-
-
 
 void		print_sprite(t_context *ct, float distance, float sp_position_angle)
 {
@@ -120,17 +119,47 @@ void		print_sprite(t_context *ct, float distance, float sp_position_angle)
 	SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
 
 }
-void	draw_sprite_in_3d(t_context *ct)
+static void	draw_one_sprite_in_3d(t_context *ct, t_floatpoint posi)
 {
 	float		distance;
 	float		sp_position_angle;
 	float 		wall_dis;
 
-	distance = sqrt(pow(ct->lst->posi.x - ct->cam.posi.x, 2) + pow(ct->lst->posi.y - ct->cam.posi.y, 2));
-	sp_position_angle = convert_rad_to_deg(atan2((ct->lst->posi.y - ct->cam.posi.y) * (-1) , (ct->lst->posi.x - ct->cam.posi.x)));
+	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2) + pow(posi.y - ct->cam.posi.y, 2));
+	sp_position_angle = convert_rad_to_deg(atan2((posi.y - ct->cam.posi.y) * (-1) , (posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
 	wall_dis = dda_return_distance(ct, sp_position_angle);
 	if (wall_dis < 0 || wall_dis > distance )
 		print_sprite(ct, distance, sp_position_angle);
+}
+
+void	draw_sprite_in_3d(t_context *ct)
+{
+	t_sp_lst *lst;
+
+	lst = ct->lst;
+	while (lst != NULL)
+	{
+		draw_one_sprite_in_3d(ct, lst->posi);
+		lst = lst->next;
+	}
+	free_lst_sp(ct->lst);
+	ct->lst = NULL;
 	ct->at_least_one_sprite = FALSE;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

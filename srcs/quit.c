@@ -25,6 +25,18 @@ void				free_map(t_context *ct)
 	free(ct->mpp.map);
 }
 
+void	free_lst_sp(t_sp_lst *lst)
+{
+	t_sp_lst *after;
+
+	while (lst != NULL)
+	{
+		after = lst->next;
+		free(lst);
+		lst = after;
+	}
+}
+
 void				quit_nothing_to_free(char *msg)
 {
 	ft_putendl(msg);
@@ -37,6 +49,11 @@ void				quit(char *msg, t_context *ct)
 	ct->mpp.map != NULL ? free_map(ct) : 0;
 	ct->window != NULL ? SDL_DestroyWindow(ct->window) : 0;
 	ct->rend != NULL ?	SDL_DestroyRenderer(ct->rend) : 0;
+	if (ct->lst != NULL)
+	{
+		free_lst_sp(ct->lst);
+		ct->lst = NULL;
+	}
 	SDL_Quit();
 	exit(0);
 }
