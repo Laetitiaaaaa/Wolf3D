@@ -31,7 +31,6 @@ void	loop(t_context *ct)
 		{
 			SDL_SetWindowFullscreen(ct->window, SDL_WINDOW_FULLSCREEN);
 			SDL_GetWindowSize(ct->window, &ct->xwin, &ct->ywin);
-			SDL_RestoreWindow(ct->window);
 		}
 		if (ct->full_screen > 0)
 		{
@@ -39,8 +38,8 @@ void	loop(t_context *ct)
 			ct->ywin = YWIN;
 			SDL_SetWindowSize(ct->window, ct->xwin, ct->ywin);
 			SDL_SetWindowFullscreen(ct->window, 0);
-			SDL_RestoreWindow(ct->window);
 		}
+		SDL_RestoreWindow(ct->window);
 		key_events(ct, state);
 		ct->cam.angle = angle_limit(ct->cam.angle);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);

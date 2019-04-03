@@ -168,10 +168,9 @@ void				draw_sprite_in_2d(t_context *ct);
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
 void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
-void				choose_menu(t_context *ct);
 void				loop_menu(t_context *ct);
-
-
+void				copy_texture_menu(t_context *ct, char *path);
+void				loop_guide(t_context *ct);
 
 
 #endif
