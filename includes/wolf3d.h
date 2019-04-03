@@ -156,7 +156,6 @@ t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle);
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle);
 void				draw_2d(t_context *ct);
 void				draw_cubes(t_context *ct);
-void				key_events(t_context *ct, Uint8 *state);
 void				draw_camera(t_context *ct);
 void				draw_ray(t_context *ct, float angle);
 float 				set_neg_posi(t_context *ct, float angle);
@@ -181,6 +180,7 @@ void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
 void				hit_sprite(t_context *ct, SDL_Point to_int);
 double				convert_rad_to_deg(double radian);
+void	key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 
 
 

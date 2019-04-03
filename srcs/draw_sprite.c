@@ -87,10 +87,20 @@ void	draw_one_sprite_in_2d(t_context *ct, t_floatpoint posi)
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y + 1);
 }
 
+
 void	draw_sprite_in_2d(t_context *ct)
 {
+	t_sp_lst *lst;
 
-	draw_one_sprite_in_2d(ct, ct->lst->posi);
+	lst = ct->lst;
+	while (lst!= NULL)
+	{
+		draw_one_sprite_in_2d(ct, lst->posi);
+		lst = lst->next;
+	}
+	free(ct->lst);
+	ct->lst = NULL;
+
 	ct->at_least_one_sprite = FALSE;
 }
 

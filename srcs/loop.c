@@ -16,21 +16,26 @@ void	loop(t_context *ct)
 {
 	Uint8			*state;
 	SDL_Event		event;
+	unsigned int	last_time;
+	unsigned int	delta_time;
 
+	last_time = 0;
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	delta_time = 0;
 	while (TRUE)
 	{
+
 		while (SDL_PollEvent(&event))
-		{
 			if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
 				ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
-		}
-		key_events(ct, state);
+		key_events(ct, state, delta_time);
 		ct->cam.angle = angle_limit(ct->cam.angle);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(ct->rend);
 		choose_interface(ct);
 		SDL_RenderPresent(ct->rend);
+		delta_time = SDL_GetTicks() - last_time;
+		last_time += delta_time;
 	}
 }
 
@@ -59,11 +64,13 @@ void	choose_interface(t_context *ct)
 }
 
 
-void	key_events(t_context *ct, Uint8 *state)
+void	key_events(t_context *ct, Uint8 *state, unsigned int delta_time)
 {
+	
+
 	state[SDL_SCANCODE_ESCAPE] ? quit("Thank you for playing", ct) : 0;
-	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 0.15 : 0;
-	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 0.15 : 0;
+	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 15.0 * delta_time/1000 : 0;
+	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 15.0 * delta_time/1000 : 0;
 	key_events_movein_2d(ct, state);
 	key_events_movein_3d(ct, state);
 }
