@@ -53,8 +53,8 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 	int				count;
 
 	count = 0;
-	// if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
-	// 	hit_sprite(ct, to_int);//camera in the same cube of sprite
+	if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
+		hit_sprite(ct, to_int);//camera in the same cube of sprite
 	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)  //attention for -1 here
 	{
 		detect = (count == 0 ? first_horizontal_step(ct, angle, detect) : continue_horizontal_step(ct, angle, detect));

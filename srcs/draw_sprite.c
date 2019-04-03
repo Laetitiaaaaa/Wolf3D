@@ -12,8 +12,6 @@
 
 #include "wolf3d.h"
 
-
-
 void	draw_one_sprite_in_2d(t_context *ct, t_floatpoint posi)
 {
 	SDL_Point		pixel;
@@ -50,6 +48,8 @@ void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle)
 
 	sp_height = convert_mapdis_to_screendis(distance, ct);
 	delta_angle = sp_position_angle - ct->cam.angle;
+	if (ft_float_abs(delta_angle) > 60)
+		delta_angle = sp_position_angle - 360 - ct->cam.angle;
 	dst.x = XWIN / 2 - XWIN / 60 * delta_angle;
 	dst.y = YWIN / 2 ;
 	dst.w = sp_height / 2;
@@ -63,9 +63,10 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_floatpoint posi)
 	float		sp_position_angle;
 	float 		wall_dis;
 
-	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2) + pow(posi.y - ct->cam.posi.y, 2));
 	sp_position_angle = convert_rad_to_deg(atan2((posi.y - ct->cam.posi.y) * (-1) , (posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
+	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2) + pow(posi.y - ct->cam.posi.y, 2))
+	* ft_float_abs(cos(convert_deg_to_rad(sp_position_angle - ct->cam.angle)));
 	wall_dis = dda_return_distance(ct, sp_position_angle);
 	if (wall_dis < 0 || wall_dis > distance )
 		print_sprite_3d(ct, distance, sp_position_angle);
@@ -104,6 +105,7 @@ void	draw_sprite_in_3d(t_context *ct)
 		// }
 		// else
 		// {
+			printf("enter loop\n");
 			draw_one_sprite_in_3d(ct, lst->posi);
 			lst = lst->next;
 		// }
