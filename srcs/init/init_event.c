@@ -51,4 +51,12 @@ void	init_valeur(t_context *ct)
 	ct->lst = NULL;
 	ct->sp.key_nb = 0;
 	ct->sp.mushroom_nb = 0;
+
 }
+
+void	init_struct(t_context *ct)
+{
+	ct->mpp.map = NULL;
+	ct->window = NULL;
+}
+

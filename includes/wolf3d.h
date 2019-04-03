@@ -25,7 +25,6 @@
 # define X_SKY 2000
 # define Y_SKY 400
 # define X_CUT_SKY 600
-
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 # define INITIAL 0
@@ -132,9 +131,7 @@ typedef struct		s_context
 	t_texture		tex;
 	t_sp_lst		*lst; // liste chainé de sprite
 	t_sprite		sp;
-
 	int				at_least_one_sprite;
-
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
@@ -174,12 +171,12 @@ void				draw_sprite_in_2d(t_context *ct);
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
 void				hit_sprite(t_context *ct, SDL_Point to_int);
-
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 void				free_lst_sp(t_sp_lst *lst);
 t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
 int					lst_new_sprite_check(t_sp_lst *lst, int id);
+void				init_struct(t_context *ct);
 
 
 

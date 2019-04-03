@@ -12,12 +12,6 @@
 
 #include "wolf3d.h"
 
-void	init_struct(t_context *ct)
-{
-	ct->mpp.map = NULL;
-	ct->window = NULL;
-}
-
 
 SDL_Texture 	*init_texture(char *path, t_context *ct)
 {
