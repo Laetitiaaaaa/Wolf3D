@@ -41,11 +41,18 @@ typedef enum  		e_map_content
 
 typedef enum 		e_interface
 {
-	MENU = 0,
-	GAME,
+	GAME = 0,
 	MAP,
 	INTERFACE_NB, // always leave it in the end
 }					t_interface;
+
+typedef enum 		e_enum_menu
+{
+	PLAY = 0,
+	GUIDE,
+	QUIT,
+	OUT,
+}					t_enum_menu;
 
 typedef enum 		e_bool
 {
@@ -126,6 +133,8 @@ typedef struct		s_context
 {
 	t_map_params	mpp;
 	SDL_Window		*window;
+	int 			xwin;
+	int 			ywin;
 	SDL_Renderer	*rend;
 	t_camera		cam;
 	t_texture		tex;
@@ -136,6 +145,7 @@ typedef struct		s_context
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
 	int				choose_inter;
+	int 			full_screen;
 }					t_context;
 
 void				load_map(t_context *ct, const char *argv);
@@ -177,7 +187,10 @@ void				free_lst_sp(t_sp_lst *lst);
 t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
 int					lst_new_sprite_check(t_sp_lst *lst, int id);
 void				init_struct(t_context *ct);
-
+void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
+void				loop_menu(t_context *ct);
+void				copy_texture_menu(t_context *ct, char *path);
+void				loop_guide(t_context *ct);
 
 
 #endif
