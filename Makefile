@@ -12,6 +12,7 @@
 
 NAME = wolf3d
 
+HDR = $(shell find includes -type f) $(shell find libft/includes -type f) $(shell find ~/.brew/include/SDL2 -type f)
 
 INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d)
 
@@ -49,8 +50,6 @@ LIB_DIR = ./libft \
 FRAMEWORK = OpenGL AppKit
 
 CC = gcc
- # -g -ggdb
-#-fsanitize=address
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
@@ -62,17 +61,14 @@ LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) 
  -L /usr/local/Cellar/sdl2/2.0.9/lib \
   -L libraries/dist/lib
 
-HEADER = includes/wolf3d.h
-
-LIBFTA = ./libft/
+LIBFTA = ./libft
 
 all: $(NAME)
-
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG)
 
-$(OBJ_DIR)/%.o: %.c $(HEADER) $(LIBFTA)
+$(OBJ_DIR)/%.o: %.c $(HDR) $(LIBFTA)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
 
@@ -99,6 +95,11 @@ re: fclean
 relib:
 	make re -C libft
 
+debug: $(OBJ)
+	$(CC) $(CFLAG) -g -fsanitize=address -o $(NAME) $(OBJ) $(LFLAG)
+	#-g -ggdb
+#-fsanitize=address
+
 image: libraries/dist/lib/libSDL2_image.dylib
 
 libraries/dist/lib/libSDL2_image.dylib: libraries/dist/lib/libSDL2_ttf.dylib
@@ -107,9 +108,6 @@ libraries/dist/lib/libSDL2_image.dylib: libraries/dist/lib/libSDL2_ttf.dylib
 	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/dist
 	make -C ./libraries/SDL2_image-2.0.4
 	make -C ./libraries/SDL2_image-2.0.4 install
-# 	mv ./libraries/SDL2_image-2.0.4/include/SDL2/SDL_image.h ./includes
-# 	mv ./libraries/SDL2_image-2.0.4/lib/ ./libraries/SDL2_image
-# 	rm -rf ./libraries/SDL2_image-2.0.4
 
 
 libraries/dist/lib/libfreetype.dylib:
@@ -126,6 +124,5 @@ libraries/dist/lib/libSDL2_ttf.dylib: libraries/dist/lib/libfreetype.dylib
 	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries/dist
 	make -C ./libraries/SDL2_ttf-2.0.15
 	make -C ./libraries/SDL2_ttf-2.0.15 install
-# 	mv ./libraries/SDL2_ttf-2.0.15/include/SDL2/SDL_ttf.h ./includes/
-# 	mv ./libraries/SDL2_ttf-2.0.15/lib ./libraries/SDL2_ttf
-# 	rm -rf ./libraries/SDL2_ttf-2.0.15
+
+.PHONY: all clean fclean re debug image ftype ttf

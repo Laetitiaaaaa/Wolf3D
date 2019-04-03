@@ -44,13 +44,15 @@ void	find_cam(t_context *ct)
 
 void	init_valeur(t_context *ct)
 {
-	ct->menu.in = 1;
-	ct->choose_inter = MAP;
 	find_cam(ct);
 	ct->cam.angle = 5.0;
 	ct->sp.key_nb = 0;
 	ct->sp.mushroom_nb = 0;
-
+	ct->full_screen = 1;
+	ct->menu.in = PLAY;
+	ct->choose_inter = GAME;
+	ct->xwin = XWIN;
+	ct->ywin = YWIN;
 }
 
 void	init_struct(t_context *ct)
