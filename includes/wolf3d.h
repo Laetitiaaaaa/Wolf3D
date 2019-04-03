@@ -167,8 +167,6 @@ void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
 int					convert_mapdis_to_screendis(float distance, t_context *ct);
 t_floatpoint		dda_return_posi(t_context *ct, float angle);
 float				dda_return_distance(t_context *ct, float angle);
-void				key_events_movein_2d(t_context *ct, Uint8 *state);
-void				key_events_movein_3d(t_context *ct, Uint8 *state);
 SDL_Rect			define_rect(int x, int y, int w, int h);
 SDL_Texture			*init_texture(char *path, t_context *ct);
 void				copy_texture_wall(float wall_point, t_context *ct, SDL_Texture *wall_texture);
@@ -180,7 +178,7 @@ void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
 void				hit_sprite(t_context *ct, SDL_Point to_int);
 double				convert_rad_to_deg(double radian);
-void	key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
+void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 
 
 

@@ -100,7 +100,6 @@ void	draw_sprite_in_2d(t_context *ct)
 	}
 	free(ct->lst);
 	ct->lst = NULL;
-
 	ct->at_least_one_sprite = FALSE;
 }
 
