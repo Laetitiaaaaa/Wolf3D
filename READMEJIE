@@ -1,0 +1,1 @@
+Je sais pas par quelle fonction tu manges les sprites donc je te met ca la : pour le son, tu mets "Mix_PlayChannel(MIX_DEFAULT_CHANNELS, ct->chunk, 0)" la ou tu manges le sprite et ca devrait le faire

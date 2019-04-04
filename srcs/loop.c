@@ -31,7 +31,15 @@ void	loop(t_context *ct)
 		{
 			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
 			((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ? ct->full_screen = -ct->full_screen : 0;
+			(state[SDL_SCANCODE_M] && event.type == SDL_KEYDOWN) ? ct->mute = -ct->mute : 0;
+			(state[SDL_SCANCODE_9] && event.type == SDL_KEYDOWN) ? ct->volume-- : 0;
+			(state[SDL_SCANCODE_0] && event.type == SDL_KEYDOWN) ? ct->volume++ : 0;
 		}
+		while (ct->volume < 0)
+			ct->volume++;
+		Mix_VolumeMusic(ct->volume);
+		Mix_VolumeChunk(ct->chunk, ct->volume);
+		(ct->mute < 0) ? Mix_PauseMusic() : Mix_ResumeMusic();
 		if (ct->full_screen < 0)
 		{
 			SDL_SetWindowFullscreen(ct->window, SDL_WINDOW_FULLSCREEN);

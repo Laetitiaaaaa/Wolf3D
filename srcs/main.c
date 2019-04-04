@@ -33,7 +33,15 @@ void	loop_menu(t_context *ct)
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == QUIT)) ? quit("Thank you for playing", ct) : 0;
 			((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ? ct->full_screen = -ct->full_screen : 0;
 			state[SDL_SCANCODE_ESCAPE] ? quit("Thank you for playing", ct) : 0;
+			(state[SDL_SCANCODE_M] && event.type == SDL_KEYDOWN) ? ct->mute = -ct->mute : 0;
+			(state[SDL_SCANCODE_9] && event.type == SDL_KEYDOWN) ? ct->volume-- : 0;
+			(state[SDL_SCANCODE_0] && event.type == SDL_KEYDOWN) ? ct->volume++ : 0;
 		}
+		while (ct->volume < 0)
+			ct->volume++;
+		Mix_VolumeMusic(ct->volume);
+		Mix_VolumeChunk(ct->chunk, ct->volume);
+		(ct->mute < 0) ? Mix_PauseMusic() : Mix_ResumeMusic();
 		(ct->full_screen < 0) ? SDL_SetWindowFullscreen(ct->window, SDL_WINDOW_FULLSCREEN) : 0;
 		(ct->full_screen > 0) ? SDL_SetWindowFullscreen(ct->window, 0) : 0;
 		SDL_RestoreWindow(ct->window);
@@ -54,8 +62,16 @@ void	loop_guide(t_context *ct)
 		{
 			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = OUT : 0;
 			state[SDL_SCANCODE_ESCAPE] ? quit("Thank you for playing", ct) : 0;
+			(state[SDL_SCANCODE_M] && event.type == SDL_KEYDOWN) ? ct->mute = -ct->mute : 0;
+			(state[SDL_SCANCODE_9] && event.type == SDL_KEYDOWN) ? ct->volume-- : 0;
+			(state[SDL_SCANCODE_0] && event.type == SDL_KEYDOWN) ? ct->volume++ : 0;
 		}
-		copy_texture_menu(ct, "./images/bloc.bmp");		
+		(ct->mute < 0) ? Mix_PauseMusic() : Mix_ResumeMusic();
+		while (ct->volume < 0)
+			ct->volume++;
+		Mix_VolumeMusic(ct->volume);
+		Mix_VolumeChunk(ct->chunk, ct->volume);
+		copy_texture_menu(ct, "./images/guides.bmp");		
 		SDL_RenderPresent(ct->rend);
 	}
 }

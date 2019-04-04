@@ -18,6 +18,7 @@
 # include "libft.h"
 # include "SDL.h"
 # include "SDL_image.h"
+# include "SDL_mixer.h"
 # include <stdio.h>
 
 # define XWIN 1000.0
@@ -146,6 +147,10 @@ typedef struct		s_context
 	t_wall_texture	wall;
 	int				choose_inter;
 	int 			full_screen;
+	Mix_Music		*music;
+	Mix_Chunk		*chunk;
+	int 			volume;
+	int 			mute;
 }					t_context;
 
 void				load_map(t_context *ct, const char *argv);

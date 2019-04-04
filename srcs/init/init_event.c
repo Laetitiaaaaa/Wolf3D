@@ -53,6 +53,14 @@ void	init_valeur(t_context *ct)
 	ct->choose_inter = GAME;
 	ct->xwin = XWIN;
 	ct->ywin = YWIN;
+	ct->music = NULL;
+	ct->chunk = NULL;
+	ct->mute = 1;
+	ct->volume = MIX_MAX_VOLUME / 2;
+	ct->wall.motif_red = NULL;
+	ct->wall.motif_yellow = NULL;
+	ct->wall.motif_green = NULL;
+	ct->wall.motif_blue = NULL;
 }
 
 void	init_struct(t_context *ct)
