@@ -31,14 +31,12 @@ void	loop_menu(t_context *ct)
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == PLAY)) ? loop(ct) : 0;
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == GUIDE)) ? loop_guide(ct) : 0;
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == QUIT)) ? quit("Thank you for playing", ct) : 0;
-
 			((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ? ct->full_screen = -ct->full_screen : 0;
 			state[SDL_SCANCODE_ESCAPE] ? quit("Thank you for playing", ct) : 0;
 		}
 		(ct->full_screen < 0) ? SDL_SetWindowFullscreen(ct->window, SDL_WINDOW_FULLSCREEN) : 0;
 		(ct->full_screen > 0) ? SDL_SetWindowFullscreen(ct->window, 0) : 0;
 		SDL_RestoreWindow(ct->window);
-//		key_events(ct, state, );
 		print_menu(ct);
 		SDL_RenderPresent(ct->rend);
 	}
@@ -54,9 +52,9 @@ void	loop_guide(t_context *ct)
 	{
 		while (SDL_PollEvent(&event))
 		{
-			((state[SDL_SCANCODE_M]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = OUT : 0;
+			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = OUT : 0;
+			state[SDL_SCANCODE_ESCAPE] ? quit("Thank you for playing", ct) : 0;
 		}
-//		key_events(ct, state);
 		copy_texture_menu(ct, "./images/bloc.bmp");		
 		SDL_RenderPresent(ct->rend);
 	}
@@ -75,10 +73,3 @@ int main(int argc, char const **argv)
 	loop_menu(&ct);
 	return (0);
 }
-
-// void	key_event_menu(t_context *ct, Uint8 *state)
-// {
-// 	;
-// 	state[SDL_SCANCODE_M] ? ct->menu.in = OUT : 0;
-
-// }
