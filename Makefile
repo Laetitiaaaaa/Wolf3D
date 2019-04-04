@@ -41,7 +41,7 @@ SRC = loop.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
-LIBS = SDL2 SDL2_image ft
+LIBS = SDL2 SDL2_image SDL2_mixer SDL2_ttf freetype ft 
 
 LIB_DIR = ./libft \
 		  ~/.brew/lib \
@@ -61,14 +61,19 @@ LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) 
 
 LIBFTA = ./libft
 
+IMAGE = ./libraries
+
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(IMAGE) $(OBJ)
 	$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG)
 
 $(OBJ_DIR)/%.o: %.c $(HDR) $(LIBFTA)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
+
+$(IMAGE): FORCE
+	make image
 
 $(LIBFTA): FORCE
 	make -C libft
@@ -114,7 +119,7 @@ libraries/lib/libSDL2_image.dylib: libraries/lib/libSDL2_ttf.dylib
 	mv ./libraries/include ./includes
 
 
-libraries/lib/libfreetype.dylib:
+libraries/lib/libfreetype.dylib: libraries/lib/libSDL2_mixer.dylib
 	mkdir -p libraries
 	tar -xzf ./filetar/freetype-2.4.11.tar.gz -C libraries
 	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries
@@ -128,5 +133,12 @@ libraries/lib/libSDL2_ttf.dylib: libraries/lib/libfreetype.dylib
 	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/SDL2_ttf-2.0.15
 	make -C ./libraries/SDL2_ttf-2.0.15 install
+
+libraries/lib/libSDL2_mixer.dylib:
+	mkdir -p libraries
+	tar -xzf ./filetar/SDL2_mixer-2.0.4.tar.gz -C libraries
+	cd libraries/SDL2_mixer-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries
+	make -C ./libraries/SDL2_mixer-2.0.4
+	make -C ./libraries/SDL2_mixer-2.0.4 install 
 
 .PHONY: all clean fclean re debug image ftype ttf
