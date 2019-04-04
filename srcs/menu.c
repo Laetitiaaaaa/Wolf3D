@@ -28,7 +28,7 @@ void	print_menu(t_context *ct)
 	if (ct->menu.in == PLAY)
 		copy_texture_menu(ct, "./images/play.bmp");
 	if (ct->menu.in == GUIDE)
-		copy_texture_menu(ct, "./images/guides.bmp");
+		copy_texture_menu(ct, "./images/menuguide.bmp");
 	if (ct->menu.in == QUIT)
 		copy_texture_menu(ct, "./images/quit.bmp");
 }
