@@ -28,9 +28,6 @@ void	loop(t_context *ct)
 		delta_time = SDL_GetTicks() - last_time;
 		last_time += delta_time;
 		while (SDL_PollEvent(&event))
-			// if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
-				// ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
-		// key_events(ct, state, delta_time);
 		{
 			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
 			((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ? ct->full_screen = -ct->full_screen : 0;

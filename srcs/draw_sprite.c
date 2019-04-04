@@ -24,8 +24,8 @@ void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, in
 	delta_angle = sp_position_angle - ct->cam.angle;
 	if (ft_float_abs(delta_angle) > 60)
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
-	dst.x = XWIN / 2 - XWIN / 60 * delta_angle;
-	dst.y = YWIN / 2 ;
+	dst.x = ct->xwin / 2 - ct->xwin / 60 * delta_angle;
+	dst.y = ct->ywin / 2 ;
 	dst.w = sp_height / 2;
 	dst.h = sp_height / 2;
 	if (id % 10 == KEY_CUBE)

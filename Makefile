@@ -53,7 +53,7 @@ CC = gcc
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
-IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) -I libraries/dist/include -I /usr/local/Cellar/sdl2/2.0.9/include/SDL2
+IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
 
 CFLAG = -Wall -Wextra -Werror
 
@@ -97,6 +97,11 @@ debug: $(OBJ)
 	$(CC) $(CFLAG) -g -fsanitize=address -o $(NAME) $(OBJ) $(LFLAG)
 	#-g -ggdb
 #-fsanitize=address
+
+resdl:
+	rm -rf ./libraries
+	rm -rf ./includes/include
+	make image
 
 image: libraries/lib/libSDL2_image.dylib
 
