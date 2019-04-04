@@ -25,21 +25,16 @@ void	find_cam(t_context *ct)
 	{
 		while (i < ct->mpp.x)
 		{
-			if (ct->mpp.map[j][i] == CAM_CUBE)
-			{
-				ct->cam.posi.x = (float)i;
-				ct->cam.posi.y = (float)j;
-				count++;
-			}
+			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.x = (float)i : 0;
+			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.y = (float)j : 0;
+			(ct->mpp.map[j][i] == CAM_CUBE) ? count++ : 0;
 			i++;
 		}
 		i = 0;
 		j++;
 	}
-	if (count == 0)
-		quit("wrong map: camera postion not defined in map", ct);
-	if (count > 1)
-		quit("wrong map: there are more than one camera in map", ct);
+	(count == 0) ? quit("wrong map: camera postion not defined in map", ct) : 0;
+	(count > 1) ? quit("wrong map: there are more than one camera in map", ct) : 0;
 }
 
 void	init_valeur(t_context *ct)

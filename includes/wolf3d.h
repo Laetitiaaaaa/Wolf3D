@@ -196,6 +196,10 @@ void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
 void				loop_menu(t_context *ct);
 void				copy_texture_menu(t_context *ct, char *path);
 void				loop_guide(t_context *ct);
-
+void				val_cam_neg_posi(t_context *ct, int a, int b);
+void				common_actions(t_context *ct, Uint8 *state, SDL_Event event);
+void				update_settings(t_context *ct);
+void				limit_menu(t_context *ct);
+void				action_loop_game(t_context *ct);
 
 #endif
