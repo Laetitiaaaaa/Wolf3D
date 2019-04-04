@@ -45,7 +45,7 @@ LIBS = SDL2 SDL2_image ft
 
 LIB_DIR = ./libft \
 		  ~/.brew/lib \
-		  ./libraries/SDL2_image \
+		  ./libraries/lib \
 
 FRAMEWORK = OpenGL AppKit
 
@@ -58,8 +58,6 @@ IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) -I libraries/dist/include -I /usr/
 CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
- -L /usr/local/Cellar/sdl2/2.0.9/lib \
-  -L libraries/dist/lib
 
 LIBFTA = ./libft
 
@@ -100,28 +98,29 @@ debug: $(OBJ)
 	#-g -ggdb
 #-fsanitize=address
 
-image: libraries/dist/lib/libSDL2_image.dylib
+image: libraries/lib/libSDL2_image.dylib
 
-libraries/dist/lib/libSDL2_image.dylib: libraries/dist/lib/libSDL2_ttf.dylib
+libraries/lib/libSDL2_image.dylib: libraries/lib/libSDL2_ttf.dylib
 	mkdir -p libraries
 	tar -xzf filetar/SDL2_image-2.0.4.tar.gz -C libraries
-	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/dist
+	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/SDL2_image-2.0.4
 	make -C ./libraries/SDL2_image-2.0.4 install
+	mv ./libraries/include ./includes
 
 
-libraries/dist/lib/libfreetype.dylib:
+libraries/lib/libfreetype.dylib:
 	mkdir -p libraries
 	tar -xzf ./filetar/freetype-2.4.11.tar.gz -C libraries
-	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries/dist
+	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/freetype-2.4.11
 	make -C ./libraries/freetype-2.4.11 install
 
 
-libraries/dist/lib/libSDL2_ttf.dylib: libraries/dist/lib/libfreetype.dylib
+libraries/lib/libSDL2_ttf.dylib: libraries/lib/libfreetype.dylib
 	mkdir -p libraries
 	tar -xzf ./filetar/SDL2_ttf-2.0.15.tar.gz -C libraries
-	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries/dist
+	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/SDL2_ttf-2.0.15
 	make -C ./libraries/SDL2_ttf-2.0.15 install
 
