@@ -58,13 +58,23 @@ void	loop(t_context *ct)
 	SDL_Event		event;
 	unsigned int	last_time;
 	unsigned int	delta_time;
+	unsigned int frame_time;
+
+	frame_time = 1000 / 60;
+
+	int		count;
+	unsigned int i = 0;
+
+	count = 0;
 
 	last_time = 0;
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
-	while (TRUE && ct->menu.in != OUT)
+	while (ct->menu.in != OUT)
 	{
 		delta_time = SDL_GetTicks() - last_time;
 		last_time += delta_time;
+		if (delta_time < frame_time)
+			SDL_Delay(frame_time);
 		while (SDL_PollEvent(&event))
 		{
 			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
@@ -73,6 +83,15 @@ void	loop(t_context *ct)
 		update_settings(ct);
 		key_events(ct, state, delta_time);
 		action_loop_game(ct);
+		count++;
+		i += delta_time;
+
+		if (i >1000)
+		{
+			// printf("count%d\n", count ); //fps
+			count = 0;
+			i =0;
+		}
 	}
 }
 

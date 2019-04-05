@@ -48,10 +48,7 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 
 int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
 {
-	if ((((int)posi_sp.x) == ((int)ct->cam.posi.x) && ((int)posi_sp.y) == (int)ct->cam.posi.y))
-		return (TRUE);
-	else
-		return (FALSE);
+	return ((((int)posi_sp.x) == ((int)ct->cam.posi.x) && ((int)posi_sp.y) == (int)ct->cam.posi.y));
 }
 
 void	pickup_sprite(t_context *ct, t_sp_lst *lst)
