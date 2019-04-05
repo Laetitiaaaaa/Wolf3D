@@ -42,8 +42,8 @@ static void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 
 	rec.x = pixel.x;
 	rec.y = pixel.y;
-	rec.w = XWIN / ct->mpp.x;
-	rec.h = YWIN / ct->mpp.y;
+	rec.w = ct->xwin / ct->mpp.x;
+	rec.h = ct->ywin / ct->mpp.y;
 	SDL_SetRenderDrawColor(ct->rend, 31, 47, 73, SDL_ALPHA_OPAQUE);
 	SDL_RenderFillRect(ct->rend, &rec);
 }
@@ -65,8 +65,8 @@ static void	draw_cubes(t_context *ct)
 			ct->mpp.map[j][i] == 1 ? draw_fill_cubes(ct, pixel): 0;
 			rects[j * (ct->mpp.x) + i].x = pixel.x;
 			rects[j * (ct->mpp.x) + i].y = pixel.y;
-			rects[j * (ct->mpp.x) + i].w = XWIN / ct->mpp.x;
-			rects[j * (ct->mpp.x) + i].h = YWIN / ct->mpp.y;
+			rects[j * (ct->mpp.x) + i].w = ct->xwin / ct->mpp.x;
+			rects[j * (ct->mpp.x) + i].h = ct->ywin / ct->mpp.y;
 			i++;
 		}
 		i = 0;
@@ -85,7 +85,7 @@ void		draw_2d(t_context *ct)
 	angle = ct->cam.angle + 30;
 	while (angle >= (ct->cam.angle - 30.0))
 	{
-		angle -= 60.0 / (float)XWIN;
+		angle -= 60.0 / (float)ct->xwin;
 		draw_ray(ct, angle);
 	}
 }

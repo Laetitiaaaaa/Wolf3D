@@ -31,7 +31,7 @@ void	init_sdl(t_context *ct)
 {
 	SDL_Init(SDL_INIT_EVERYTHING) != 0 ? quit("Initiation failed", ct) : 0;
 	IMG_Init(IMG_INIT_PNG);
-	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, XWIN, YWIN, SDL_WINDOW_SHOWN);
+	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ct->xwin, ct->ywin, SDL_WINDOW_SHOWN);
 	if (ct->window == NULL)
 		quit("window create failed", ct);
 	ct->rend = SDL_CreateRenderer(ct->window, -1, SDL_RENDERER_ACCELERATED);
@@ -39,10 +39,10 @@ void	init_sdl(t_context *ct)
 
 void	load_texture_wall(t_context *ct)
 {
-	ct->wall.motif_red = init_texture("./images/mariowallred.bmp", ct);
-	ct->wall.motif_yellow = init_texture("./images/mariowallyellow.bmp", ct);
-	ct->wall.motif_green = init_texture("./images/mariowallgreen.bmp", ct);
-	ct->wall.motif_blue = init_texture("./images/mariowallblue.bmp", ct);
+	ct->wall.motif_red = init_texture("./images/blocgris.bmp", ct);
+	ct->wall.motif_yellow = init_texture("./images/murgris.bmp", ct);
+	ct->wall.motif_green = init_texture("./images/bloc.bmp", ct);
+	ct->wall.motif_blue = init_texture("./images/murroux.bmp", ct);
 }
 
 void	load_texture_backgr(t_context *ct)
@@ -98,7 +98,5 @@ int		init(t_context *ct, const char *argv)
 	load_texture_backgr(ct);
 	load_texture_obj(ct);
 	load_texture_wall(ct);
-
-
 	return (0);
 }

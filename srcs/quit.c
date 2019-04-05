@@ -23,6 +23,7 @@ void				free_map(t_context *ct)
 		i++;
 	}
 	free(ct->mpp.map);
+
 }
 
 void	free_lst_sp(t_sp_lst *lst)

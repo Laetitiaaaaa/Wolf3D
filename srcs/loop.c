@@ -12,6 +12,8 @@
 
 #include "wolf3d.h"
 
+
+
 void	loop(t_context *ct)
 {
 	Uint8			*state;
@@ -21,13 +23,31 @@ void	loop(t_context *ct)
 
 	last_time = 0;
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
-	while (TRUE)
+	while (TRUE && ct->menu.in != OUT)
 	{
 		delta_time = SDL_GetTicks() - last_time;
 		last_time += delta_time;
 		while (SDL_PollEvent(&event))
-			if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
-				ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
+			// if ((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN))
+				// ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB;
+		// key_events(ct, state, delta_time);
+		{
+			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
+			((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ? ct->full_screen = -ct->full_screen : 0;
+		}
+		if (ct->full_screen < 0)
+		{
+			SDL_SetWindowFullscreen(ct->window, SDL_WINDOW_FULLSCREEN);
+			SDL_GetWindowSize(ct->window, &ct->xwin, &ct->ywin);
+		}
+		if (ct->full_screen > 0)
+		{
+			ct->xwin = XWIN;
+			ct->ywin = YWIN;
+			SDL_SetWindowSize(ct->window, ct->xwin, ct->ywin);
+			SDL_SetWindowFullscreen(ct->window, 0);
+		}
+		SDL_RestoreWindow(ct->window);
 		key_events(ct, state, delta_time);
 		ct->cam.angle = angle_limit(ct->cam.angle);
 		SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
@@ -55,11 +75,6 @@ void	choose_interface(t_context *ct)
 			draw_sprite_in_3d(ct);
 		}
 	}
-	if (ct->choose_inter == MENU)
-	{
-		print_menu(ct);
-	}
 }
-
 
 
