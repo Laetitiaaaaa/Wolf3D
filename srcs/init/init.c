@@ -31,6 +31,8 @@ void	init_sdl(t_context *ct)
 {
 	SDL_Init(SDL_INIT_EVERYTHING) != 0 ? quit("Initiation failed", ct) : 0;
 	IMG_Init(IMG_INIT_PNG);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+		quit("initialisation SDL_Mixer failed", ct);
 	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ct->xwin, ct->ywin, SDL_WINDOW_SHOWN);
 	if (ct->window == NULL)
 		quit("window create failed", ct);
@@ -73,6 +75,13 @@ void	load_texture_obj(t_context *ct)
 }
 
 
+void	load_music(t_context *ct)
+{
+	ct->music = Mix_LoadMUS("./images/mario.wav");
+	ct->chunk = Mix_LoadWAV("./images/sonchampi.wav");
+	Mix_PlayMusic(ct->music, -1);
+}
+
 int		init(t_context *ct, const char *argv)
 {
 	init_struct(ct);
@@ -95,6 +104,7 @@ int		init(t_context *ct, const char *argv)
 // ---------------------------------
 	init_valeur(ct);
 	init_sdl(ct);
+	load_music(ct);
 	load_texture_backgr(ct);
 	load_texture_obj(ct);
 	load_texture_wall(ct);

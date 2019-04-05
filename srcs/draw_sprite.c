@@ -24,10 +24,7 @@ void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, in
 	delta_angle = sp_position_angle - ct->cam.angle;
 	if (ft_float_abs(delta_angle) > 60)
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
-	dst.x = XWIN / 2 - XWIN / 60 * delta_angle;
-	dst.y = YWIN / 2 ;
-	dst.w = sp_height / 2;
-	dst.h = sp_height / 2;
+	dst = define_rect(ct->xwin /2 - ct->xwin / 60 * delta_angle, ct->ywin / 2, sp_height / 2, sp_height / 2);
 	if (id % 10 == KEY_CUBE)
 		SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
 	if (id % 10 == MUSHROOM_CUBE)
@@ -65,6 +62,7 @@ void	pickup_sprite(t_context *ct, t_sp_lst *lst)
 		ct->sp.key_nb++;
 	if ((lst->id)% 10 == MUSHROOM_CUBE)
 		ct->sp.mushroom_nb++;
+	Mix_PlayChannel(MIX_DEFAULT_CHANNELS, ct->chunk, 0);
 	to_int.x = lst->posi.x;
 	to_int.y = lst->posi.y;
 	ct->mpp.map[to_int.y][to_int.x] = EMPTY;
