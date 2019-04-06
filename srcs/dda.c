@@ -35,8 +35,7 @@ float		dda_return_distance(t_context *ct, float angle) // fisheye corrected in t
 		return(distance_ver);
 	else if (distance_ver < distance_hor)
 		return (distance_ver);
-	else
-		return(distance_hor);
+	return(distance_hor);
 }
 
 t_floatpoint		dda_return_posi(t_context *ct, float angle)
@@ -56,49 +55,28 @@ t_floatpoint		dda_return_posi(t_context *ct, float angle)
 		return (posi_hor);
 	else if (posi_hor.x == NO_WALL)
 		return (posi_ver);
-	else
-	{
-		distance_ver = sqrt(pow(posi_ver.x - ct->cam.posi.x, 2)
-			+ pow(posi_ver.y - ct->cam.posi.y, 2));
-		distance_hor = sqrt(pow(posi_hor.x - ct->cam.posi.x, 2)
-			+ pow(posi_hor.y - ct->cam.posi.y, 2));
-		return (distance_ver < distance_hor ? posi_ver : posi_hor);
-	}
+	distance_ver = sqrt(pow(posi_ver.x - ct->cam.posi.x, 2)
+		+ pow(posi_ver.y - ct->cam.posi.y, 2));
+	distance_hor = sqrt(pow(posi_hor.x - ct->cam.posi.x, 2)
+		+ pow(posi_hor.y - ct->cam.posi.y, 2));
+	return (distance_ver < distance_hor ? posi_ver : posi_hor);
+}
+
+void	val_cam_neg_posi(t_context *ct, int a, int b)
+{
+	ct->cam.neg_posi.x = a;
+	ct->cam.neg_posi.y = b;
 }
 
 float 	set_neg_posi(t_context *ct, float angle)
 {
 	angle = angle_limit(angle);
-	if ((angle > 0) && (angle < 90))
-	{
-		ct->cam.neg_posi.x = POSITIVE;
-		ct->cam.neg_posi.y = NEGATIVE;
-	}
-	if (angle == 90)
-	{
-		ct->cam.neg_posi.x = ZERO;
-		ct->cam.neg_posi.y = NEGATIVE;
-	}
-	if ((angle > 90) && (angle <= 180))
-	{
-		ct->cam.neg_posi.x = NEGATIVE;
-		ct->cam.neg_posi.y = NEGATIVE;
-	}
-	if ((angle > 180) && (angle < 270))
-	{
-		ct->cam.neg_posi.x = NEGATIVE;
-		ct->cam.neg_posi.y = POSITIVE;
-	}
-	if (angle == 270)
-	{
-		ct->cam.neg_posi.x = ZERO;
-		ct->cam.neg_posi.y = POSITIVE;
-	}
-	if ((angle > 270) && (angle < 360))
-	{
-		ct->cam.neg_posi.x = POSITIVE;
-		ct->cam.neg_posi.y = POSITIVE;
-	}
+	((angle > 0) && (angle < 90)) ? val_cam_neg_posi(ct, POSITIVE, NEGATIVE) : 0;
+	(angle == 90) ? val_cam_neg_posi(ct, ZERO, NEGATIVE) : 0;
+	((angle > 90) && (angle <= 180)) ? val_cam_neg_posi(ct, NEGATIVE, NEGATIVE) : 0;
+	((angle > 180) && (angle < 270)) ? val_cam_neg_posi(ct, NEGATIVE, POSITIVE) : 0;
+	(angle == 270) ? val_cam_neg_posi(ct, ZERO, POSITIVE) : 0;
+	((angle > 270) && (angle < 360)) ? val_cam_neg_posi(ct, POSITIVE, POSITIVE) : 0;
 	return (angle);
 }
 

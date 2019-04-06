@@ -63,10 +63,7 @@ static void	draw_cubes(t_context *ct)
 		{
 			pixel = convert_plan_to_pixel((float)i, (float)j, ct);
 			ct->mpp.map[j][i] == 1 ? draw_fill_cubes(ct, pixel): 0;
-			rects[j * (ct->mpp.x) + i].x = pixel.x;
-			rects[j * (ct->mpp.x) + i].y = pixel.y;
-			rects[j * (ct->mpp.x) + i].w = ct->xwin / ct->mpp.x;
-			rects[j * (ct->mpp.x) + i].h = ct->ywin / ct->mpp.y;
+			rects[j * (ct->mpp.x) + i] = define_rect(pixel.x, pixel.y, ct->xwin / ct->mpp.x, ct->ywin / ct->mpp.y);
 			i++;
 		}
 		i = 0;

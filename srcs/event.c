@@ -44,31 +44,23 @@ static void	key_events_3d(t_context *ct, Uint8 *state, unsigned delta_time)
 		&& (ct->cam.posi.x + dx < ct->mpp.x) && (ct->cam.posi.x + dx > 0)
 		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)] != 1)
 	{
-		if (state[SDL_SCANCODE_UP])
-		{
-			ct->cam.posi.y -= dy ;
-			ct->cam.posi.x += dx ;
-		}
+		(state[SDL_SCANCODE_UP]) ? ct->cam.posi.y -= dy : 0;
+		(state[SDL_SCANCODE_UP]) ? ct->cam.posi.x += dx : 0;
 	}
 	if ((ct->cam.posi.y + dy < ct->mpp.y) && (ct->cam.posi.y + dy > 0)
 		&& (ct->cam.posi.x - dx > 0) && (ct->cam.posi.x - dx < ct->mpp.x)
 		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)] != 1)
 	{
-		if (state[SDL_SCANCODE_DOWN])
-		{
-			ct->cam.posi.y += dy;
-			ct->cam.posi.x -= dx;
-		}
+		(state[SDL_SCANCODE_DOWN]) ? ct->cam.posi.y += dy : 0;
+		(state[SDL_SCANCODE_DOWN]) ? ct->cam.posi.x -= dx : 0;
 	}
 }
 
 void	key_events(t_context *ct, Uint8 *state, unsigned int delta_time)
 {
-	state[SDL_SCANCODE_ESCAPE] ? quit("Thank you for playing", ct) : 0;
 	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 50.0 * delta_time/1000 : 0;
 	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 50.0 * delta_time/1000 : 0;
-	state[SDL_SCANCODE_M] ? ct->menu.in = OUT : 0;
+	state[SDL_SCANCODE_SPACE] ? ct->menu.in = OUT : 0;
 	key_events_2d(ct, state, delta_time);
 	key_events_3d(ct, state, delta_time);
-
 }

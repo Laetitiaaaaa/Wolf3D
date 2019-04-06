@@ -14,7 +14,8 @@ NAME = wolf3d
 
 HDR = $(shell find includes -type f) $(shell find libft/includes -type f) $(shell find ~/.brew/include/SDL2 -type f)
 
-INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d)
+INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d) \
+-I libraries/dist/include -I /usr/local/Cellar/sdl2/2.0.9/include/SDL2
 
 SRC_DIR = $(shell find srcs -type d)
 
@@ -41,11 +42,11 @@ SRC = loop.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
-LIBS = SDL2 SDL2_image ft
+LIBS = SDL2 SDL2_image SDL2_mixer SDL2_ttf freetype ft 
 
 LIB_DIR = ./libft \
 		  ~/.brew/lib \
-		  ./libraries/SDL2_image \
+		  ./libraries/lib \
 
 FRAMEWORK = OpenGL AppKit
 
@@ -53,24 +54,27 @@ CC = gcc
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
-IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) ) -I libraries/dist/include -I /usr/local/Cellar/sdl2/2.0.9/include/SDL2
+IFLAG = $(foreach dir, $(INC_DIR), -I$(dir) )
 
 CFLAG = -Wall -Wextra -Werror
 
 LFLAG = $(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIBS), -l$(lib) ) $(foreach fmw, $(FRAMEWORK), -framework $(fmw) ) \
- -L /usr/local/Cellar/sdl2/2.0.9/lib \
-  -L libraries/dist/lib
 
 LIBFTA = ./libft
 
+IMAGE = ./libraries
+
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(IMAGE) $(OBJ)
 	$(CC) $(CFLAG) -o $(NAME) $(OBJ) $(LFLAG)
 
 $(OBJ_DIR)/%.o: %.c $(HDR) $(LIBFTA)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAG) -o $@ -c $< $(IFLAG)
+
+$(IMAGE): FORCE
+	make image
 
 $(LIBFTA): FORCE
 	make -C libft
@@ -100,29 +104,42 @@ debug: $(OBJ)
 	#-g -ggdb
 #-fsanitize=address
 
-image: libraries/dist/lib/libSDL2_image.dylib
+resdl:
+	rm -rf ./libraries
+	rm -rf ./includes/include
+	make image
 
-libraries/dist/lib/libSDL2_image.dylib: libraries/dist/lib/libSDL2_ttf.dylib
+image: libraries/lib/libSDL2_image.dylib
+
+libraries/lib/libSDL2_image.dylib: libraries/lib/libSDL2_ttf.dylib
 	mkdir -p libraries
 	tar -xzf filetar/SDL2_image-2.0.4.tar.gz -C libraries
-	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries/dist
+	cd libraries/SDL2_image-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/SDL2_image-2.0.4
 	make -C ./libraries/SDL2_image-2.0.4 install
+	mv ./libraries/include ./includes
 
 
-libraries/dist/lib/libfreetype.dylib:
+libraries/lib/libfreetype.dylib: libraries/lib/libSDL2_mixer.dylib
 	mkdir -p libraries
 	tar -xzf ./filetar/freetype-2.4.11.tar.gz -C libraries
-	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries/dist
+	cd libraries/freetype-2.4.11 ; ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/freetype-2.4.11
 	make -C ./libraries/freetype-2.4.11 install
 
 
-libraries/dist/lib/libSDL2_ttf.dylib: libraries/dist/lib/libfreetype.dylib
+libraries/lib/libSDL2_ttf.dylib: libraries/lib/libfreetype.dylib
 	mkdir -p libraries
 	tar -xzf ./filetar/SDL2_ttf-2.0.15.tar.gz -C libraries
-	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries/dist
+	cd libraries/SDL2_ttf-2.0.15 ; FT2_CONFIG=$(shell pwd)/libraries/dist/bin/freetype-config ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/SDL2_ttf-2.0.15
 	make -C ./libraries/SDL2_ttf-2.0.15 install
+
+libraries/lib/libSDL2_mixer.dylib:
+	mkdir -p libraries
+	tar -xzf ./filetar/SDL2_mixer-2.0.4.tar.gz -C libraries
+	cd libraries/SDL2_mixer-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries
+	make -C ./libraries/SDL2_mixer-2.0.4
+	make -C ./libraries/SDL2_mixer-2.0.4 install 
 
 .PHONY: all clean fclean re debug image ftype ttf

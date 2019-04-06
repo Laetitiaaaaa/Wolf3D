@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-void					check_map_line(char *line)
+void				check_map_line(char *line)
 {
 	int		i;
 
@@ -28,15 +28,14 @@ void					check_map_line(char *line)
 	}
 }
 
-void					check_map(const char *argv, t_context *ct)
+void				check_map(const char *argv, t_context *ct)
 {
 	int		fd;
 	char	*line;
 	int		ret_gnl;
 
 	fd = open(argv, O_RDONLY);
-	if (fd == -1)
-		quit_nothing_to_free("map load failed, error with open()");
+	(fd == -1) ? quit_nothing_to_free("map load failed, error with open()") : 0;
 	ct->mpp.y = 0;
 	while (1)
 	{
@@ -82,11 +81,11 @@ int					*aatoii(char **pptr, t_context *ct)
 }
 
 
-void		stock_map(int fd, t_context *ct)
+void				stock_map(int fd, t_context *ct)
 {
-	char			*line;
-	int				temp;
-	int				ret;
+	char	*line;
+	int		temp;
+	int		ret;
 
 	temp = 0;
 	ct->mpp.y = 0;
@@ -101,10 +100,7 @@ void		stock_map(int fd, t_context *ct)
 		if (ct->mpp.y == 0)
 			temp = ct->mpp.x;
 		else if (ct->mpp.x != temp)
-		{
-			free(line);
 			quit("error:the LENGTH OF EACH LINE SHOULD BE THE SAME", ct);
-		}
 		ct->mpp.y++;
 		free(line);
 		line = NULL;
@@ -112,9 +108,9 @@ void		stock_map(int fd, t_context *ct)
 }
 
 
-void	load_map(t_context *ct, const char *argv)
+void				load_map(t_context *ct, const char *argv)
 {
-	int				fd;
+	int		fd;
 
 	check_map(argv, ct);
 	fd = open(argv, O_RDONLY);

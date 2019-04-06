@@ -47,6 +47,12 @@ void				quit_nothing_to_free(char *msg)
 void				quit(char *msg, t_context *ct)
 {
 	ft_putendl(msg);
+	ct->chunk != NULL ? Mix_FreeChunk(ct->chunk) : 0;
+	ct->music != NULL ? Mix_FreeMusic(ct->music) : 0;
+	ct->wall.motif_red != NULL ? SDL_DestroyTexture(ct->wall.motif_red) : 0;
+	ct->wall.motif_yellow != NULL ? SDL_DestroyTexture(ct->wall.motif_yellow) : 0;
+	ct->wall.motif_green != NULL ? SDL_DestroyTexture(ct->wall.motif_green) : 0;
+	ct->wall.motif_blue != NULL ? SDL_DestroyTexture(ct->wall.motif_blue) : 0;
 	ct->mpp.map != NULL ? free_map(ct) : 0;
 	ct->window != NULL ? SDL_DestroyWindow(ct->window) : 0;
 	ct->rend != NULL ?	SDL_DestroyRenderer(ct->rend) : 0;
@@ -55,6 +61,9 @@ void				quit(char *msg, t_context *ct)
 		free_lst_sp(ct->lst);
 		ct->lst = NULL;
 	}
+	Mix_CloseAudio();
+	ct->rend != NULL ? SDL_DestroyRenderer(ct->rend) : 0;
+	ct->window != NULL ? SDL_DestroyWindow(ct->window) : 0;
 	SDL_Quit();
 	exit(0);
 }

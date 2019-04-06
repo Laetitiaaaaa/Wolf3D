@@ -28,7 +28,7 @@ double		convert_deg_to_rad(double angle)
 	return(((double)angle) * M_PI / (double)180);
 }
 
-float	angle_limit(float angle)
+float		angle_limit(float angle)
 {
 	while (angle >= 360)
 		angle = angle - 360;

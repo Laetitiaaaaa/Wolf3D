@@ -12,15 +12,6 @@
 
 #include "wolf3d.h"
 
-// void		print_menu(t_context *ct)
-// {
-// 	ct->tmp = init_texture("../wolf3d.bmp", ct);
-// 	SDL_SetRenderTarget(ct->rend, ct->texture);
-// 	SDL_RenderCopy(ct->rend, ct->tmp, NULL, NULL);
-// 	SDL_DestroyTexture(ct->tmp);
-// 	SDL_SetRenderTarget(ct->rend, NULL);
-// }
-
 void	copy_texture_menu(t_context *ct, char *path)
 {
 	SDL_Texture 	*tmp;
@@ -37,7 +28,7 @@ void	print_menu(t_context *ct)
 	if (ct->menu.in == PLAY)
 		copy_texture_menu(ct, "./images/play.bmp");
 	if (ct->menu.in == GUIDE)
-		copy_texture_menu(ct, "./images/guides.bmp");
+		copy_texture_menu(ct, "./images/menuguide.bmp");
 	if (ct->menu.in == QUIT)
 		copy_texture_menu(ct, "./images/quit.bmp");
 }
