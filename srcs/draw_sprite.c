@@ -27,18 +27,23 @@ static void		print_sprite_3d(t_context *ct, float distance, float sp_position_an
 	else if (ft_float_abs(delta_angle) > 150)
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
 	// printf("delta_angle position camangle(%f, %f, %f)\n", delta_angle, sp_position_angle, ct->cam.angle );
-	dst = define_rect((int)(ct->xwin / 2 - ct->xwin * delta_angle / 60 - sp_height / 2),(int)(ct->ywin / 2), sp_height, sp_height);
-	printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / 60));
-	if (id % 10 == KEY_CUBE)
+	// printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE));
+	if (id % 10 == KEY_CUBE){
+		dst = define_rect((int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE - sp_height / 2),(int)(ct->ywin / 2) + sp_height / 2, sp_height/2, sp_height/2);
 		SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
+	}
+
 	if (id % 10 == MUSHROOM_CUBE)
+	{
+		dst = define_rect((int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE - sp_height / 2),(int)(ct->ywin / 2), sp_height, sp_height);
 		SDL_RenderCopy(ct->rend, ct->tex.mushroom, NULL, &dst);
+	}
 	// if (id % 10 == DOOR_CUBE)
 	// {
 		// print_door_3d(ct, dis)
 
 		// sp_height = sp_height *2;
-		// dst = define_rect(ct->xwin / 2 - (ct->xwin * delta_angle / 60 + sp_height / 2), ct->ywin / 2 - sp_height / 2, sp_height, sp_height);
+		// dst = define_rect(ct->xwin / 2 - (ct->xwin * delta_angle / ANGLE + sp_height / 2), ct->ywin / 2 - sp_height / 2, sp_height, sp_height);
 		// SDL_RenderCopy(ct->rend, ct->tex.door, NULL, &dst);
 	// }
 }

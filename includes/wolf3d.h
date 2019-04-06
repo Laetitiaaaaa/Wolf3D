@@ -29,6 +29,7 @@
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 # define INITIAL 0
+# define ANGLE 60
 
 typedef enum  		e_map_content
 {

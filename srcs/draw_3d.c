@@ -22,7 +22,7 @@ void	draw_wall(t_context *ct)
 	x_pixel = 0;
 	while (x_pixel < ct->xwin)
 	{
-		angle -= 60.0 / ((float)ct->xwin);
+		angle -= (float)ANGLE / ((float)ct->xwin);
 		draw_line_wall(ct, angle, x_pixel);
 		x_pixel++;
 	}
