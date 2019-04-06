@@ -170,7 +170,6 @@ void				draw_2d(t_context *ct);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_valeur(t_context *ct);
 void				draw_wall(t_context *ct);
-void				choose_interface(t_context *ct);
 void				print_menu(t_context *ct);
 void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
 int					convert_mapdis_to_screendis(float distance, t_context *ct);
@@ -200,7 +199,6 @@ void				val_cam_neg_posi(t_context *ct, int a, int b);
 void				common_actions(t_context *ct, Uint8 *state, SDL_Event event);
 void				update_settings(t_context *ct);
 void				limit_menu(t_context *ct);
-void				action_loop_game(t_context *ct);
 
 
 #endif

@@ -12,60 +12,8 @@
 
 #include "wolf3d.h"
 
-void	action_loop_game(t_context *ct)
-{
-	ct->cam.angle = angle_limit(ct->cam.angle);
-	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(ct->rend);
-	choose_interface(ct);
-	SDL_RenderPresent(ct->rend);
-}
 
-
-void	loop(t_context *ct)
-{
-	Uint8			*state;
-	SDL_Event		event;
-	unsigned int	last_time;
-	unsigned int	delta_time;
-	unsigned int frame_time;
-
-	frame_time = 1000 / 60;
-
-	int		count;
-	unsigned int i = 0;
-
-	count = 0;
-
-	last_time = 0;
-	state = (Uint8*)SDL_GetKeyboardState(NULL);
-	while (ct->menu.in != OUT)
-	{
-		delta_time = SDL_GetTicks() - last_time;
-		last_time += delta_time;
-		if (delta_time < frame_time)
-			SDL_Delay(frame_time);
-		while (SDL_PollEvent(&event))
-		{
-			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
-			common_actions(ct, state, event);
-		}
-		update_settings(ct);
-		key_events(ct, state, delta_time);
-		action_loop_game(ct);
-		count++;
-		i += delta_time;
-
-		if (i >1000)
-		{
-			// printf("count%d\n", count ); //fps
-			count = 0;
-			i =0;
-		}
-	}
-}
-
-void	choose_interface(t_context *ct)
+static void	choose_interface(t_context *ct)
 {
 	if (ct->choose_inter == MAP)
 	{
@@ -81,3 +29,53 @@ void	choose_interface(t_context *ct)
 			draw_sprite_in_3d(ct);
 	}
 }
+
+static void	action_loop_game(t_context *ct)
+{
+	ct->cam.angle = angle_limit(ct->cam.angle);
+	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(ct->rend);
+	choose_interface(ct);
+	SDL_RenderPresent(ct->rend);
+}
+
+
+void	loop(t_context *ct)
+{
+	Uint8			*state;
+	SDL_Event		event;
+	unsigned int	last_time;
+	unsigned int	delta_time;
+	unsigned int	frame_time;
+
+	int		fps;
+	unsigned int i = 0;
+	fps = 0;
+	frame_time = 1000 / 60;
+	last_time = 0;
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	while (ct->menu.in != OUT)
+	{
+		delta_time = SDL_GetTicks() - last_time;
+		last_time += delta_time;
+		delta_time < frame_time ? SDL_Delay(frame_time - delta_time) : 0;
+		while (SDL_PollEvent(&event))
+		{
+			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
+			common_actions(ct, state, event);
+		}
+		update_settings(ct);
+		key_events(ct, state, delta_time);
+		action_loop_game(ct);
+		fps++;
+		i += delta_time;
+
+		if (i >1000)
+		{
+			// printf("fps%d\n", fps ); //fps
+			fps = 0;
+			i =0;
+		}
+	}
+}
+

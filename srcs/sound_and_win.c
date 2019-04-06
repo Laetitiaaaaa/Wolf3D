@@ -51,9 +51,9 @@ void	loop_menu(t_context *ct)
 		while (SDL_PollEvent(&event))
 		{
 			limit_menu(ct);
+			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == PLAY)) ? loop(ct) : 0;
 			((state[SDL_SCANCODE_DOWN]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in + 1) % OUT : 0;
 			((state[SDL_SCANCODE_UP]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in - 1) % OUT : 0;
-			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == PLAY)) ? loop(ct) : 0;
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == GUIDE)) ? loop_guide(ct) : 0;
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == QUIT)) ? quit("Thank you for playing", ct) : 0;
 			common_actions(ct, state, event);
@@ -64,21 +64,3 @@ void	loop_menu(t_context *ct)
 	}
 }
 
-void	loop_guide(t_context *ct)
-{
-	Uint8			*state;
-	SDL_Event		event;
-
-	state = (Uint8*)SDL_GetKeyboardState(NULL);
-	while (TRUE && ct->menu.in != OUT)
-	{
-		while (SDL_PollEvent(&event))
-		{
-			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = OUT : 0;
-			common_actions(ct, state, event);
-		}
-		update_settings(ct);
-		copy_texture_menu(ct, "./images/guides.bmp");
-		SDL_RenderPresent(ct->rend);
-	}
-}
