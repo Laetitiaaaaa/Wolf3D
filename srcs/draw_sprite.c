@@ -12,7 +12,17 @@
 
 #include "wolf3d.h"
 
+static	void	draw_key(t_context *ct, float delta_angle, int sp_height)
+{
+	SDL_Rect 	dst;
+	int			x;
+	int			y;
 
+	x = (int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE - sp_height / 4);
+	y = (int)(ct->ywin / 2) + sp_height / 4;
+	dst = define_rect(x, y, sp_height / 2, sp_height / 2);
+	SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
+}
 
 static void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, int id)
 {
@@ -28,11 +38,8 @@ static void		print_sprite_3d(t_context *ct, float distance, float sp_position_an
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
 	// printf("delta_angle position camangle(%f, %f, %f)\n", delta_angle, sp_position_angle, ct->cam.angle );
 	// printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE));
-	if (id % 10 == KEY_CUBE){
-		dst = define_rect((int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE - sp_height / 2),(int)(ct->ywin / 2) + sp_height / 2, sp_height/2, sp_height/2);
-		SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
-	}
-
+	if (id % 10 == KEY_CUBE)
+		draw_key(ct, delta_angle, sp_height);
 	if (id % 10 == MUSHROOM_CUBE)
 	{
 		dst = define_rect((int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE - sp_height / 2),(int)(ct->ywin / 2), sp_height, sp_height);
