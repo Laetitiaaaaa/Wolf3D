@@ -39,10 +39,11 @@ SRC = loop.c \
 	  event.c \
 	  sprite_list.c \
 	  draw_sprite2d.c \
+	  sound_and_win.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
-LIBS = SDL2 SDL2_image SDL2_mixer SDL2_ttf freetype ft 
+LIBS = SDL2 SDL2_image SDL2_mixer SDL2_ttf freetype ft
 
 LIB_DIR = ./libft \
 		  ~/.brew/lib \
@@ -140,6 +141,6 @@ libraries/lib/libSDL2_mixer.dylib:
 	tar -xzf ./filetar/SDL2_mixer-2.0.4.tar.gz -C libraries
 	cd libraries/SDL2_mixer-2.0.4 ; ./configure --prefix=$(shell pwd)/libraries
 	make -C ./libraries/SDL2_mixer-2.0.4
-	make -C ./libraries/SDL2_mixer-2.0.4 install 
+	make -C ./libraries/SDL2_mixer-2.0.4 install
 
 .PHONY: all clean fclean re debug image ftype ttf

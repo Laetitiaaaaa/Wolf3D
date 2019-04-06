@@ -202,4 +202,5 @@ void				update_settings(t_context *ct);
 void				limit_menu(t_context *ct);
 void				action_loop_game(t_context *ct);
 
+
 #endif
