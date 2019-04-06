@@ -14,7 +14,7 @@
 
 
 
-void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, int id)
+static void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, int id)
 {
 	SDL_Rect	dst;
 	int			sp_height;
@@ -22,9 +22,11 @@ void		print_sprite_3d(t_context *ct, float distance, float sp_position_angle, in
 
 	sp_height = convert_mapdis_to_screendis(distance, ct);
 	delta_angle = sp_position_angle - ct->cam.angle;
-	if (ft_float_abs(delta_angle) > 60)
+	if (ft_float_abs(delta_angle) > 150 && sp_position_angle < ct->cam.angle )
+		delta_angle = sp_position_angle + 360 - ct->cam.angle;
+	else if (ft_float_abs(delta_angle) > 150)
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
-	dst = define_rect(ct->xwin /2 - ct->xwin / 60 * delta_angle, ct->ywin / 2, sp_height / 2, sp_height / 2);
+	dst = define_rect(ct->xwin / 2 - ct->xwin / 60 * delta_angle, ct->ywin / 2, sp_height / 2, sp_height / 2);
 	if (id % 10 == KEY_CUBE)
 		SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
 	if (id % 10 == MUSHROOM_CUBE)
@@ -73,15 +75,11 @@ void	draw_sprite_in_3d(t_context *ct)
 	while (lst != NULL)
 	{
 		if (walk_on_sprite(ct, lst->posi) == TRUE)
-		{
 			pickup_sprite(ct, lst);
-			lst = lst->next;
-		}
 		else
-		{
 			draw_one_sprite_in_3d(ct, lst);
-			lst = lst->next;
-		}
+		lst = lst->next;
+
 	}
 	free_lst_sp(ct->lst);
 	ct->lst = NULL;
