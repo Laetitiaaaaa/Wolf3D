@@ -26,11 +26,21 @@ static void		print_sprite_3d(t_context *ct, float distance, float sp_position_an
 		delta_angle = sp_position_angle + 360 - ct->cam.angle;
 	else if (ft_float_abs(delta_angle) > 150)
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
-	dst = define_rect(ct->xwin / 2 - ct->xwin / 60 * delta_angle, ct->ywin / 2, sp_height / 2, sp_height / 2);
+	printf("delta_angle position camangle(%f, %f, %f)\n", delta_angle, sp_position_angle, ct->cam.angle );
+	dst = define_rect((int)(ct->xwin / 2 - ct->xwin * delta_angle / 60),(int)ct->ywin / 2, sp_height, sp_height);
+	printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / 60));
 	if (id % 10 == KEY_CUBE)
 		SDL_RenderCopy(ct->rend, ct->tex.key, NULL, &dst);
 	if (id % 10 == MUSHROOM_CUBE)
 		SDL_RenderCopy(ct->rend, ct->tex.mushroom, NULL, &dst);
+	// if (id % 10 == DOOR_CUBE)
+	// {
+		// print_door_3d(ct, dis)
+
+		// sp_height = sp_height *2;
+		// dst = define_rect(ct->xwin / 2 - (ct->xwin * delta_angle / 60 + sp_height / 2), ct->ywin / 2 - sp_height / 2, sp_height, sp_height);
+		// SDL_RenderCopy(ct->rend, ct->tex.door, NULL, &dst);
+	// }
 }
 
 static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
@@ -39,6 +49,11 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 	float		sp_position_angle;
 	float 		wall_dis;
 
+	// if (lst->id % 10 == DOOR_CUBE)
+	// {
+	// 	lst->posi.x -= CUBESIZE / 2;
+	// 	lst->posi.y -= CUBESIZE / 2;
+	// }
 	sp_position_angle = convert_rad_to_deg(atan2((lst->posi.y - ct->cam.posi.y) * (-1) , (lst->posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
 	distance = sqrt(pow(lst->posi.x - ct->cam.posi.x, 2) + pow(lst->posi.y - ct->cam.posi.y, 2))

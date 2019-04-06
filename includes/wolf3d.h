@@ -36,6 +36,7 @@ typedef enum  		e_map_content
 	WALL_CUBE,
 	CAM_CUBE,
 	SPRITE_CUBE,
+	DOOR_CUBE = 6,
 	MUSHROOM_CUBE = 7,
 	KEY_CUBE = 8,
 }					t_map_content;
@@ -111,6 +112,7 @@ typedef struct 		s_texture
 	SDL_Texture		*sky;
 	SDL_Texture		*key;
 	SDL_Texture		*mushroom;
+	SDL_Texture		*door;
 
 }					t_texture;
 
@@ -127,6 +129,7 @@ typedef struct s_sprite
 {
 	int				key_nb;
 	int				mushroom_nb;
+	int				door_nb;
 }				t_sprite;
 
 

@@ -51,7 +51,7 @@ LIB_DIR = ./libft \
 
 FRAMEWORK = OpenGL AppKit
 
-CC = gcc
+CC = gcc -g -ggdb
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
@@ -101,7 +101,7 @@ relib:
 	make re -C libft
 
 debug: $(OBJ)
-	$(CC) $(CFLAG) -g -fsanitize=address -o $(NAME) $(OBJ) $(LFLAG)
+	$(CC) $(CFLAG) -g -ggdb -o $(NAME) $(OBJ) $(LFLAG)
 	#-g -ggdb
 #-fsanitize=address
 
