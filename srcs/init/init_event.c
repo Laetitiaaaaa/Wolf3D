@@ -25,8 +25,8 @@ void	find_cam(t_context *ct)
 	{
 		while (i < ct->mpp.x)
 		{
-			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.x = (float)i : 0;
-			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.y = (float)j : 0;
+			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.x = i + 0.5 : 0;
+			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.y = j + 0.5 : 0;
 			(ct->mpp.map[j][i] == CAM_CUBE) ? count++ : 0;
 			i++;
 		}
