@@ -36,8 +36,8 @@ static void		print_sprite_3d(t_context *ct, float distance, float sp_position_an
 		delta_angle = sp_position_angle + 360 - ct->cam.angle;
 	else if (ft_float_abs(delta_angle) > 150)
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
-	// printf("delta_angle position camangle(%f, %f, %f)\n", delta_angle, sp_position_angle, ct->cam.angle );
-	// printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE));
+	printf("delta_angle position camangle(%f, %f, %f)\n", delta_angle, sp_position_angle, ct->cam.angle );
+	printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE));
 	if (id % 10 == KEY_CUBE)
 		draw_key(ct, delta_angle, sp_height);
 	if (id % 10 == MUSHROOM_CUBE)
@@ -49,16 +49,23 @@ static void		print_sprite_3d(t_context *ct, float distance, float sp_position_an
 
 static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 {
-	// float		distance;
 	float		sp_position_angle;
 	float 		wall_dis;
+	// float		delta_wall_angle;
+	float		near_wall_dis_up;
+	float		near_wall_dis_down;
 
 	sp_position_angle = convert_rad_to_deg(atan2((lst->posi.y - ct->cam.posi.y) * (-1) , (lst->posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
-	// distance = sqrt(pow(lst->posi.x - ct->cam.posi.x, 2) + pow(lst->posi.y - ct->cam.posi.y, 2));
 	wall_dis = dda_return_distance(ct, sp_position_angle);
-	if (wall_dis < 0 || wall_dis > lst->distance )
+	// delta_wall_angle = convert_rad_to_deg(atan(sqrt(2.0) / 2 / lst->distance));
+	near_wall_dis_down = dda_return_distance(ct, angle_limit(sp_position_angle + 3.0));
+	near_wall_dis_up = dda_return_distance(ct, angle_limit(sp_position_angle - 3.0));
+	if (wall_dis < 0 || (wall_dis > lst->distance && near_wall_dis_up > lst->distance && near_wall_dis_down > lst->distance))
+	// if (wall_dis < 0 || wall_dis > lst->distance)
 		print_sprite_3d(ct, lst->distance, sp_position_angle, lst->id);
+
+
 }
 
 int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)

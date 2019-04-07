@@ -202,8 +202,8 @@ void				val_cam_neg_posi(t_context *ct, int a, int b);
 void				common_actions(t_context *ct, Uint8 *state, SDL_Event event);
 void				update_settings(t_context *ct);
 void				limit_menu(t_context *ct);
-t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
-t_sp_lst	*sort_list(t_sp_lst *lst);
+t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
+t_sp_lst			*sort_list(t_sp_lst *lst);
 
 
 
