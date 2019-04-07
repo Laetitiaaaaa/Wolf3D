@@ -40,6 +40,7 @@ SRC = loop.c \
 	  sprite_list.c \
 	  draw_sprite2d.c \
 	  sound_and_win.c \
+	  draw_icon.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
@@ -51,8 +52,8 @@ LIB_DIR = ./libft \
 
 FRAMEWORK = OpenGL AppKit
 
-CC = gcc
-# -g -ggdb
+CC = gcc -g -ggdb
+# -fsanitize=address
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 

@@ -155,6 +155,7 @@ typedef struct		s_context
 	Mix_Chunk		*chunk;
 	int 			volume;
 	int 			mute;
+	TTF_Font		*font;
 }					t_context;
 
 void				load_map(t_context *ct, const char *argv);

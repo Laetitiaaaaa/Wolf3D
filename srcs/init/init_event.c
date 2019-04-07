@@ -57,6 +57,7 @@ void	init_valeur(t_context *ct)
 	ct->wall.motif_yellow = NULL;
 	ct->wall.motif_green = NULL;
 	ct->wall.motif_blue = NULL;
+	ct->font = NULL;
 }
 
 void	init_struct(t_context *ct)

@@ -84,7 +84,12 @@ void	load_texture_obj(t_context *ct)
 
 }
 
-
+void	load_font(t_context *ct)
+{
+	ct->font = TTF_OpenFont("/Library/Fonts/Arial.ttf", 35);
+	if (ct->font == NULL)
+		quit("TTF_OpenFont()failed", ct);
+}
 
 
 void	load_music(t_context *ct)
@@ -117,6 +122,7 @@ int		init(t_context *ct, const char *argv)
 	init_valeur(ct);
 	init_sdl(ct);
 	load_music(ct);
+	load_font(ct);
 	load_texture_backgr(ct);
 	load_texture_obj(ct);
 	load_texture_wall(ct);

@@ -61,6 +61,7 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 	// delta_wall_angle = convert_rad_to_deg(atan(sqrt(2.0) / 2 / lst->distance));
 	near_wall_dis_down = dda_return_distance(ct, angle_limit(sp_position_angle + 3.0));
 	near_wall_dis_up = dda_return_distance(ct, angle_limit(sp_position_angle - 3.0));
+	// if (wall_dis < 0 || wall_dis > lst->distance )
 	if (wall_dis < 0 || (wall_dis > lst->distance && near_wall_dis_up > lst->distance && near_wall_dis_down > lst->distance))
 	// if (wall_dis < 0 || wall_dis > lst->distance)
 		print_sprite_3d(ct, lst->distance, sp_position_angle, lst->id);
