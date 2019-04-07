@@ -69,34 +69,33 @@ int		lst_new_sprite_check(t_sp_lst *lst, int id)
 }
 
 
-// void	swap(t_sp_lst *max, t_sp_lst *cmp)
-// {
+void	swap(t_sp_lst *max, t_sp_lst *cmp)
+{
+	int				id_tmp;
+	float			distance_tmp;
+	t_floatpoint	posi_tmp;
 
-
-
-// }
+	id_tmp = max->id;
+	distance_tmp = max->distance;
+	posi_tmp.x = max->posi.x;
+	posi_tmp.y = max->posi.y;
+	max->id = cmp->id;
+	max->distance = cmp->distance;
+	max->posi.x = cmp->posi.x;
+	max->posi.y = cmp->posi.y;
+	cmp->id = id_tmp;
+	cmp->distance = distance_tmp;
+	cmp->posi.x = posi_tmp.x;
+	cmp->posi.y = posi_tmp.y;
+}
 
 t_sp_lst	*sort_list(t_sp_lst *lst)
 {
 	t_sp_lst 	*max;
 	t_sp_lst	*cmp;
-	// t_sp_lst	*test;
-	int				id_tmp;
-	float			distance_tmp;
-	t_floatpoint	posi_tmp;
+
 
 	max = lst;
-
-
-	// test = lst;
-	// while (test!= NULL)
-	// {
-	// 	printf("before_testid(%d, %f)\n", test->id, test->distance);
-	// 	test = test->next;
-	// }
-
-
-
 	while (max->next != NULL)
 	{
 		cmp = max->next;
@@ -104,42 +103,12 @@ t_sp_lst	*sort_list(t_sp_lst *lst)
 		{
 			if (max->distance < cmp->distance)
 			{
-				id_tmp = max->id;
-				distance_tmp = max->distance;
-				posi_tmp.x = max->posi.x;
-				posi_tmp.y = max->posi.y;
-				max->id = cmp->id;
-				max->distance = cmp->distance;
-				max->posi.x = cmp->posi.x;
-				max->posi.y = cmp->posi.y;
-				cmp->id = id_tmp;
-				cmp->distance = distance_tmp;
-				cmp->posi.x = posi_tmp.x;
-				cmp->posi.y = posi_tmp.y;
-				printf("%f | %f \n", max->distance, cmp->distance);
+				swap(max, cmp);
 			}
 			cmp = cmp->next;
 		}
 		max = max->next;
 	}
-
-	max = lst;
-	while (max->next != NULL)
-	{
-		printf("%f\t", max->distance);
-		max = max->next;
-	}
-	printf("%f\t", max->distance);
-	printf("\n");
-
-	// test = lst;
-	// while (test!= NULL)
-	// {
-	// 	printf("after_restid(%d, %f)\n", test->id, test->distance);
-	// 	test = test->next;
-	// }
-
-
 	return (lst);
 }
 
