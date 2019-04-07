@@ -30,7 +30,10 @@ SDL_Texture 	*init_texture(char *path, t_context *ct)
 void	init_sdl(t_context *ct)
 {
 	SDL_Init(SDL_INIT_EVERYTHING) != 0 ? quit("Initiation failed", ct) : 0;
+	if(TTF_Init() == -1)
+		quit("TTF_Init() failed", ct);
 	IMG_Init(IMG_INIT_PNG);
+
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
 		quit("initialisation SDL_Mixer failed", ct);
 	ct->window = SDL_CreateWindow("wolf3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ct->xwin, ct->ywin, SDL_WINDOW_SHOWN);
@@ -80,6 +83,8 @@ void	load_texture_obj(t_context *ct)
 	// SDL_FreeSurface(tmp);
 
 }
+
+
 
 
 void	load_music(t_context *ct)

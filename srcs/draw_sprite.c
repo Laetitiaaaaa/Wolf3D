@@ -36,8 +36,8 @@ static void		print_sprite_3d(t_context *ct, float distance, float sp_position_an
 		delta_angle = sp_position_angle + 360 - ct->cam.angle;
 	else if (ft_float_abs(delta_angle) > 150)
 		delta_angle = sp_position_angle - 360 - ct->cam.angle;
-	printf("delta_angle position camangle(%f, %f, %f)\n", delta_angle, sp_position_angle, ct->cam.angle );
-	printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE));
+	// printf("delta_angle position camangle(%f, %f, %f)\n", delta_angle, sp_position_angle, ct->cam.angle );
+	// printf("xpixel:%d\n",(int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE));
 	if (id % 10 == KEY_CUBE)
 		draw_key(ct, delta_angle, sp_height);
 	if (id % 10 == MUSHROOM_CUBE)

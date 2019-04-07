@@ -68,6 +68,7 @@ void				quit(char *msg, t_context *ct)
 	// printf("13\n");
 	ct->rend != NULL ? SDL_DestroyRenderer(ct->rend) : 0;
 	ct->window != NULL ? SDL_DestroyWindow(ct->window) : 0;
+	TTF_Quit();
 	SDL_Quit();
 	exit(0);
 }

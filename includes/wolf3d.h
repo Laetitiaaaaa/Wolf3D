@@ -19,6 +19,7 @@
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
+# include "SDL_ttf.h"
 # include <stdio.h>
 
 # define XWIN 1000.0
@@ -113,8 +114,7 @@ typedef struct 		s_texture
 	SDL_Texture		*sky;
 	SDL_Texture		*key;
 	SDL_Texture		*mushroom;
-	SDL_Texture		*door;
-
+	SDL_Texture		*words;
 }					t_texture;
 
 typedef struct	s_sp_lst
@@ -204,6 +204,8 @@ void				update_settings(t_context *ct);
 void				limit_menu(t_context *ct);
 t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
 t_sp_lst			*sort_list(t_sp_lst *lst);
+void				draw_icon(t_context *ct);
+
 
 
 
