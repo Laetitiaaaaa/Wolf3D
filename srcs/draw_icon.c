@@ -21,15 +21,16 @@ void	draw_text(t_context *ct, char *s, SDL_Point posi)
 	SDL_Surface		*surface;
 	SDL_Texture		*texture;
 
-
-	surface = TTF_RenderText_Solid(ct->font, s, color);
+	font = TTF_OpenFont("/Library/Fonts/Arial.ttf", 35);
+	if (font == NULL)
+		quit("TTF_OpenFont()failed", ct);
+	surface = TTF_RenderText_Solid(font, s, color);
 	if (surface == NULL)
 		quit("TTF_RenderText_Solid()failed", ct);
+	TTF_CloseFont(font);
 	texture = SDL_CreateTextureFromSurface(ct->rend, surface);
 	if (texture == NULL)
 		quit("SDL_CreateTextureFromSurface()failed", ct);
-	// TTF_CloseFont(ct->font) : 0;
-
 	int	texw = 0;
 	int texh = 0;
 	SDL_QueryTexture(texture, NULL, NULL, &texw, &texh);
