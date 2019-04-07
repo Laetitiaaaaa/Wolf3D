@@ -53,11 +53,6 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 	float		sp_position_angle;
 	float 		wall_dis;
 
-	// if (lst->id % 10 == DOOR_CUBE)
-	// {
-	// 	lst->posi.x -= CUBESIZE / 2;
-	// 	lst->posi.y -= CUBESIZE / 2;
-	// }
 	sp_position_angle = convert_rad_to_deg(atan2((lst->posi.y - ct->cam.posi.y) * (-1) , (lst->posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
 	// distance = sqrt(pow(lst->posi.x - ct->cam.posi.x, 2) + pow(lst->posi.y - ct->cam.posi.y, 2));

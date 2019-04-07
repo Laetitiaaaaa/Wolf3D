@@ -14,15 +14,19 @@
 
 void		hit_sprite(t_context *ct, SDL_Point to_int)
 {
-
 	int				id;
 	t_floatpoint	posi;
 	float			distance;
+	float			sp_position_angle;
 
 	ct->at_least_one_sprite = TRUE;
+
 	posi.x = (float)to_int.x + (CUBESIZE / 2.0);
 	posi.y = (float)to_int.y + (CUBESIZE / 2.0);
-	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2) + pow(posi.y - ct->cam.posi.y, 2));
+	sp_position_angle = convert_rad_to_deg(atan2((posi.y - ct->cam.posi.y) * (-1), (posi.x - ct->cam.posi.x)));
+	sp_position_angle = angle_limit(sp_position_angle);
+	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2) + pow(posi.y - ct->cam.posi.y, 2))
+	* ft_float_abs(cos(convert_deg_to_rad(sp_position_angle - ct->cam.angle)));
 	id = ct->mpp.map[to_int.y][to_int.x];
 	if (lst_new_sprite_check(ct->lst, id) == TRUE)
 		ct->lst = lst_fill(ct->lst, id, posi, distance);
@@ -91,9 +95,8 @@ void	swap(t_sp_lst *max, t_sp_lst *cmp)
 
 t_sp_lst	*sort_list(t_sp_lst *lst)
 {
-	t_sp_lst 	*max;
+	t_sp_lst	*max;
 	t_sp_lst	*cmp;
-
 
 	max = lst;
 	while (max->next != NULL)
@@ -102,9 +105,7 @@ t_sp_lst	*sort_list(t_sp_lst *lst)
 		while (cmp != NULL)
 		{
 			if (max->distance < cmp->distance)
-			{
 				swap(max, cmp);
-			}
 			cmp = cmp->next;
 		}
 		max = max->next;

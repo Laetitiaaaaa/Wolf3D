@@ -61,8 +61,8 @@ static void	key_events_3d(t_context *ct, Uint8 *state, unsigned delta_time)
 
 void	key_events(t_context *ct, Uint8 *state, unsigned int delta_time)
 {
-	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 50.0 * delta_time/1000 : 0;
-	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 50.0 * delta_time/1000 : 0;
+	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 40.0 * delta_time/1000 : 0;
+	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 40.0 * delta_time/1000 : 0;
 	state[SDL_SCANCODE_SPACE] ? ct->menu.in = OUT : 0;
 	key_events_2d(ct, state, delta_time);
 	key_events_3d(ct, state, delta_time);
