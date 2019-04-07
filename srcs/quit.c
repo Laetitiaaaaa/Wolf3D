@@ -58,17 +58,17 @@ void				quit(char *msg, t_context *ct)
 	Mix_CloseAudio();
 	ct->chunk != NULL ? Mix_FreeChunk(ct->chunk) : 0;
 	ct->music != NULL ? Mix_FreeMusic(ct->music) : 0;
-	// ct->wall.motif_red != NULL ? SDL_DestroyTexture(ct->wall.motif_red) : 0;
-	// printf("10\n");
-	// ct->wall.motif_yellow != NULL ? SDL_DestroyTexture(ct->wall.motif_yellow) : 0;
-	// printf("11\n");
-	// ct->wall.motif_green != NULL ? SDL_DestroyTexture(ct->wall.motif_green) : 0;
-	// printf("12\n");
-	// ct->wall.motif_blue != NULL ? SDL_DestroyTexture(ct->wall.motif_blue) : 0; // seg fault with this line
-	// printf("13\n");
+	ct->wall.motif_red != NULL ? SDL_DestroyTexture(ct->wall.motif_red) : 0;
+	ct->wall.motif_yellow != NULL ? SDL_DestroyTexture(ct->wall.motif_yellow) : 0;
+	ct->wall.motif_green != NULL ? SDL_DestroyTexture(ct->wall.motif_green) : 0;
+	ct->wall.motif_blue != NULL ? SDL_DestroyTexture(ct->wall.motif_blue) : 0;
+	ct->tex.ground != NULL ? SDL_DestroyTexture(ct->tex.ground) : 0;	
+	ct->tex.sky != NULL ? SDL_DestroyTexture(ct->tex.sky) : 0;	
+	ct->tex.key != NULL ? SDL_DestroyTexture(ct->tex.key) : 0;	
+	ct->tex.mushroom != NULL ? SDL_DestroyTexture(ct->tex.mushroom) : 0;	
 	ct->rend != NULL ? SDL_DestroyRenderer(ct->rend) : 0;
 	ct->window != NULL ? SDL_DestroyWindow(ct->window) : 0;
-	ct->font != NULL? TTF_CloseFont(ct->font) : 0;
+	ct->font != NULL ? TTF_CloseFont(ct->font) : 0;
 	TTF_Quit();
 	SDL_Quit();
 	exit(0);

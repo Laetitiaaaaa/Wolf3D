@@ -146,6 +146,7 @@ typedef struct		s_context
 	t_sp_lst		*lst; // liste chainé de sprite
 	t_sprite		sp;
 	int				at_least_one_sprite;
+	int				total_mushroom_nb;
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
@@ -194,7 +195,7 @@ double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 void				free_lst_sp(t_sp_lst *lst);
 int					lst_new_sprite_check(t_sp_lst *lst, int id);
-void				init_struct(t_context *ct);
+// void				init_struct(t_context *ct);
 void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
 void				loop_menu(t_context *ct);
 void				copy_texture_menu(t_context *ct, char *path);
@@ -206,8 +207,5 @@ void				limit_menu(t_context *ct);
 t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
 t_sp_lst			*sort_list(t_sp_lst *lst);
 void				draw_icon(t_context *ct);
-
-
-
 
 #endif

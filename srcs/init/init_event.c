@@ -12,6 +12,24 @@
 
 #include "wolf3d.h"
 
+int		cam_check_and_fix(t_context *ct, int i, int j)
+{
+	if (ct->mpp.map[j][i] == CAM_CUBE)
+	{
+		ct->cam.posi.x = i + 0.5;
+		ct->cam.posi.y = j + 0.5;
+		return (TRUE);
+	}
+	else
+		return(FALSE);
+}
+
+void	mushroom_counter(t_context *ct, int i, int j)
+{
+	if (ct->mpp.map[j][i] % 10 == MUSHROOM_CUBE)
+		ct->total_mushroom_nb++;
+}
+
 void	find_cam(t_context *ct)
 {
 	int	i;
@@ -25,9 +43,8 @@ void	find_cam(t_context *ct)
 	{
 		while (i < ct->mpp.x)
 		{
-			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.x = i + 0.5 : 0;
-			(ct->mpp.map[j][i] == CAM_CUBE) ? ct->cam.posi.y = j + 0.5 : 0;
-			(ct->mpp.map[j][i] == CAM_CUBE) ? count++ : 0;
+			cam_check_and_fix(ct, i, j) == TRUE ? count++ : 0;
+			mushroom_counter(ct, i, j);
 			i++;
 		}
 		i = 0;
@@ -40,7 +57,8 @@ void	find_cam(t_context *ct)
 void	init_valeur(t_context *ct)
 {
 	find_cam(ct);
-	ct->cam.angle = 0.0;
+	printf("nb%d\n", ct->total_mushroom_nb);
+	ct->cam.angle = 270.0;
 	ct->sp.key_nb = 0;
 	ct->sp.mushroom_nb = 0;
 	ct->sp.door_nb = 0;
@@ -49,22 +67,27 @@ void	init_valeur(t_context *ct)
 	ct->choose_inter = GAME;
 	ct->xwin = XWIN;
 	ct->ywin = YWIN;
-	ct->music = NULL;
-	ct->chunk = NULL;
 	ct->mute = 1;
 	ct->volume = MIX_MAX_VOLUME / 2;
-	ct->wall.motif_red = NULL;
-	ct->wall.motif_yellow = NULL;
-	ct->wall.motif_green = NULL;
-	ct->wall.motif_blue = NULL;
-	ct->font = NULL;
+	ct->total_mushroom_nb = 0;
 }
 
-void	init_struct(t_context *ct)
-{
-	ct->mpp.map = NULL;
-	ct->window = NULL;
-	ct->lst = NULL;
-	ct->rend = NULL;
-}
+// void	init_struct(t_context *ct)
+// {
+// 	ct->mpp.map = NULL;
+// 	ct->window = NULL;
+// 	ct->lst = NULL;
+// 	ct->rend = NULL;
+// 	ct->music = NULL;
+// 	ct->chunk = NULL;
+// 	ct->wall.motif_red = NULL;
+// 	ct->wall.motif_yellow = NULL;
+// 	ct->wall.motif_green = NULL;
+// 	ct->wall.motif_blue = NULL;
+// 	ct->font = NULL;
+// 	ct->tex.sky = NULL;
+// 	ct->tex.ground = NULL;
+// 	ct->tex.mushroom = NULL;
+// 	ct->tex.key = NULL;
+// }
 

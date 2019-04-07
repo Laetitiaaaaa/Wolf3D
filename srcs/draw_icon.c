@@ -12,6 +12,9 @@
 
 #include "wolf3d.h"
 
+
+
+
 void	draw_text(t_context *ct, char *s, SDL_Point posi)
 {
 	SDL_Color		color = {165, 4, 13,  SDL_ALPHA_OPAQUE};

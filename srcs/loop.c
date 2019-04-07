@@ -12,6 +12,11 @@
 
 #include "wolf3d.h"
 
+// void	mario_winner(t_context *ct)
+// {
+// 	printf("congratulations!");
+// 	(void)ct;
+// }
 
 static void	choose_interface(t_context *ct)
 {
@@ -29,6 +34,10 @@ static void	choose_interface(t_context *ct)
 		if (ct->at_least_one_sprite == TRUE)
 			draw_sprite_in_3d(ct);
 		draw_icon(ct);
+		if (ct->sp.mushroom_nb == ct->total_mushroom_nb)
+		 	printf("congratulations!");
+
+			// mario_winner(ct);
 	}
 }
 
