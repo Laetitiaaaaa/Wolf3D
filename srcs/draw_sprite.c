@@ -45,19 +45,11 @@ static void		print_sprite_3d(t_context *ct, float distance, float sp_position_an
 		dst = define_rect((int)(ct->xwin / 2 - ct->xwin * delta_angle / ANGLE - sp_height / 2),(int)(ct->ywin / 2), sp_height, sp_height);
 		SDL_RenderCopy(ct->rend, ct->tex.mushroom, NULL, &dst);
 	}
-	// if (id % 10 == DOOR_CUBE)
-	// {
-		// print_door_3d(ct, dis)
-
-		// sp_height = sp_height *2;
-		// dst = define_rect(ct->xwin / 2 - (ct->xwin * delta_angle / ANGLE + sp_height / 2), ct->ywin / 2 - sp_height / 2, sp_height, sp_height);
-		// SDL_RenderCopy(ct->rend, ct->tex.door, NULL, &dst);
-	// }
 }
 
 static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 {
-	float		distance;
+	// float		distance;
 	float		sp_position_angle;
 	float 		wall_dis;
 
@@ -68,11 +60,10 @@ static void	draw_one_sprite_in_3d(t_context *ct, t_sp_lst *lst)
 	// }
 	sp_position_angle = convert_rad_to_deg(atan2((lst->posi.y - ct->cam.posi.y) * (-1) , (lst->posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
-	distance = sqrt(pow(lst->posi.x - ct->cam.posi.x, 2) + pow(lst->posi.y - ct->cam.posi.y, 2))
-	* ft_float_abs(cos(convert_deg_to_rad(sp_position_angle - ct->cam.angle)));
+	// distance = sqrt(pow(lst->posi.x - ct->cam.posi.x, 2) + pow(lst->posi.y - ct->cam.posi.y, 2));
 	wall_dis = dda_return_distance(ct, sp_position_angle);
-	if (wall_dis < 0 || wall_dis > distance )
-		print_sprite_3d(ct, distance, sp_position_angle, lst->id);
+	if (wall_dis < 0 || wall_dis > lst->distance )
+		print_sprite_3d(ct, lst->distance, sp_position_angle, lst->id);
 }
 
 int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
@@ -98,6 +89,7 @@ void	draw_sprite_in_3d(t_context *ct)
 {
 	t_sp_lst *lst;
 
+	ct->lst = sort_list(ct->lst);
 	lst = ct->lst;
 	while (lst != NULL)
 	{

@@ -121,7 +121,7 @@ typedef struct	s_sp_lst
 {
 
 	int				id;
-	int				visible;
+	float			distance;
 	t_floatpoint	posi;
 	struct s_sp_lst	*next;
 }				t_sp_lst;
@@ -192,7 +192,6 @@ void				hit_sprite(t_context *ct, SDL_Point to_int);
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 void				free_lst_sp(t_sp_lst *lst);
-t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
 int					lst_new_sprite_check(t_sp_lst *lst, int id);
 void				init_struct(t_context *ct);
 void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
@@ -203,6 +202,9 @@ void				val_cam_neg_posi(t_context *ct, int a, int b);
 void				common_actions(t_context *ct, Uint8 *state, SDL_Event event);
 void				update_settings(t_context *ct);
 void				limit_menu(t_context *ct);
+t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
+t_sp_lst	*sort_list(t_sp_lst *lst);
+
 
 
 #endif
