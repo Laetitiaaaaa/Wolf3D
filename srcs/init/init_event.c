@@ -24,10 +24,9 @@ int		cam_check_and_fix(t_context *ct, int i, int j)
 		return(FALSE);
 }
 
-void	mushroom_counter(t_context *ct, int i, int j)
+int		mushroom_counter(t_context *ct, int i, int j)
 {
-	if (ct->mpp.map[j][i] % 10 == MUSHROOM_CUBE)
-		ct->total_mushroom_nb++;
+	return((ct->mpp.map[j][i] % 10 == MUSHROOM_CUBE));
 }
 
 void	find_cam(t_context *ct)
@@ -35,16 +34,18 @@ void	find_cam(t_context *ct)
 	int	i;
 	int	j;
 	int	count;
+	int	c_mush;
 
 	count = 0;
 	i = 0;
 	j = 0;
+	c_mush = 0;
 	while (j < ct->mpp.y)
 	{
 		while (i < ct->mpp.x)
 		{
 			cam_check_and_fix(ct, i, j) == TRUE ? count++ : 0;
-			mushroom_counter(ct, i, j);
+			mushroom_counter(ct, i, j) == TRUE ? c_mush++ : 0;
 			i++;
 		}
 		i = 0;
@@ -52,12 +53,13 @@ void	find_cam(t_context *ct)
 	}
 	(count == 0) ? quit("wrong map: camera postion not defined in map", ct) : 0;
 	(count > 1) ? quit("wrong map: there are more than one camera in map", ct) : 0;
+	ct->total_mushroom_nb = c_mush;
+
 }
 
 void	init_valeur(t_context *ct)
 {
 	find_cam(ct);
-	printf("nb%d\n", ct->total_mushroom_nb);
 	ct->cam.angle = 270.0;
 	ct->sp.key_nb = 0;
 	ct->sp.mushroom_nb = 0;
@@ -69,7 +71,6 @@ void	init_valeur(t_context *ct)
 	ct->ywin = YWIN;
 	ct->mute = 1;
 	ct->volume = MIX_MAX_VOLUME / 2;
-	ct->total_mushroom_nb = 0;
 }
 
 // void	init_struct(t_context *ct)

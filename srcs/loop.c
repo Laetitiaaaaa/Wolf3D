@@ -12,11 +12,16 @@
 
 #include "wolf3d.h"
 
-// void	mario_winner(t_context *ct)
-// {
-// 	printf("congratulations!");
-// 	(void)ct;
-// }
+void	draw_fireworks(t_context *ct)
+{
+	unsigned int time;
+	unsigned int curr;
+
+	time = SDL_GetTicks();
+	curr = time % (FIREWORKS_FRAMES * FIREWORKS_FRAME_TIME);
+	SDL_Rect dst = {0, 0, ct->xwin, ct->ywin};
+	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);
+}
 
 static void	choose_interface(t_context *ct)
 {
@@ -35,10 +40,10 @@ static void	choose_interface(t_context *ct)
 			draw_sprite_in_3d(ct);
 		draw_icon(ct);
 		if (ct->sp.mushroom_nb == ct->total_mushroom_nb)
-		 	printf("congratulations!");
-
-			// mario_winner(ct);
+			ct->choose_inter = FIREWORKS;
 	}
+	if (ct->choose_inter == FIREWORKS)
+		draw_fireworks(ct);
 }
 
 static void	action_loop_game(t_context *ct)

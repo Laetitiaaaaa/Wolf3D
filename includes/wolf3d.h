@@ -31,6 +31,8 @@
 # define NO_WALL -1.0
 # define INITIAL 0
 # define ANGLE 60
+# define FIREWORKS_FRAMES 10
+# define FIREWORKS_FRAME_TIME 200
 
 typedef enum  		e_map_content
 {
@@ -48,6 +50,7 @@ typedef enum 		e_interface
 	GAME = 0,
 	MAP,
 	INTERFACE_NB, // always leave it in the end
+	FIREWORKS,
 }					t_interface;
 
 typedef enum 		e_enum_menu
@@ -115,6 +118,7 @@ typedef struct 		s_texture
 	SDL_Texture		*key;
 	SDL_Texture		*mushroom;
 	SDL_Texture		*words;
+	SDL_Texture		*fireworks[FIREWORKS_FRAMES];
 }					t_texture;
 
 typedef struct	s_sp_lst

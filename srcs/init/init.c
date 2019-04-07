@@ -48,30 +48,42 @@ void	load_texture_wall(t_context *ct)
 	ct->wall.motif_blue = init_texture("./images/murroux.bmp", ct);
 }
 
+
+SDL_Texture 	*init_texture_png(char *path, t_context *ct)
+{
+	SDL_Texture 	*texture;
+	SDL_Surface 	*surface;
+
+	texture = NULL;
+	surface = IMG_Load(path);
+	if (surface == NULL)
+		quit("wrong path for IMG_Load\n", ct);
+	if (!(texture = SDL_CreateTextureFromSurface(ct->rend, surface)))
+		quit("texturefromsurface failed\n", ct);
+	SDL_FreeSurface(surface);
+	return (texture);
+}
+
 void	load_texture_backgr(t_context *ct)
 {
 	ct->tex.ground = init_texture("./images/Floor.bmp", ct);
 	ct->tex.sky = init_texture("./images/Sky.bmp", ct);
+	ct->tex.fireworks[0] = init_texture_png("./images/Fireworks3.png", ct);
+	ct->tex.fireworks[1] = init_texture_png("./images/Fireworks4.png", ct);
+	ct->tex.fireworks[2] = init_texture_png("./images/Fireworks5.png", ct);
+	ct->tex.fireworks[3] = init_texture_png("./images/Fireworks6.png", ct);
+	ct->tex.fireworks[4] = init_texture_png("./images/Fireworks7.png", ct);
+	ct->tex.fireworks[5] = init_texture_png("./images/Fireworks8.png", ct);
+	ct->tex.fireworks[6] = init_texture_png("./images/Fireworks9.png", ct);
+	ct->tex.fireworks[7] = init_texture_png("./images/Fireworks10.png", ct);
+	ct->tex.fireworks[8] = init_texture_png("./images/Fireworks11.png", ct);
+	ct->tex.fireworks[9] = init_texture_png("./images/Fireworks12.png", ct);
 }
 
 void	load_texture_obj(t_context *ct)
 {
-	SDL_Surface	*tmp;
-
-	tmp =  IMG_Load("./images/Key.png");
-	if (tmp == NULL)
-		quit("Error IMG_Load Key.png", ct);
-	ct->tex.key = SDL_CreateTextureFromSurface(ct->rend, tmp);
- 	if (ct->tex.key == NULL)
-		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
-	SDL_FreeSurface(tmp);
-	tmp =  IMG_Load("./images/Mushroom.png");
-	if (tmp == NULL)
-		quit("Error IMG_Load Mushroom.png", ct);
-	ct->tex.mushroom = SDL_CreateTextureFromSurface(ct->rend, tmp);
- 	if (ct->tex.mushroom == NULL)
-		quit("Error SDL_CreateTextureFromSurface from function load_texture_obj()", ct);
-	SDL_FreeSurface(tmp);
+	ct->tex.key = init_texture_png("./images/Key.png", ct);
+	ct->tex.mushroom = init_texture_png("./images/Mushroom.png", ct);
 }
 
 void	load_font(t_context *ct)
