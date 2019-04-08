@@ -1,14 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sound_and_win.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llejeune <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/08 20:46:12 by llejeune          #+#    #+#             */
+/*   Updated: 2019/04/08 20:46:19 by llejeune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "wolf3d.h"
 
 void	common_actions(t_context *ct, Uint8 *state, SDL_Event event)
 {
-	((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ? ct->full_screen = -ct->full_screen : 0;
-	(state[SDL_SCANCODE_M] && event.type == SDL_KEYDOWN) ? ct->mute = -ct->mute : 0;
+	((state[SDL_SCANCODE_1]) && (event.type == SDL_KEYDOWN)) ?
+	ct->full_screen = -ct->full_screen : 0;
+	(state[SDL_SCANCODE_M] && event.type == SDL_KEYDOWN) ?
+	ct->mute = -ct->mute : 0;
 	(state[SDL_SCANCODE_9] && event.type == SDL_KEYDOWN) ? ct->volume-- : 0;
 	(state[SDL_SCANCODE_0] && event.type == SDL_KEYDOWN) ? ct->volume++ : 0;
-	(state[SDL_SCANCODE_ESCAPE] && event.type == SDL_KEYDOWN) ? quit("Thank you for playing", ct) : 0;
-	((state[SDL_SCANCODE_F]) && (event.type == SDL_KEYDOWN)) ? ct->show_fps = (ct->show_fps + 1) % 2 : 0;
+	(state[SDL_SCANCODE_ESCAPE] && event.type == SDL_KEYDOWN) ?
+	quit("Thank you for playing", ct) : 0;
+	((state[SDL_SCANCODE_F]) && (event.type == SDL_KEYDOWN)) ?
+	ct->show_fps = (ct->show_fps + 1) % 2 : 0;
 }
 
 void	update_settings(t_context *ct)
@@ -52,12 +67,18 @@ void	loop_menu(t_context *ct)
 		while (SDL_PollEvent(&event))
 		{
 			limit_menu(ct);
-			if ((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == PLAY))
+			if ((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN)
+				&& (ct->menu.in == PLAY))
 				loop(ct);
-			((state[SDL_SCANCODE_DOWN]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in + 1) % OUT : 0;
-			((state[SDL_SCANCODE_UP]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in - 1) % OUT : 0;
-			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == GUIDE)) ? loop_guide(ct) : 0;
-			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == QUIT)) ? quit("Thank you for playing", ct) : 0;
+			((state[SDL_SCANCODE_DOWN]) && (event.type == SDL_KEYDOWN)) ?
+			ct->menu.in = (ct->menu.in + 1) % OUT : 0;
+			((state[SDL_SCANCODE_UP]) && (event.type == SDL_KEYDOWN)) ?
+			ct->menu.in = (ct->menu.in - 1) % OUT : 0;
+			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN)
+				&& (ct->menu.in == GUIDE)) ? loop_guide(ct) : 0;
+			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN)
+				&& (ct->menu.in == QUIT)) ?
+			quit("Thank you for playing", ct) : 0;
 			(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
 			common_actions(ct, state, event);
 		}
@@ -66,4 +87,3 @@ void	loop_menu(t_context *ct)
 		SDL_RenderPresent(ct->rend);
 	}
 }
-

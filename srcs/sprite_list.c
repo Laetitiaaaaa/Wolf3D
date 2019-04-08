@@ -22,15 +22,16 @@ void		hit_sprite(t_context *ct, t_point to_int)
 	ct->at_least_one_sprite = TRUE;
 	posi.x = (float)to_int.x + (CUBESIZE / 2.0);
 	posi.y = (float)to_int.y + (CUBESIZE / 2.0);
-	sp_position_angle = convert_rad_to_deg(atan2((posi.y - ct->cam.posi.y) * (-1), (posi.x - ct->cam.posi.x)));
+	sp_position_angle = convert_rad_to_deg(atan2((posi.y - ct->cam.posi.y)
+		* (-1), (posi.x - ct->cam.posi.x)));
 	sp_position_angle = angle_limit(sp_position_angle);
-	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2) + pow(posi.y - ct->cam.posi.y, 2))
+	distance = sqrt(pow(posi.x - ct->cam.posi.x, 2)
+		+ pow(posi.y - ct->cam.posi.y, 2))
 	* ft_float_abs(cos(convert_deg_to_rad(sp_position_angle - ct->cam.angle)));
 	id = ct->mpp.map[to_int.y][to_int.x];
 	if (lst_new_sprite_check(ct->lst, id) == TRUE)
 		ct->lst = lst_fill(ct->lst, id, posi, distance);
 }
-
 
 t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance)
 {
@@ -44,7 +45,7 @@ t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance)
 	}
 	else
 	{
-		while(current->next != NULL)
+		while (current->next != NULL)
 			current = current->next;
 		current->next = (t_sp_lst*)malloc(sizeof(t_sp_lst));
 		current = current->next;
@@ -56,21 +57,20 @@ t_sp_lst	*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance)
 	return (lst);
 }
 
-int		lst_new_sprite_check(t_sp_lst *lst, int id)
+int			lst_new_sprite_check(t_sp_lst *lst, int id)
 {
 	int			new_sprite;
 
-		if (lst == NULL)
+	if (lst == NULL)
 		return (new_sprite = TRUE);
 	while (lst != NULL)
 	{
 		if (lst->id == id)
-			return(new_sprite = FALSE);
+			return (new_sprite = FALSE);
 		lst = lst->next;
 	}
 	return (new_sprite = TRUE);
 }
-
 
 static void	swap(t_sp_lst *max, t_sp_lst *cmp)
 {
@@ -111,22 +111,3 @@ t_sp_lst	*sort_list(t_sp_lst *lst)
 	}
 	return (lst);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

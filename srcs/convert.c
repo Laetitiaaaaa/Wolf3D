@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-t_point	convert_plan_to_pixel(float x, float y, t_context *ct)
+t_point		convert_plan_to_pixel(float x, float y, t_context *ct)
 {
 	t_point	pixel;
 

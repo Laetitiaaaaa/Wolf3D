@@ -45,7 +45,8 @@ t_floatpoint		continue_vertical_step(t_context *ct,
 	return (detect);
 }
 
-t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, t_point to_int)
+t_floatpoint		sub_vertial(t_context *ct,
+	float angle, t_floatpoint detect, t_point to_int)
 {
 	int				count;
 
@@ -76,7 +77,7 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, t_poi
 t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	detect;
-	t_point		to_int;
+	t_point			to_int;
 
 	detect.x = ct->cam.posi.x;
 	detect.y = ct->cam.posi.y;

@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-int main(int argc, char const **argv)
+int		main(int argc, char const **argv)
 {
 	t_context	ct;
 

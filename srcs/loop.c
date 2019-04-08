@@ -12,23 +12,22 @@
 
 #include "wolf3d.h"
 
-
-void	loop_fireworks(t_context *ct)
+void			loop_fireworks(t_context *ct)
 {
-	Uint8 	*state;
-	SDL_Event event;
+	Uint8		*state;
+	SDL_Event	event;
 
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
-
 	while (SDL_PollEvent(&event))
 	{
 		(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
-		(state[SDL_SCANCODE_ESCAPE] && event.type == SDL_KEYDOWN) ? quit("Thank you for playing", ct) : 0;
+		(state[SDL_SCANCODE_ESCAPE] && event.type == SDL_KEYDOWN) ?
+		quit("Thank you for playing", ct) : 0;
 	}
 	draw_fireworks(ct);
 }
 
-static void	choose_interface(t_context *ct)
+static void		choose_interface(t_context *ct)
 {
 	if (ct->choose_inter == MAP)
 	{
@@ -54,18 +53,20 @@ static void	choose_interface(t_context *ct)
 		loop_fireworks(ct);
 }
 
-static void	action_loop_game(t_context *ct, Uint8 *state, unsigned int delta_time)
+static void		action_loop_game(t_context *ct, Uint8 *state,
+	unsigned int delta_time)
 {
 	SDL_Event		event;
 
 	while (SDL_PollEvent(&event))
 	{
-		((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
+		((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ?
+		ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
 		(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
 		common_actions(ct, state, event);
 	}
 	ct->cam.angle = angle_limit(ct->cam.angle);
-	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(ct->rend);
 	choose_interface(ct);
 	if (ct->show_fps == TRUE)
@@ -73,10 +74,10 @@ static void	action_loop_game(t_context *ct, Uint8 *state, unsigned int delta_tim
 	SDL_RenderPresent(ct->rend);
 	update_settings(ct);
 	key_events(ct, state, delta_time);
-
 }
 
-int		one_second_passed(t_context *ct, int one_second_count, int fps_count)
+int				one_second_passed(t_context *ct,
+	int one_second_count, int fps_count)
 {
 	if (one_second_count > 1000)
 	{
@@ -87,12 +88,12 @@ int		one_second_passed(t_context *ct, int one_second_count, int fps_count)
 		return (FALSE);
 }
 
-void	loop(t_context *ct)
+void			loop(t_context *ct)
 {
 	Uint8			*state;
 	unsigned int	last_time;
 	unsigned int	delta_time;
-	unsigned int 	one_second_count;
+	unsigned int	one_second_count;
 	unsigned int	fps_count;
 
 	last_time = 0;
@@ -115,4 +116,3 @@ void	loop(t_context *ct)
 		action_loop_game(ct, state, delta_time);
 	}
 }
-

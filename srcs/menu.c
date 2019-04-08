@@ -14,7 +14,7 @@
 
 void	copy_texture_menu(t_context *ct, char *path)
 {
-	SDL_Texture 	*tmp;
+	SDL_Texture		*tmp;
 
 	tmp = init_texture(path, ct);
 	SDL_SetRenderTarget(ct->rend, ct->menu.texture);
@@ -43,7 +43,8 @@ void	loop_guide(t_context *ct)
 	{
 		while (SDL_PollEvent(&event))
 		{
-			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = OUT : 0;
+			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ?
+			ct->menu.in = OUT : 0;
 			(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
 			common_actions(ct, state, event);
 		}

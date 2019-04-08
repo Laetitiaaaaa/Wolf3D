@@ -30,7 +30,7 @@ void	draw_sprite_in_2d(t_context *ct)
 	t_sp_lst *lst;
 
 	lst = ct->lst;
-	while (lst!= NULL)
+	while (lst != NULL)
 	{
 		draw_one_sprite_in_2d(ct, lst->posi);
 		lst = lst->next;

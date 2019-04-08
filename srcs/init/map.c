@@ -80,7 +80,6 @@ int					*aatoii(char **pptr, t_context *ct)
 	return (tab);
 }
 
-
 void				stock_map(int fd, t_context *ct)
 {
 	char	*line;
@@ -106,7 +105,6 @@ void				stock_map(int fd, t_context *ct)
 		line = NULL;
 	}
 }
-
 
 void				load_map(t_context *ct, const char *argv)
 {

@@ -82,13 +82,13 @@ typedef struct		s_map_params
 	int				**map;
 }					t_map_params;
 
-typedef struct 		s_point
+typedef struct		s_point
 {
 	int		x;
 	int		y;
 }					t_point;
 
-typedef struct 		s_floatpoint
+typedef struct		s_floatpoint
 {
 	float			x;
 	float			y;
@@ -98,7 +98,7 @@ typedef struct		s_camera
 {
 	t_floatpoint	posi;
 	float			angle;
-	t_point		neg_posi;
+	t_point			neg_posi;
 }					t_camera;
 
 typedef struct		s_wall_texture
@@ -181,7 +181,7 @@ int					init(t_context *ct, const char *argv);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
 double				convert_deg_to_rad(double angle);
-t_point			convert_plan_to_pixel(float x, float y, t_context *ct);
+t_point				convert_plan_to_pixel(float x, float y, t_context *ct);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle);

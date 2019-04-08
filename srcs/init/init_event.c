@@ -21,12 +21,12 @@ int		cam_check_and_fix(t_context *ct, int i, int j)
 		return (TRUE);
 	}
 	else
-		return(FALSE);
+		return (FALSE);
 }
 
 int		mushroom_counter(t_context *ct, int i, int j)
 {
-	return((ct->mpp.map[j][i] % 10 == MUSHROOM_CUBE));
+	return ((ct->mpp.map[j][i] % 10 == MUSHROOM_CUBE));
 }
 
 void	find_cam(t_context *ct)
@@ -52,9 +52,9 @@ void	find_cam(t_context *ct)
 		j++;
 	}
 	(count == 0) ? quit("wrong map: camera postion not defined in map", ct) : 0;
-	(count > 1) ? quit("wrong map: there are more than one camera in map", ct) : 0;
+	(count > 1) ? quit("wrong map: there are more than one camera in map",
+		ct) : 0;
 	ct->total_mushroom_nb = c_mush;
-
 }
 
 void	init_valeur(t_context *ct)
@@ -72,23 +72,3 @@ void	init_valeur(t_context *ct)
 	ct->mute = 1;
 	ct->volume = MIX_MAX_VOLUME / 2;
 }
-
-// void	init_struct(t_context *ct)
-// {
-// 	ct->mpp.map = NULL;
-// 	ct->window = NULL;
-// 	ct->lst = NULL;
-// 	ct->rend = NULL;
-// 	ct->music = NULL;
-// 	ct->chunk = NULL;
-// 	ct->wall.motif_red = NULL;
-// 	ct->wall.motif_yellow = NULL;
-// 	ct->wall.motif_green = NULL;
-// 	ct->wall.motif_blue = NULL;
-// 	ct->font = NULL;
-// 	ct->tex.sky = NULL;
-// 	ct->tex.ground = NULL;
-// 	ct->tex.mushroom = NULL;
-// 	ct->tex.key = NULL;
-// }
-

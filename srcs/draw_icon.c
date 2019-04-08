@@ -27,14 +27,13 @@ void	draw_fireworks(t_context *ct)
 
 void	draw_text(t_context *ct, char *s, t_point posi)
 {
-	SDL_Color			color = {165, 4, 13,  SDL_ALPHA_OPAQUE};
+	SDL_Color			color = {165, 4, 13, SDL_ALPHA_OPAQUE};
 	SDL_Surface			*surface;
 	SDL_Texture			*texture;
 	SDL_Rect			dst;
 	int					tex_width;
 	int					tex_height;
 
-	color = get_sdl_color(165, 4, 13, SDL_ALPHA_OPAQUE);
 	surface = TTF_RenderText_Solid(ct->font, s, color);
 	if (surface == NULL)
 		quit("TTF_RenderText_Solid()failed", ct);
@@ -51,9 +50,9 @@ void	draw_text(t_context *ct, char *s, t_point posi)
 
 void	draw_icon(t_context *ct)
 {
-	SDL_Rect dst_mushroom;
-	SDL_Rect dst_key;
-	t_point	posi;
+	SDL_Rect	dst_mushroom;
+	SDL_Rect	dst_key;
+	t_point		posi;
 	char		*s;
 
 	posi.x = 80;
