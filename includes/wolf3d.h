@@ -82,7 +82,13 @@ typedef struct		s_map_params
 	int				**map;
 }					t_map_params;
 
-typedef struct		s_floatpoint
+typedef struct 		s_point
+{
+	int		x;
+	int		y;
+}					t_point;
+
+typedef struct 		s_floatpoint
 {
 	float			x;
 	float			y;
@@ -92,7 +98,7 @@ typedef struct		s_camera
 {
 	t_floatpoint	posi;
 	float			angle;
-	SDL_Point		neg_posi;
+	t_point		neg_posi;
 }					t_camera;
 
 typedef struct		s_wall_texture
@@ -175,7 +181,7 @@ int					init(t_context *ct, const char *argv);
 void				loop(t_context *ct);
 void				draw_background(t_context *ct);
 double				convert_deg_to_rad(double angle);
-SDL_Point			convert_plan_to_pixel(float x, float y, t_context *ct);
+t_point			convert_plan_to_pixel(float x, float y, t_context *ct);
 t_floatpoint		horizontal_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle);
 t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle);
@@ -199,14 +205,13 @@ float				angle_limit(float angle);
 void				draw_sprite_in_2d(t_context *ct);
 void				draw_sprite_in_3d(t_context *ct);
 void				load_texture_obj(t_context *ct);
-void				hit_sprite(t_context *ct, SDL_Point to_int);
+void				hit_sprite(t_context *ct, t_point to_int);
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct,
 	Uint8 *state, unsigned int delta_time);
 void				free_lst_sp(t_sp_lst *lst);
 int					lst_new_sprite_check(t_sp_lst *lst, int id);
-void				sprite_visible(t_context *ct,
-	SDL_Point to_int, float angle);
+void				sprite_visible(t_context *ct, t_point to_int, float angle);
 void				loop_menu(t_context *ct);
 void				copy_texture_menu(t_context *ct, char *path);
 void				loop_guide(t_context *ct);
@@ -221,5 +226,6 @@ t_sp_lst			*sort_list(t_sp_lst *lst);
 void				draw_icon(t_context *ct);
 void				loop_fireworks(t_context *ct);
 void				draw_fireworks(t_context *ct);
+void				show_fps(t_context *ct);
 
 #endif

@@ -64,7 +64,7 @@ int		walk_on_sprite(t_context *ct, t_floatpoint posi_sp)
 
 void	pickup_sprite(t_context *ct, t_sp_lst *lst)
 {
-	SDL_Point to_int;
+	t_point to_int;
 
 	if ((lst->id)% 10 == KEY_CUBE)
 		ct->sp.key_nb++;

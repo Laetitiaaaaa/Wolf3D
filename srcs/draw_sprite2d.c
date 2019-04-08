@@ -14,7 +14,7 @@
 
 void	draw_one_sprite_in_2d(t_context *ct, t_floatpoint posi)
 {
-	SDL_Point		pixel;
+	t_point		pixel;
 
 	pixel = convert_plan_to_pixel(posi.x, posi.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 134, 244, 66, SDL_ALPHA_OPAQUE);
