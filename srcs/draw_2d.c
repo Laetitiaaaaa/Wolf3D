@@ -29,7 +29,7 @@ static void	draw_ray(t_context *ct, float angle)
 
 static void	draw_camera(t_context *ct)
 {
-	SDL_Point    	pixel;
+	SDL_Point	pixel;
 
 	pixel = convert_plan_to_pixel(ct->cam.posi.x, ct->cam.posi.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 89, 224, 192, SDL_ALPHA_OPAQUE);
@@ -50,7 +50,7 @@ static void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 
 static void	draw_cubes(t_context *ct)
 {
-	SDL_Rect 		rects[ct->mpp.x * ct->mpp.y];
+	SDL_Rect		rects[ct->mpp.x * ct->mpp.y];
 	SDL_Point		pixel;
 	int				i;
 	int				j;
@@ -62,8 +62,9 @@ static void	draw_cubes(t_context *ct)
 		while (i < ct->mpp.x)
 		{
 			pixel = convert_plan_to_pixel((float)i, (float)j, ct);
-			ct->mpp.map[j][i] == 1 ? draw_fill_cubes(ct, pixel): 0;
-			rects[j * (ct->mpp.x) + i] = define_rect(pixel.x, pixel.y, ct->xwin / ct->mpp.x, ct->ywin / ct->mpp.y);
+			ct->mpp.map[j][i] == 1 ? draw_fill_cubes(ct, pixel) : 0;
+			rects[j * (ct->mpp.x) + i] = define_rect(pixel.x, pixel.y,
+				ct->xwin / ct->mpp.x, ct->ywin / ct->mpp.y);
 			i++;
 		}
 		i = 0;
@@ -86,7 +87,3 @@ void		draw_2d(t_context *ct)
 		draw_ray(ct, angle);
 	}
 }
-
-
-
-

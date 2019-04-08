@@ -12,8 +12,6 @@
 
 #include "wolf3d.h"
 
-
-//je vais normaliser les points sur plan entre 0 et 1
 SDL_Point	convert_plan_to_pixel(float x, float y, t_context *ct)
 {
 	SDL_Point	pixel;
@@ -25,7 +23,7 @@ SDL_Point	convert_plan_to_pixel(float x, float y, t_context *ct)
 
 double		convert_deg_to_rad(double angle)
 {
-	return(((double)angle) * M_PI / (double)180);
+	return (((double)angle) * M_PI / (double)180);
 }
 
 float		angle_limit(float angle)
@@ -39,5 +37,5 @@ float		angle_limit(float angle)
 
 double		convert_rad_to_deg(double radian)
 {
-	return(radian * ((double)180) / M_PI);
+	return (radian * ((double)180) / M_PI);
 }
