@@ -12,15 +12,25 @@
 
 #include "wolf3d.h"
 
-void	draw_fireworks(t_context *ct)
+void	show_fps(t_context *ct)
 {
-	unsigned int time;
-	unsigned int curr;
+	SDL_Color		color = {0, 0, 0,  SDL_ALPHA_OPAQUE};
+	SDL_Surface		*surface;
+	SDL_Texture		*texture;
+	char 			*s;
 
-	time = SDL_GetTicks();
-	curr = time % (FIREWORKS_FRAMES * FIREWORKS_FRAME_TIME);
-	SDL_Rect dst = {0, 0, ct->xwin, ct->ywin};
-	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);
+	s = ft_itoa(ct->fps);
+	surface = TTF_RenderText_Solid(ct->font, s, color);
+	if (surface == NULL)
+		quit("TTF_RenderText_Solid()failed", ct);
+	texture = SDL_CreateTextureFromSurface(ct->rend, surface);
+	if (texture == NULL)
+		quit("SDL_CreateTextureFromSurface()failed", ct);
+	SDL_FreeSurface(surface);
+	SDL_Rect dst= {500, 20, 40, 40};
+	SDL_RenderCopy(ct->rend, texture, NULL, &dst);
+	free(s);
+	s = NULL;
 }
 
 void	loop_fireworks(t_context *ct)
@@ -48,7 +58,6 @@ static void	choose_interface(t_context *ct)
 	}
 	if (ct->choose_inter == GAME)
 	{
-
 		draw_background(ct);
 		draw_wall(ct);
 		if (ct->at_least_one_sprite == TRUE)
@@ -65,54 +74,56 @@ static void	choose_interface(t_context *ct)
 		loop_fireworks(ct);
 }
 
-static void	action_loop_game(t_context *ct)
+static void	action_loop_game(t_context *ct, Uint8 *state, unsigned int delta_time)
 {
+	SDL_Event		event;
+
+	while (SDL_PollEvent(&event))
+	{
+		((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
+		(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
+		common_actions(ct, state, event);
+	}
 	ct->cam.angle = angle_limit(ct->cam.angle);
 	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0,  SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(ct->rend);
 	choose_interface(ct);
+	if (ct->show_fps == TRUE)
+		show_fps(ct);
 	SDL_RenderPresent(ct->rend);
-}
+	update_settings(ct);
+	key_events(ct, state, delta_time);
 
+}
 
 void	loop(t_context *ct)
 {
 	Uint8			*state;
-	SDL_Event		event;
 	unsigned int	last_time;
 	unsigned int	delta_time;
-	unsigned int	frame_time;
+	unsigned int 	one_second_count;
+	unsigned int	fps_count;
 
-	int		fps;
-	unsigned int i = 0;
-	fps = 0;
-	frame_time = 1000 / 60;
 	last_time = 0;
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
 
+	one_second_count = 0;
+	fps_count = 0;
+	Mix_PlayMusic(ct->music, -1);
 	while (ct->menu.in != OUT)
 	{
 		delta_time = SDL_GetTicks() - last_time;
 		last_time += delta_time;
-		delta_time < frame_time ? SDL_Delay(frame_time - delta_time) : 0;
-		while (SDL_PollEvent(&event))
+		delta_time < FRAME_TIME ? SDL_Delay(FRAME_TIME - delta_time) : 0;
+		fps_count++;
+		one_second_count += delta_time;
+		if (one_second_count > 1000)
 		{
-			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
-			(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
-			common_actions(ct, state, event);
+			ct->fps = fps_count;
+			one_second_count = 0;
+			fps_count = 0;
 		}
-		update_settings(ct);
-		key_events(ct, state, delta_time);
-		action_loop_game(ct);
-		fps++;
-		i += delta_time;
-
-		if (i >1000)
-		{
-			// printf("fps%d\n", fps ); //fps
-			fps = 0;
-			i =0;
-		}
+		action_loop_game(ct, state, delta_time);
 	}
 }
 

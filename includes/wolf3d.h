@@ -27,10 +27,11 @@
 # define X_SKY 2000
 # define Y_SKY 400
 # define X_CUT_SKY 600
-# define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
+# define CUBESIZE 1.0
 # define NO_WALL -1.0
 # define INITIAL 0
 # define ANGLE 60
+# define FRAME_TIME 1000 / 60
 # define FIREWORKS_FRAMES 10
 # define FIREWORKS_FRAME_TIME 200
 
@@ -90,7 +91,7 @@ typedef struct 		s_floatpoint
 typedef struct  	s_camera
 {
 	t_floatpoint	posi;
-	float			angle; // angle is between 0 and 360
+	float			angle;
 	SDL_Point		neg_posi;
 }					t_camera;
 
@@ -138,7 +139,6 @@ typedef struct s_sprite
 	int				door_nb;
 }				t_sprite;
 
-
 typedef struct		s_context
 {
 	t_map_params	mpp;
@@ -148,7 +148,7 @@ typedef struct		s_context
 	SDL_Renderer	*rend;
 	t_camera		cam;
 	t_texture		tex;
-	t_sp_lst		*lst; // liste chainé de sprite
+	t_sp_lst		*lst;
 	t_sprite		sp;
 	int				at_least_one_sprite;
 	int				total_mushroom_nb;
@@ -163,6 +163,8 @@ typedef struct		s_context
 	int 			volume;
 	int 			mute;
 	TTF_Font		*font;
+	unsigned int	fps;
+	unsigned int	show_fps;
 }					t_context;
 
 void				load_map(t_context *ct, const char *argv);
@@ -201,7 +203,6 @@ double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 void				free_lst_sp(t_sp_lst *lst);
 int					lst_new_sprite_check(t_sp_lst *lst, int id);
-// void				init_struct(t_context *ct);
 void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
 void				loop_menu(t_context *ct);
 void				copy_texture_menu(t_context *ct, char *path);
@@ -214,5 +215,6 @@ t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
 t_sp_lst			*sort_list(t_sp_lst *lst);
 void				draw_icon(t_context *ct);
 void				loop_fireworks(t_context *ct);
+void				draw_fireworks(t_context *ct);
 
 #endif

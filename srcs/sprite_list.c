@@ -20,7 +20,6 @@ void		hit_sprite(t_context *ct, SDL_Point to_int)
 	float			sp_position_angle;
 
 	ct->at_least_one_sprite = TRUE;
-
 	posi.x = (float)to_int.x + (CUBESIZE / 2.0);
 	posi.y = (float)to_int.y + (CUBESIZE / 2.0);
 	sp_position_angle = convert_rad_to_deg(atan2((posi.y - ct->cam.posi.y) * (-1), (posi.x - ct->cam.posi.x)));
@@ -73,7 +72,7 @@ int		lst_new_sprite_check(t_sp_lst *lst, int id)
 }
 
 
-void	swap(t_sp_lst *max, t_sp_lst *cmp)
+static void	swap(t_sp_lst *max, t_sp_lst *cmp)
 {
 	int				id_tmp;
 	float			distance_tmp;

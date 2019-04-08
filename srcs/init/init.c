@@ -48,7 +48,6 @@ void	load_texture_wall(t_context *ct)
 	ct->wall.motif_blue = init_texture("./images/murroux.bmp", ct);
 }
 
-
 SDL_Texture 	*init_texture_png(char *path, t_context *ct)
 {
 	SDL_Texture 	*texture;
@@ -100,14 +99,11 @@ void	load_music(t_context *ct)
 	ct->music = Mix_LoadMUS("./images/mario.wav");
 	ct->chunk = Mix_LoadWAV("./images/sonchampi.wav");
 	ct->chunky = Mix_LoadWAV("./images/levelcomplete.wav");
-	// Mix_PlayMusic(ct->music, -1);
 }
 
 int		init(t_context *ct, const char *argv)
 {
 	ft_bzero(ct, sizeof(*ct));
-
-	// init_struct(ct);
 	load_map(ct, argv);
 	init_valeur(ct);
 	init_sdl(ct);

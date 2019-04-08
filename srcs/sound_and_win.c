@@ -8,6 +8,7 @@ void	common_actions(t_context *ct, Uint8 *state, SDL_Event event)
 	(state[SDL_SCANCODE_9] && event.type == SDL_KEYDOWN) ? ct->volume-- : 0;
 	(state[SDL_SCANCODE_0] && event.type == SDL_KEYDOWN) ? ct->volume++ : 0;
 	(state[SDL_SCANCODE_ESCAPE] && event.type == SDL_KEYDOWN) ? quit("Thank you for playing", ct) : 0;
+	((state[SDL_SCANCODE_F]) && (event.type == SDL_KEYDOWN)) ? ct->show_fps = (ct->show_fps + 1) % 2 : 0;
 }
 
 void	update_settings(t_context *ct)
