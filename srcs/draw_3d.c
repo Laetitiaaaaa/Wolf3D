@@ -22,7 +22,7 @@ void	draw_wall(t_context *ct)
 	x_pixel = 0;
 	while (x_pixel < ct->xwin)
 	{
-		angle -= 60.0 / ((float)ct->xwin);
+		angle -= (float)ANGLE / ((float)ct->xwin);
 		draw_line_wall(ct, angle, x_pixel);
 		x_pixel++;
 	}
@@ -62,10 +62,7 @@ void	draw_line_wall(t_context *ct, float angle, int x_pixel)
 		return ;
 	wall_height = convert_mapdis_to_screendis(distance, ct);
 	ct->wall.dst = define_rect(x_pixel, (ct->ywin - wall_height) / 2, 1, wall_height);
-	while (angle >= 360)
-		angle = angle - 360;
-	while (angle < 0)
-		angle = angle + 360;
+	angle = angle_limit(angle);
 	if (((int)(wall.x * 10000.0) % 10000) == 0 && (angle >= 90 && angle <= 270))
 		copy_texture_wall(wall.y, ct, ct->wall.motif_red);
 	else if (((int)(wall.y * 10000.0) % 10000) == 0 && (angle >= 0 && angle <= 180))

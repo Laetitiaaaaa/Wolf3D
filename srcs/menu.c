@@ -32,3 +32,22 @@ void	print_menu(t_context *ct)
 	if (ct->menu.in == QUIT)
 		copy_texture_menu(ct, "./images/quit.bmp");
 }
+
+void	loop_guide(t_context *ct)
+{
+	Uint8			*state;
+	SDL_Event		event;
+
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	while (TRUE && ct->menu.in != OUT)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = OUT : 0;
+			common_actions(ct, state, event);
+		}
+		update_settings(ct);
+		copy_texture_menu(ct, "./images/guides.bmp");
+		SDL_RenderPresent(ct->rend);
+	}
+}

@@ -82,7 +82,7 @@ void		draw_2d(t_context *ct)
 	angle = ct->cam.angle + 30;
 	while (angle >= (ct->cam.angle - 30.0))
 	{
-		angle -= 60.0 / (float)ct->xwin;
+		angle -= (float)ANGLE / (float)ct->xwin;
 		draw_ray(ct, angle);
 	}
 }

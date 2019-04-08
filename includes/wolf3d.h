@@ -19,6 +19,7 @@
 # include "SDL.h"
 # include "SDL_image.h"
 # include "SDL_mixer.h"
+# include "SDL_ttf.h"
 # include <stdio.h>
 
 # define XWIN 1000.0
@@ -29,6 +30,9 @@
 # define CUBESIZE 1.0 // cubesize must be 1, otherwise plan2d calcu will not work
 # define NO_WALL -1.0
 # define INITIAL 0
+# define ANGLE 60
+# define FIREWORKS_FRAMES 10
+# define FIREWORKS_FRAME_TIME 200
 
 typedef enum  		e_map_content
 {
@@ -36,6 +40,7 @@ typedef enum  		e_map_content
 	WALL_CUBE,
 	CAM_CUBE,
 	SPRITE_CUBE,
+	DOOR_CUBE = 6,
 	MUSHROOM_CUBE = 7,
 	KEY_CUBE = 8,
 }					t_map_content;
@@ -45,6 +50,7 @@ typedef enum 		e_interface
 	GAME = 0,
 	MAP,
 	INTERFACE_NB, // always leave it in the end
+	FIREWORKS,
 }					t_interface;
 
 typedef enum 		e_enum_menu
@@ -111,14 +117,15 @@ typedef struct 		s_texture
 	SDL_Texture		*sky;
 	SDL_Texture		*key;
 	SDL_Texture		*mushroom;
-
+	SDL_Texture		*words;
+	SDL_Texture		*fireworks[FIREWORKS_FRAMES];
 }					t_texture;
 
 typedef struct	s_sp_lst
 {
 
 	int				id;
-	int				visible;
+	float			distance;
 	t_floatpoint	posi;
 	struct s_sp_lst	*next;
 }				t_sp_lst;
@@ -127,6 +134,7 @@ typedef struct s_sprite
 {
 	int				key_nb;
 	int				mushroom_nb;
+	int				door_nb;
 }				t_sprite;
 
 
@@ -142,6 +150,7 @@ typedef struct		s_context
 	t_sp_lst		*lst; // liste chainé de sprite
 	t_sprite		sp;
 	int				at_least_one_sprite;
+	int				total_mushroom_nb;
 	t_menu			menu;
 	SDL_Texture		*texture;
 	t_wall_texture	wall;
@@ -151,6 +160,7 @@ typedef struct		s_context
 	Mix_Chunk		*chunk;
 	int 			volume;
 	int 			mute;
+	TTF_Font		*font;
 }					t_context;
 
 void				load_map(t_context *ct, const char *argv);
@@ -170,7 +180,6 @@ void				draw_2d(t_context *ct);
 float 				set_neg_posi(t_context *ct, float angle);
 void				init_valeur(t_context *ct);
 void				draw_wall(t_context *ct);
-void				choose_interface(t_context *ct);
 void				print_menu(t_context *ct);
 void				draw_line_wall(t_context *ct, float angle, int	x_pixel);
 int					convert_mapdis_to_screendis(float distance, t_context *ct);
@@ -189,9 +198,8 @@ void				hit_sprite(t_context *ct, SDL_Point to_int);
 double				convert_rad_to_deg(double radian);
 void				key_events(t_context *ct, Uint8 *state, unsigned int delta_time);
 void				free_lst_sp(t_sp_lst *lst);
-t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, int visible);
 int					lst_new_sprite_check(t_sp_lst *lst, int id);
-void				init_struct(t_context *ct);
+// void				init_struct(t_context *ct);
 void				sprite_visible(t_context *ct, SDL_Point to_int, float angle);
 void				loop_menu(t_context *ct);
 void				copy_texture_menu(t_context *ct, char *path);
@@ -200,6 +208,8 @@ void				val_cam_neg_posi(t_context *ct, int a, int b);
 void				common_actions(t_context *ct, Uint8 *state, SDL_Event event);
 void				update_settings(t_context *ct);
 void				limit_menu(t_context *ct);
-void				action_loop_game(t_context *ct);
+t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
+t_sp_lst			*sort_list(t_sp_lst *lst);
+void				draw_icon(t_context *ct);
 
 #endif
