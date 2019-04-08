@@ -46,20 +46,16 @@ static void	key_events_3d(t_context *ct, Uint8 *state, unsigned delta_time)
 	dx = d * cos(convert_deg_to_rad(ct->cam.angle));
 	if ((ct->cam.posi.y - dy > 0) && (ct->cam.posi.y - dy < ct->mpp.y)
 		&& (ct->cam.posi.x + dx < ct->mpp.x) && (ct->cam.posi.x + dx > 0)
-		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)]
-		!= WALL_CUBE
-		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)]
-		!= TUYAU_CUBE)
+		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)] != WALL_CUBE
+		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)] % 10 != TUYAU_CUBE)
 	{
 		(state[SDL_SCANCODE_UP]) ? ct->cam.posi.y -= dy : 0;
 		(state[SDL_SCANCODE_UP]) ? ct->cam.posi.x += dx : 0;
 	}
 	if ((ct->cam.posi.y + dy < ct->mpp.y) && (ct->cam.posi.y + dy > 0)
 		&& (ct->cam.posi.x - dx > 0) && (ct->cam.posi.x - dx < ct->mpp.x)
-		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)]
-		!= WALL_CUBE
-		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)]
-		!= TUYAU_CUBE)
+		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)] != WALL_CUBE
+		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)] % 10 != TUYAU_CUBE)
 	{
 		(state[SDL_SCANCODE_DOWN]) ? ct->cam.posi.y += dy : 0;
 		(state[SDL_SCANCODE_DOWN]) ? ct->cam.posi.x -= dx : 0;

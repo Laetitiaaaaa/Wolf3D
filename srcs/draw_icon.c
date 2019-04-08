@@ -18,22 +18,35 @@ void	draw_fireworks(t_context *ct)
 	unsigned int	curr;
 	SDL_Rect		dst;
 
-	dst = define_rect(0, 0, ct->xwin, ct->ywin);
+	dst= define_rect(0, 0, ct->xwin, ct->ywin);
 	time = SDL_GetTicks();
 	curr = time % (FIREWORKS_FRAMES * FIREWORKS_FRAME_TIME);
-	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME],
-		NULL, &dst);
+	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);
+}
+
+void	sub_draw_text(t_context *ct, t_point posi, SDL_Texture *texture)
+{
+	int				tex_width;
+	int				tex_height;
+	SDL_Rect		dst;
+
+	tex_width = 0;
+	tex_height = 0;
+	SDL_QueryTexture(texture, NULL, NULL, &tex_width, &tex_height);
+	dst= define_rect(posi.x, posi.y, tex_width, tex_height);
+	SDL_RenderCopy(ct->rend, texture, NULL, &dst);
 }
 
 void	draw_text(t_context *ct, char *s, t_point posi)
 {
-	SDL_Color			color = {165, 4, 13, SDL_ALPHA_OPAQUE};
-	SDL_Surface			*surface;
-	SDL_Texture			*texture;
-	SDL_Rect			dst;
-	int					tex_width;
-	int					tex_height;
+	SDL_Color		color ;
+	SDL_Surface		*surface;
+	SDL_Texture		*texture;
 
+	color.r = 165;
+	color.g = 4;
+	color.b = 13;
+	color.a = SDL_ALPHA_OPAQUE;
 	surface = TTF_RenderText_Solid(ct->font, s, color);
 	if (surface == NULL)
 		quit("TTF_RenderText_Solid()failed", ct);
@@ -41,11 +54,7 @@ void	draw_text(t_context *ct, char *s, t_point posi)
 	if (texture == NULL)
 		quit("SDL_CreateTextureFromSurface()failed", ct);
 	SDL_FreeSurface(surface);
-	tex_width = 0;
-	tex_height = 0;
-	dst = define_rect(posi.x, posi.y, tex_width, tex_height);
-	SDL_QueryTexture(texture, NULL, NULL, &tex_width, &tex_height);
-	SDL_RenderCopy(ct->rend, texture, NULL, &dst);
+	sub_draw_text(ct, posi, texture);
 }
 
 void	draw_icon(t_context *ct)

@@ -14,9 +14,9 @@
 
 void		draw_ground(t_context *ct)
 {
-	SDL_Rect	dst_ground;
+	SDL_Rect dst_ground;
 
-	dst_ground = define_rect(0, ct->ywin / 2, ct->xwin, ct->ywin / 2);
+	dst_ground =  define_rect(0, ct->ywin / 2, ct->xwin, ct->ywin / 2);
 	SDL_RenderCopy(ct->rend, ct->tex.ground, NULL, &dst_ground);
 }
 
