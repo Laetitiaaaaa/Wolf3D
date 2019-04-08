@@ -44,6 +44,7 @@ void	loop_guide(t_context *ct)
 		while (SDL_PollEvent(&event))
 		{
 			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = OUT : 0;
+			(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
 			common_actions(ct, state, event);
 		}
 		update_settings(ct);

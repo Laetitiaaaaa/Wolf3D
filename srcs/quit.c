@@ -56,6 +56,7 @@ void				quit(char *msg, t_context *ct)
 		ct->lst = NULL;
 	}
 	Mix_CloseAudio();
+	ct->chunky != NULL ? Mix_FreeChunk(ct->chunky) : 0;
 	ct->chunk != NULL ? Mix_FreeChunk(ct->chunk) : 0;
 	ct->music != NULL ? Mix_FreeMusic(ct->music) : 0;
 	ct->wall.motif_red != NULL ? SDL_DestroyTexture(ct->wall.motif_red) : 0;
