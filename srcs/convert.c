@@ -12,8 +12,6 @@
 
 #include "wolf3d.h"
 
-
-//je vais normaliser les points sur plan entre 0 et 1
 t_point	convert_plan_to_pixel(float x, float y, t_context *ct)
 {
 	t_point	pixel;

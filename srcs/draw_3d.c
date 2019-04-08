@@ -58,7 +58,7 @@ void	draw_line_wall(t_context *ct, float angle, int x_pixel)
 	t_floatpoint wall;
 
 	wall = dda_return_posi(ct, angle);
-	if ((distance = dda_return_distance(ct, angle)) < 0) // distance will be negative if no wall
+	if ((distance = dda_return_distance(ct, angle)) < 0)
 		return ;
 	wall_height = convert_mapdis_to_screendis(distance, ct);
 	ct->wall.dst = define_rect(x_pixel, (ct->ywin - wall_height) / 2, 1, wall_height);
@@ -80,7 +80,7 @@ int		convert_mapdis_to_screendis(float distance, t_context *ct)
 	int		wall_height;
 
 	dis_max = sqrt(pow(ct->mpp.x, 2) + pow(ct->mpp.y, 2));
-	wall_height = (int)((dis_max - distance) * 50.0 / distance) + 5; //it was 20.0 rather than 50.0 before
+	wall_height = (int)((dis_max - distance) * 50.0 / distance) + 5;
 	return (wall_height);
 }
 
