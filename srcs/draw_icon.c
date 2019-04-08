@@ -18,6 +18,7 @@ void	draw_fireworks(t_context *ct)
 	unsigned int	curr;
 	SDL_Rect		dst = {0, 0, ct->xwin, ct->ywin} ;
 
+
 	time = SDL_GetTicks();
 	curr = time % (FIREWORKS_FRAMES * FIREWORKS_FRAME_TIME);
 	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);

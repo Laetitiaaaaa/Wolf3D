@@ -25,7 +25,8 @@ t_floatpoint		vertical_first_delta_calcu(t_context *ct, float angle)
 	return (d);
 }
 
-t_floatpoint		first_vertical_step(t_context *ct, float angle, t_floatpoint detect)
+t_floatpoint		first_vertical_step(t_context *ct,
+	float angle, t_floatpoint detect)
 {
 	t_floatpoint	delta;
 
@@ -35,7 +36,8 @@ t_floatpoint		first_vertical_step(t_context *ct, float angle, t_floatpoint detec
 	return (detect);
 }
 
-t_floatpoint		continue_vertical_step(t_context *ct, float angle, t_floatpoint detect)
+t_floatpoint		continue_vertical_step(t_context *ct,
+	float angle, t_floatpoint detect)
 {
 	detect.x += ct->cam.neg_posi.x * CUBESIZE;
 	detect.y += ct->cam.neg_posi.y * CUBESIZE
@@ -48,26 +50,30 @@ t_floatpoint		sub_vertial(t_context *ct, float angle, t_floatpoint detect, t_poi
 	int				count;
 
 	count = 0;
-	(ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE) ? hit_sprite(ct, to_int) : 0; // camera in the same cube of sprite
+	if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
+		hit_sprite(ct, to_int);
 	while (ct->mpp.map[to_int.y][to_int.x] != WALL_CUBE)
 	{
-		detect = (count == 0 ? first_vertical_step(ct, angle, detect) : continue_vertical_step(ct, angle, detect));
+		detect = (count == 0 ? first_vertical_step(ct, angle, detect)
+			: continue_vertical_step(ct, angle, detect));
 		count++;
 		to_int.x = (int)detect.x;
 		to_int.y = (int)detect.y;
 		(angle > 90 && angle < 270) ? to_int.x-- : 0;
-		if (detect.x > ct->mpp.x - 1 || detect.x < 1 || detect.y <= 0 || detect.y >= ct->mpp.y)
+		if (detect.x > ct->mpp.x - 1 || detect.x < 1
+			|| detect.y <= 0 || detect.y >= ct->mpp.y)
 		{
 			detect.x = NO_WALL;
 			detect.y = NO_WALL;
 			return (detect);
 		}
-		(ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE) ? hit_sprite(ct, to_int) : 0;
+		if (ct->mpp.map[to_int.y][to_int.x] >= SPRITE_CUBE)
+			hit_sprite(ct, to_int);
 	}
 	return (detect);
 }
 
-t_floatpoint			vertical_wall_position_calcu(t_context *ct, float angle)
+t_floatpoint		vertical_wall_position_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	detect;
 	t_point		to_int;
@@ -81,8 +87,8 @@ t_floatpoint			vertical_wall_position_calcu(t_context *ct, float angle)
 	{
 		detect.x = NO_WALL;
 		detect.y = NO_WALL;
-		return(detect);
+		return (detect);
 	}
 	detect = sub_vertial(ct, angle, detect, to_int);
-	return(detect);
+	return (detect);
 }

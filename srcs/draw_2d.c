@@ -62,8 +62,9 @@ static void	draw_cubes(t_context *ct)
 		while (i < ct->mpp.x)
 		{
 			pixel = convert_plan_to_pixel((float)i, (float)j, ct);
-			ct->mpp.map[j][i] == 1 ? draw_fill_cubes(ct, pixel): 0;
-			rects[j * (ct->mpp.x) + i] = define_rect(pixel.x, pixel.y, ct->xwin / ct->mpp.x, ct->ywin / ct->mpp.y);
+			ct->mpp.map[j][i] == 1 ? draw_fill_cubes(ct, pixel) : 0;
+			rects[j * (ct->mpp.x) + i] = define_rect(pixel.x, pixel.y,
+				ct->xwin / ct->mpp.x, ct->ywin / ct->mpp.y);
 			i++;
 		}
 		i = 0;
@@ -86,7 +87,3 @@ void		draw_2d(t_context *ct)
 		draw_ray(ct, angle);
 	}
 }
-
-
-
-

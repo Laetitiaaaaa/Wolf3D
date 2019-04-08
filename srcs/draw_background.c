@@ -22,12 +22,13 @@ void		draw_ground(t_context *ct)
 
 void		draw_background(t_context *ct)
 {
-	SDL_Rect dst_sky;
-	SDL_Rect src_sky;
+	SDL_Rect	dst_sky;
+	SDL_Rect	src_sky;
 
 	dst_sky = define_rect(0, 0, ct->xwin, ct->ywin / 2);
 	draw_ground(ct);
-	src_sky.x = (X_SKY - X_CUT_SKY) - ((X_SKY - X_CUT_SKY) * ct->cam.angle / 360 );
+	src_sky.x = (X_SKY - X_CUT_SKY) - ((X_SKY - X_CUT_SKY)
+		* ct->cam.angle / 360);
 	src_sky.y = 0;
 	src_sky.w = X_CUT_SKY;
 	src_sky.h = Y_SKY;
