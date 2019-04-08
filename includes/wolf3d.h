@@ -40,7 +40,7 @@ typedef enum  		e_map_content
 	WALL_CUBE,
 	CAM_CUBE,
 	SPRITE_CUBE,
-	DOOR_CUBE = 6,
+	TUYAU_CUBE = 6,
 	MUSHROOM_CUBE = 7,
 	KEY_CUBE = 8,
 }					t_map_content;
@@ -118,6 +118,7 @@ typedef struct 		s_texture
 	SDL_Texture		*key;
 	SDL_Texture		*mushroom;
 	SDL_Texture		*words;
+	SDL_Texture		*tuyau;
 	SDL_Texture		*fireworks[FIREWORKS_FRAMES];
 }					t_texture;
 

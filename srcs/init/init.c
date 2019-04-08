@@ -84,6 +84,7 @@ void	load_texture_obj(t_context *ct)
 {
 	ct->tex.key = init_texture_png("./images/Key.png", ct);
 	ct->tex.mushroom = init_texture_png("./images/Mushroom.png", ct);
+	ct->tex.tuyau = init_texture_png("./images/tuyau.png", ct);
 }
 
 void	load_font(t_context *ct)
@@ -104,7 +105,7 @@ void	load_music(t_context *ct)
 int		init(t_context *ct, const char *argv)
 {
 	ft_bzero(ct, sizeof(*ct));
-	
+
 	// init_struct(ct);
 	load_map(ct, argv);
 	init_valeur(ct);
