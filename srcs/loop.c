@@ -12,16 +12,6 @@
 
 #include "wolf3d.h"
 
-void	draw_fireworks(t_context *ct)
-{
-	unsigned int time;
-	unsigned int curr;
-
-	time = SDL_GetTicks();
-	curr = time % (FIREWORKS_FRAMES * FIREWORKS_FRAME_TIME);
-	SDL_Rect dst = {0, 0, ct->xwin, ct->ywin};
-	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);
-}
 
 static void	choose_interface(t_context *ct)
 {
@@ -55,26 +45,20 @@ static void	action_loop_game(t_context *ct)
 	SDL_RenderPresent(ct->rend);
 }
 
-
-void	loop(t_context *ct)
+static void		sub_loop(t_context *ct, Uint8 *state, unsigned int last_time)
 {
-	Uint8			*state;
 	SDL_Event		event;
-	unsigned int	last_time;
 	unsigned int	delta_time;
-	unsigned int	frame_time;
+	int				fps;
+	unsigned int 	time_count;
 
-	int		fps;
-	unsigned int i = 0;
+	time_count = 0;
 	fps = 0;
-	frame_time = 1000 / 60;
-	last_time = 0;
-	state = (Uint8*)SDL_GetKeyboardState(NULL);
 	while (ct->menu.in != OUT)
 	{
 		delta_time = SDL_GetTicks() - last_time;
 		last_time += delta_time;
-		delta_time < frame_time ? SDL_Delay(frame_time - delta_time) : 0;
+		delta_time < FRAME_TIME ? SDL_Delay(FRAME_TIME - delta_time) : 0;
 		while (SDL_PollEvent(&event))
 		{
 			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
@@ -84,14 +68,24 @@ void	loop(t_context *ct)
 		key_events(ct, state, delta_time);
 		action_loop_game(ct);
 		fps++;
-		i += delta_time;
+		time_count += delta_time;
 
-		if (i >1000)
+		if (time_count >1000)
 		{
 			// printf("fps%d\n", fps ); //fps
 			fps = 0;
-			i =0;
+			time_count =0;
 		}
 	}
+}
+
+void	loop(t_context *ct)
+{
+	Uint8			*state;
+	unsigned int	last_time;
+
+	last_time = 0;
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	sub_loop(ct, state, last_time);
 }
 

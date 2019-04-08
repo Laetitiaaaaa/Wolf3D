@@ -105,8 +105,6 @@ void	load_music(t_context *ct)
 int		init(t_context *ct, const char *argv)
 {
 	ft_bzero(ct, sizeof(*ct));
-
-	// init_struct(ct);
 	load_map(ct, argv);
 	init_valeur(ct);
 	init_sdl(ct);

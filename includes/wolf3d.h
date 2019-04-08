@@ -31,6 +31,7 @@
 # define NO_WALL -1.0
 # define INITIAL 0
 # define ANGLE 60
+# define FRAME_TIME 1000 / 60
 # define FIREWORKS_FRAMES 10
 # define FIREWORKS_FRAME_TIME 200
 
@@ -148,7 +149,7 @@ typedef struct		s_context
 	SDL_Renderer	*rend;
 	t_camera		cam;
 	t_texture		tex;
-	t_sp_lst		*lst; // liste chainé de sprite
+	t_sp_lst		*lst;
 	t_sprite		sp;
 	int				at_least_one_sprite;
 	int				total_mushroom_nb;
@@ -212,5 +213,7 @@ void				limit_menu(t_context *ct);
 t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
 t_sp_lst			*sort_list(t_sp_lst *lst);
 void				draw_icon(t_context *ct);
+void				draw_fireworks(t_context *ct);
+
 
 #endif
