@@ -51,11 +51,16 @@ void	loop_menu(t_context *ct)
 		while (SDL_PollEvent(&event))
 		{
 			limit_menu(ct);
-			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == PLAY)) ? loop(ct) : 0;
+			if ((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == PLAY))
+			{
+				Mix_PlayMusic(ct->music, -1);
+				loop(ct);
+			}
 			((state[SDL_SCANCODE_DOWN]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in + 1) % OUT : 0;
 			((state[SDL_SCANCODE_UP]) && (event.type == SDL_KEYDOWN)) ? ct->menu.in = (ct->menu.in - 1) % OUT : 0;
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == GUIDE)) ? loop_guide(ct) : 0;
 			((state[SDL_SCANCODE_RETURN]) && (event.type == SDL_KEYDOWN) && (ct->menu.in == QUIT)) ? quit("Thank you for playing", ct) : 0;
+			(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
 			common_actions(ct, state, event);
 		}
 		update_settings(ct);

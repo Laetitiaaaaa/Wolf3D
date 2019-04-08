@@ -99,7 +99,8 @@ void	load_music(t_context *ct)
 {
 	ct->music = Mix_LoadMUS("./images/mario.wav");
 	ct->chunk = Mix_LoadWAV("./images/sonchampi.wav");
-	Mix_PlayMusic(ct->music, -1);
+	ct->chunky = Mix_LoadWAV("./images/levelcomplete.wav");
+	// Mix_PlayMusic(ct->music, -1);
 }
 
 int		init(t_context *ct, const char *argv)

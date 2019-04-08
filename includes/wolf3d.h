@@ -159,6 +159,7 @@ typedef struct		s_context
 	int 			full_screen;
 	Mix_Music		*music;
 	Mix_Chunk		*chunk;
+	Mix_Chunk		*chunky;
 	int 			volume;
 	int 			mute;
 	TTF_Font		*font;
@@ -212,5 +213,6 @@ void				limit_menu(t_context *ct);
 t_sp_lst			*lst_fill(t_sp_lst *lst, int id, t_floatpoint posi, float distance);
 t_sp_lst			*sort_list(t_sp_lst *lst);
 void				draw_icon(t_context *ct);
+void				loop_fireworks(t_context *ct);
 
 #endif

@@ -15,7 +15,6 @@ NAME = wolf3d
 HDR = $(shell find includes -type f) $(shell find libft/includes -type f) $(shell find ~/.brew/include/SDL2 -type f)
 
 INC_DIR = $(shell find includes -type d) $(shell find libft -type d) $(shell find ~/.brew/include/SDL2 -type d) \
--I libraries/dist/include -I /usr/local/Cellar/sdl2/2.0.9/include/SDL2
 
 SRC_DIR = $(shell find srcs -type d)
 

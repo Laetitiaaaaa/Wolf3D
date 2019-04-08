@@ -23,6 +23,21 @@ void	draw_fireworks(t_context *ct)
 	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);
 }
 
+void	loop_fireworks(t_context *ct)
+{
+	Uint8 	*state;
+	SDL_Event event;
+
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
+
+	while (SDL_PollEvent(&event))
+	{
+		(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
+		(state[SDL_SCANCODE_ESCAPE] && event.type == SDL_KEYDOWN) ? quit("Thank you for playing", ct) : 0;
+	}
+	draw_fireworks(ct);
+}
+
 static void	choose_interface(t_context *ct)
 {
 	if (ct->choose_inter == MAP)
@@ -40,10 +55,14 @@ static void	choose_interface(t_context *ct)
 			draw_sprite_in_3d(ct);
 		draw_icon(ct);
 		if (ct->sp.mushroom_nb == ct->total_mushroom_nb)
+		{
 			ct->choose_inter = FIREWORKS;
+			Mix_HaltMusic();
+			Mix_PlayChannel(MIX_DEFAULT_CHANNELS, ct->chunky, -1);
+		}
 	}
 	if (ct->choose_inter == FIREWORKS)
-		draw_fireworks(ct);
+		loop_fireworks(ct);
 }
 
 static void	action_loop_game(t_context *ct)
@@ -70,6 +89,7 @@ void	loop(t_context *ct)
 	frame_time = 1000 / 60;
 	last_time = 0;
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
+
 	while (ct->menu.in != OUT)
 	{
 		delta_time = SDL_GetTicks() - last_time;
@@ -78,6 +98,7 @@ void	loop(t_context *ct)
 		while (SDL_PollEvent(&event))
 		{
 			((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ? ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
+			(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
 			common_actions(ct, state, event);
 		}
 		update_settings(ct);
