@@ -139,7 +139,6 @@ typedef struct s_sprite
 	int				door_nb;
 }				t_sprite;
 
-
 typedef struct		s_context
 {
 	t_map_params	mpp;
@@ -163,6 +162,8 @@ typedef struct		s_context
 	int 			volume;
 	int 			mute;
 	TTF_Font		*font;
+	unsigned int	fps;
+	unsigned int	show_fps;
 }					t_context;
 
 void				load_map(t_context *ct, const char *argv);
