@@ -23,7 +23,7 @@ void	draw_fireworks(t_context *ct)
 	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);
 }
 
-void	draw_text(t_context *ct, char *s, SDL_Point posi)
+void	draw_text(t_context *ct, char *s, t_point posi)
 {
 	SDL_Color		color = {165, 4, 13,  SDL_ALPHA_OPAQUE};
 	SDL_Surface		*surface;
@@ -49,7 +49,7 @@ void	draw_icon(t_context *ct)
 {
 	SDL_Rect dst_mushroom;
 	SDL_Rect dst_key;
-	SDL_Point	posi;
+	t_point	posi;
 	char		*s;
 
 	posi.x = 80;

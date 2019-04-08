@@ -43,7 +43,7 @@ t_floatpoint		continue_horizontal_step(t_context *ct, float angle, t_floatpoint 
 	return (detect);
 }
 
-t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, SDL_Point to_int)
+t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, t_point to_int)
 {
 	int				count;
 
@@ -71,7 +71,7 @@ t_floatpoint 		sub_horizontal(t_context *ct, float angle, t_floatpoint detect, S
 t_floatpoint		horizontal_wall_position_calcu(t_context *ct, float angle)
 {
 	t_floatpoint	detect;
-	SDL_Point		to_int;
+	t_point		to_int;
 
 	detect.x = ct->cam.posi.x;
 	detect.y = ct->cam.posi.y;

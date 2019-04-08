@@ -14,8 +14,8 @@
 
 static void	draw_ray(t_context *ct, float angle)
 {
-	SDL_Point			pix_cam;
-	SDL_Point			pix_wall;
+	t_point			pix_cam;
+	t_point			pix_wall;
 	t_floatpoint		wall_p;
 
 	wall_p = dda_return_posi(ct, angle);
@@ -29,14 +29,14 @@ static void	draw_ray(t_context *ct, float angle)
 
 static void	draw_camera(t_context *ct)
 {
-	SDL_Point    	pixel;
+	t_point    	pixel;
 
 	pixel = convert_plan_to_pixel(ct->cam.posi.x, ct->cam.posi.y, ct);
 	SDL_SetRenderDrawColor(ct->rend, 89, 224, 192, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawPoint(ct->rend, pixel.x, pixel.y);
 }
 
-static void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
+static void	draw_fill_cubes(t_context *ct, t_point pixel)
 {
 	SDL_Rect		rec;
 
@@ -51,7 +51,7 @@ static void	draw_fill_cubes(t_context *ct, SDL_Point pixel)
 static void	draw_cubes(t_context *ct)
 {
 	SDL_Rect 		rects[ct->mpp.x * ct->mpp.y];
-	SDL_Point		pixel;
+	t_point		pixel;
 	int				i;
 	int				j;
 

@@ -12,26 +12,6 @@
 
 #include "wolf3d.h"
 
-void	show_fps(t_context *ct)
-{
-	SDL_Color		color = {0, 0, 0,  SDL_ALPHA_OPAQUE};
-	SDL_Surface		*surface;
-	SDL_Texture		*texture;
-	char 			*s;
-
-	s = ft_itoa(ct->fps);
-	surface = TTF_RenderText_Solid(ct->font, s, color);
-	if (surface == NULL)
-		quit("TTF_RenderText_Solid()failed", ct);
-	texture = SDL_CreateTextureFromSurface(ct->rend, surface);
-	if (texture == NULL)
-		quit("SDL_CreateTextureFromSurface()failed", ct);
-	SDL_FreeSurface(surface);
-	SDL_Rect dst= {500, 20, 40, 40};
-	SDL_RenderCopy(ct->rend, texture, NULL, &dst);
-	free(s);
-	s = NULL;
-}
 
 void	loop_fireworks(t_context *ct)
 {
@@ -96,6 +76,17 @@ static void	action_loop_game(t_context *ct, Uint8 *state, unsigned int delta_tim
 
 }
 
+int		one_second_passed(t_context *ct, int one_second_count, int fps_count)
+{
+	if (one_second_count > 1000)
+	{
+		ct->fps = fps_count;
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
+
 void	loop(t_context *ct)
 {
 	Uint8			*state;
@@ -116,9 +107,8 @@ void	loop(t_context *ct)
 		delta_time < FRAME_TIME ? SDL_Delay(FRAME_TIME - delta_time) : 0;
 		fps_count++;
 		one_second_count += delta_time;
-		if (one_second_count > 1000)
+		if (one_second_passed(ct, one_second_count, fps_count) == TRUE)
 		{
-			ct->fps = fps_count;
 			one_second_count = 0;
 			fps_count = 0;
 		}

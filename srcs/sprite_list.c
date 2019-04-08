@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-void		hit_sprite(t_context *ct, SDL_Point to_int)
+void		hit_sprite(t_context *ct, t_point to_int)
 {
 	int				id;
 	t_floatpoint	posi;
