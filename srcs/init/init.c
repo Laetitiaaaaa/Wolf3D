@@ -48,7 +48,6 @@ void	load_texture_wall(t_context *ct)
 	ct->wall.motif_blue = init_texture("./images/murroux.bmp", ct);
 }
 
-
 SDL_Texture 	*init_texture_png(char *path, t_context *ct)
 {
 	SDL_Texture 	*texture;
