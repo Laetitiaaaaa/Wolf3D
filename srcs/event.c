@@ -63,7 +63,12 @@ void	key_events(t_context *ct, Uint8 *state, unsigned int delta_time)
 {
 	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 50.0 * delta_time/1000 : 0;
 	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 50.0 * delta_time/1000 : 0;
-	state[SDL_SCANCODE_SPACE] ? ct->menu.in = OUT : 0;
+	if (state[SDL_SCANCODE_SPACE])
+	{
+		Mix_HaltMusic();
+		Mix_HaltChannel(-1);
+		ct->menu.in = OUT;
+	}
 	key_events_2d(ct, state, delta_time);
 	key_events_3d(ct, state, delta_time);
 }

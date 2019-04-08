@@ -106,7 +106,6 @@ void	loop(t_context *ct)
 
 	last_time = 0;
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
-
 	one_second_count = 0;
 	fps_count = 0;
 	Mix_PlayMusic(ct->music, -1);
