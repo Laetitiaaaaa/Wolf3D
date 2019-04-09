@@ -38,9 +38,12 @@ SRC = loop.c \
 	  event.c \
 	  sprite_list.c \
 	  draw_sprite2d.c \
-	  sound_and_win.c \
+	  game.c \
 	  draw_icon.c \
 	  show_fps.c \
+	  load_tools.c \
+	  free.c \
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 

@@ -12,6 +12,47 @@
 
 #include "wolf3d.h"
 
+void			loop_guide(t_context *ct)
+{
+	Uint8			*state;
+	SDL_Event		event;
+
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	while (TRUE && ct->menu.in != OUT)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			((state[SDL_SCANCODE_SPACE]) && (event.type == SDL_KEYDOWN)) ?
+			ct->menu.in = OUT : 0;
+			(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
+			common_actions(ct, state, event);
+		}
+		update_settings(ct);
+		copy_texture_menu(ct, "./images/guides.bmp");
+		SDL_RenderPresent(ct->rend);
+	}
+}
+
+void			loop_menu(t_context *ct)
+{
+	Uint8			*state;
+	SDL_Event		event;
+
+	state = (Uint8*)SDL_GetKeyboardState(NULL);
+	while (TRUE)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			limit_menu(ct);
+			action_loop_menu(state, event, ct);
+			common_actions(ct, state, event);
+		}
+		update_settings(ct);
+		print_menu(ct);
+		SDL_RenderPresent(ct->rend);
+	}
+}
+
 void			loop_fireworks(t_context *ct)
 {
 	Uint8		*state;
@@ -27,7 +68,7 @@ void			loop_fireworks(t_context *ct)
 	draw_fireworks(ct);
 }
 
-static void		choose_interface(t_context *ct)
+void			choose_interface(t_context *ct)
 {
 	if (ct->choose_inter == MAP)
 	{
@@ -53,41 +94,6 @@ static void		choose_interface(t_context *ct)
 		loop_fireworks(ct);
 }
 
-static void		action_loop_game(t_context *ct, Uint8 *state,
-	unsigned int delta_time)
-{
-	SDL_Event		event;
-
-	while (SDL_PollEvent(&event))
-	{
-		((state[SDL_SCANCODE_C]) && (event.type == SDL_KEYDOWN)) ?
-		ct->choose_inter = (ct->choose_inter + 1) % INTERFACE_NB : 0;
-		(event.type == SDL_QUIT) ? quit("Thank you for playing", ct) : 0;
-		common_actions(ct, state, event);
-	}
-	ct->cam.angle = angle_limit(ct->cam.angle);
-	SDL_SetRenderDrawColor(ct->rend, 0, 0, 0, SDL_ALPHA_OPAQUE);
-	SDL_RenderClear(ct->rend);
-	choose_interface(ct);
-	if (ct->show_fps == TRUE)
-		show_fps(ct);
-	SDL_RenderPresent(ct->rend);
-	update_settings(ct);
-	key_events(ct, state, delta_time);
-}
-
-int				one_second_passed(t_context *ct,
-	int one_second_count, int fps_count)
-{
-	if (one_second_count > 1000)
-	{
-		ct->fps = fps_count;
-		return (TRUE);
-	}
-	else
-		return (FALSE);
-}
-
 void			loop(t_context *ct)
 {
 	Uint8			*state;
@@ -100,7 +106,7 @@ void			loop(t_context *ct)
 	state = (Uint8*)SDL_GetKeyboardState(NULL);
 	one_second_count = 0;
 	fps_count = 0;
-	Mix_PlayMusic(ct->music, -1);
+	manage_music(ct);
 	while (ct->menu.in != OUT)
 	{
 		delta_time = SDL_GetTicks() - last_time;
