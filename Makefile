@@ -101,11 +101,6 @@ re: fclean
 relib:
 	make re -C libft
 
-debug: $(OBJ)
-	$(CC) $(CFLAG) -g -ggdb -o $(NAME) $(OBJ) $(LFLAG)
-	#-g -ggdb
-#-fsanitize=address
-
 resdl:
 	rm -rf ./libraries
 	rm -rf ./includes/include
