@@ -14,5 +14,5 @@
 
 float	ft_float_abs(float x)
 {
-	return(x >= 0 ? x : -x);
+	return (x >= 0 ? x : -x);
 }

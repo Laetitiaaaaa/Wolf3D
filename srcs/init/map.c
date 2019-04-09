@@ -65,7 +65,7 @@ void				stock_map(int fd, t_context *ct)
 	while (1)
 	{
 		ret = get_next_line(fd, &line);
-		ret == -1 ?	quit("error with get_next_line()", ct) : 0;
+		(ret == -1) ? quit("error with get_next_line()", ct) : 0;
 		if ((ct->mpp.y == 0) && (ret == 0))
 			quit_nothing_to_free("map file shold not be empty");
 		if (ret == 0)
