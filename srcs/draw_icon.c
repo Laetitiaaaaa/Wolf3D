@@ -18,10 +18,11 @@ void	draw_fireworks(t_context *ct)
 	unsigned int	curr;
 	SDL_Rect		dst;
 
-	dst= define_rect(0, 0, ct->xwin, ct->ywin);
+	dst = define_rect(0, 0, ct->xwin, ct->ywin);
 	time = SDL_GetTicks();
 	curr = time % (FIREWORKS_FRAMES * FIREWORKS_FRAME_TIME);
-	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME], NULL, &dst);
+	SDL_RenderCopy(ct->rend, ct->tex.fireworks[curr / FIREWORKS_FRAME_TIME],
+		NULL, &dst);
 }
 
 void	sub_draw_text(t_context *ct, t_point posi, SDL_Texture *texture)
@@ -33,13 +34,13 @@ void	sub_draw_text(t_context *ct, t_point posi, SDL_Texture *texture)
 	tex_width = 0;
 	tex_height = 0;
 	SDL_QueryTexture(texture, NULL, NULL, &tex_width, &tex_height);
-	dst= define_rect(posi.x, posi.y, tex_width, tex_height);
+	dst = define_rect(posi.x, posi.y, tex_width, tex_height);
 	SDL_RenderCopy(ct->rend, texture, NULL, &dst);
 }
 
 void	draw_text(t_context *ct, char *s, t_point posi)
 {
-	SDL_Color		color ;
+	SDL_Color		color;
 	SDL_Surface		*surface;
 	SDL_Texture		*texture;
 

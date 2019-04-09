@@ -166,6 +166,7 @@ typedef struct		s_context
 	Mix_Music		*music;
 	Mix_Chunk		*chunk;
 	Mix_Chunk		*chunky;
+	Mix_Chunk		*chunk_menu;
 	int				volume;
 	int				mute;
 	TTF_Font		*font;
@@ -227,5 +228,19 @@ void				draw_icon(t_context *ct);
 void				loop_fireworks(t_context *ct);
 void				draw_fireworks(t_context *ct);
 void				show_fps(t_context *ct);
+void				free_texture(t_context *ct);
+void				free_sound(t_context *ct);
+void				manage_music(t_context *ct);
+void				action_loop_menu(Uint8 *state, SDL_Event event,
+	t_context *ct);
+void				action_loop_game(t_context *ct, Uint8 *state,
+	unsigned int delta_time);
+int					one_second_passed(t_context *ct,
+	int one_second_count, int fps_count);
+void				choose_interface(t_context *ct);
+void				load_music(t_context *ct);
+void				load_font(t_context *ct);
+void				load_texture_backgr(t_context *ct);
+SDL_Texture			*init_texture_png(char *path, t_context *ct);
 
 #endif

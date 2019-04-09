@@ -12,7 +12,8 @@
 
 #include "wolf3d.h"
 
-static void	key_events_2d(t_context *ct, Uint8 *state, unsigned int delta_time)
+static void		key_events_2d(t_context *ct, Uint8 *state,
+	unsigned int delta_time)
 {
 	float	d;
 
@@ -35,7 +36,13 @@ static void	key_events_2d(t_context *ct, Uint8 *state, unsigned int delta_time)
 		state[SDL_SCANCODE_L] ? ct->cam.posi.x += d : 0;
 }
 
-static void	key_events_3d(t_context *ct, Uint8 *state, unsigned delta_time)
+void			action_key(Uint8 state, t_context *ct, float dy, float dx)
+{
+	state ? ct->cam.posi.y += dy : 0;
+	state ? ct->cam.posi.x += dx : 0;
+}
+
+static void		key_events_3d(t_context *ct, Uint8 *state, unsigned delta_time)
 {
 	float	d;
 	float	dx;
@@ -46,23 +53,21 @@ static void	key_events_3d(t_context *ct, Uint8 *state, unsigned delta_time)
 	dx = d * cos(convert_deg_to_rad(ct->cam.angle));
 	if ((ct->cam.posi.y - dy > 0) && (ct->cam.posi.y - dy < ct->mpp.y)
 		&& (ct->cam.posi.x + dx < ct->mpp.x) && (ct->cam.posi.x + dx > 0)
-		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)] != WALL_CUBE
-		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)] % 10 != TUYAU_CUBE)
-	{
-		(state[SDL_SCANCODE_UP]) ? ct->cam.posi.y -= dy : 0;
-		(state[SDL_SCANCODE_UP]) ? ct->cam.posi.x += dx : 0;
-	}
+		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)]
+		!= WALL_CUBE
+		&& ct->mpp.map[(int)(ct->cam.posi.y - dy)][(int)(ct->cam.posi.x + dx)]
+		% 10 != TUYAU_CUBE)
+		action_key(state[SDL_SCANCODE_UP], ct, -dy, dx);
 	if ((ct->cam.posi.y + dy < ct->mpp.y) && (ct->cam.posi.y + dy > 0)
 		&& (ct->cam.posi.x - dx > 0) && (ct->cam.posi.x - dx < ct->mpp.x)
-		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)] != WALL_CUBE
-		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)] % 10 != TUYAU_CUBE)
-	{
-		(state[SDL_SCANCODE_DOWN]) ? ct->cam.posi.y += dy : 0;
-		(state[SDL_SCANCODE_DOWN]) ? ct->cam.posi.x -= dx : 0;
-	}
+		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)]
+		!= WALL_CUBE
+		&& ct->mpp.map[(int)(ct->cam.posi.y + dy)][(int)(ct->cam.posi.x - dx)]
+		% 10 != TUYAU_CUBE)
+		action_key(state[SDL_SCANCODE_DOWN], ct, dy, -dx);
 }
 
-void	key_events(t_context *ct, Uint8 *state, unsigned int delta_time)
+void			key_events(t_context *ct, Uint8 *state, unsigned int delta_time)
 {
 	state[SDL_SCANCODE_LEFT] ? ct->cam.angle += 50.0 * delta_time / 1000 : 0;
 	state[SDL_SCANCODE_RIGHT] ? ct->cam.angle -= 50.0 * delta_time / 1000 : 0;
