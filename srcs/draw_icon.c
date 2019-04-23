@@ -56,6 +56,7 @@ void	draw_text(t_context *ct, char *s, t_point posi)
 		quit("SDL_CreateTextureFromSurface()failed", ct);
 	SDL_FreeSurface(surface);
 	sub_draw_text(ct, posi, texture);
+	SDL_DestroyTexture(texture);
 }
 
 void	draw_icon(t_context *ct)

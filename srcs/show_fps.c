@@ -36,4 +36,5 @@ void	show_fps(t_context *ct)
 	SDL_RenderCopy(ct->rend, texture, NULL, &dst);
 	free(s);
 	s = NULL;
+	SDL_DestroyTexture(texture);
 }
